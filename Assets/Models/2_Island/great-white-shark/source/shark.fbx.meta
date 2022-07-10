@@ -1,11 +1,17 @@
 fileFormatVersion: 2
-guid: a377bc77dcdf60d47985c348c2246bca
+guid: 638c7ceac68c449289f84258efb40ef6
 ModelImporter:
   serializedVersion: 21202
   internalIDToNameTable:
   - first:
-      74: -623603649343465320
-    second: Scene
+      74: 1900988871415771224
+    second: Shark_Armature|Bite
+  - first:
+      74: 5653786433144918588
+    second: Shark_Armature|Swim
+  - first:
+      74: -161688862752167033
+    second: Shark_Armature|Swim2
   externalObjects: {}
   materials:
     materialImportMode: 2
