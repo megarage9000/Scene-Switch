@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
 using Photon.Pun;
+using UnityEngine.XR.Interaction.Toolkit;
+using Unity.XR.CoreUtils;
 
 public class NetworkPlayer : MonoBehaviour
 {
@@ -11,34 +13,43 @@ public class NetworkPlayer : MonoBehaviour
     public Transform LeftHand;
     public Transform RightHand;
 
+    private Transform HeadRig;
+    private Transform LeftHandRig;
+    private Transform RightHandRig;
+
     private PhotonView photonView;
 
     // Start is called before the first frame update
     void Start() {
         photonView = GetComponent<PhotonView>();
+
+        XROrigin rig = FindObjectOfType<XROrigin>();
+        HeadRig = rig.transform.Find("Camera Offset/Main Camera");
+        LeftHandRig = rig.transform.Find("Camera Offset/LeftHand Controller");
+        RightHandRig = rig.transform.Find("Camera Offset/RightHand Controller");
+    
+        // Disabling mesh renderers if its the local player
+        if(photonView.IsMine) {
+            foreach (var mesh in GetComponentsInChildren<Renderer>()) {
+                mesh.enabled = false;
+            }
+        }
     }
 
     // Update is called once per frame
     void Update() {
-        // Hide your objects, but still move them for the others on Network
         if(photonView.IsMine) {
-            RightHand.gameObject.SetActive(false);
-            LeftHand.gameObject.SetActive(false);
-            Head.gameObject.SetActive(false);
-
             // We don't want to be moving the head and hands of other players
-            MapPosition(Head, XRNode.Head);
-            MapPosition(LeftHand, XRNode.LeftHand);
-            MapPosition(RightHand, XRNode.RightHand);
+            MapPosition(Head, HeadRig);
+            MapPosition(LeftHand, LeftHandRig);
+            MapPosition(RightHand, RightHandRig);
         }
 
     }
 
-    void MapPosition(Transform target, XRNode node) {
-        InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.devicePosition, out Vector3 position);
-        InputDevices.GetDeviceAtXRNode(node).TryGetFeatureValue(CommonUsages.deviceRotation, out Quaternion rotation);
+    void MapPosition(Transform target, Transform rigTransform) {
 
-        target.position = position;
-        target.rotation = rotation;
+        target.position = rigTransform.position;
+        target.rotation = rigTransform.rotation;
     }
 }
