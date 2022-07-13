@@ -4,7 +4,10 @@
 EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
-  m_Scenes: []
+  m_Scenes:
+  - enabled: 1
+    path: Assets/Scenes/Photon-POC.unity
+    guid: a8da74168feae5547a80a6bee1b89a1c
   m_configObjects:
     Unity.XR.Oculus.Settings: {fileID: 11400000, guid: 9577461b62f5c3549bf10b4fe3409169, type: 2}
     com.unity.xr.management.loader_settings: {fileID: 11400000, guid: 4f6dd23e7b961114dac9c0bc0a262d8f, type: 2}
