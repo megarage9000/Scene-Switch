@@ -8,7 +8,9 @@ public class EmojiBall : XRBaseInteractable
 
     public XRSimpleInteractable _secondGrabPoint;
     private SphereCollider _collider;
-    private float _scaleDown = 0.5f;
+
+    private GameObject _secondGrabContact;
+    private GameObject _primaryGrabContact;
 
     protected override void Awake() {
         base.Awake();
@@ -18,31 +20,36 @@ public class EmojiBall : XRBaseInteractable
     }
 
     private void OnSecondHandGrab(SelectEnterEventArgs args) {
-        Debug.Log("Second Hand grabbed!");
+        _secondGrabContact = args.interactorObject.transform.gameObject;
     }
 
     private void OnSecondHandRelease(SelectExitEventArgs args) {
-        Debug.Log("Second Hand released!");
+        _secondGrabContact = null;
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args) {
         base.OnSelectEntered(args);
         transform.parent = args.interactorObject.transform;
+        _primaryGrabContact = args.interactorObject.transform.gameObject;
         _collider.enabled = false;
-        // _collider.radius *= _scaleDown;
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args) {
         base.OnSelectExited(args);
         transform.parent = null;
+        _primaryGrabContact = null;
         _collider.enabled = true;
-        // _collider.radius *= 1f / _scaleDown;
     }
 
-    /*
-    public override bool IsSelectableBy(IXRSelectInteractor interactor) {
-        bool isAlreadySelected = interactorsSelecting.Count > 0;
-        return base.IsSelectableBy(interactor) && !isAlreadySelected;
+    private void FixedUpdate() {
+        if(_primaryGrabContact && _secondGrabContact) {
+            Vector3 primaryGrabPosition = _primaryGrabContact.transform.position;
+            Vector3 secondGrabPosition = _secondGrabContact.transform.position;
+
+            Vector3 scaleDirection = secondGrabPosition - primaryGrabPosition;
+            float amount = scaleDirection.magnitude;
+
+            transform.localScale = Vector3.one * amount;
+        }
     }
-    */
 }
