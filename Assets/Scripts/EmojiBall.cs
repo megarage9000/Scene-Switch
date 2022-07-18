@@ -84,7 +84,7 @@ public class EmojiBall : XRBaseInteractable {
 
     // --- Placement / Interaction --- 
 
-    private void OnCollisionEnter(Collision collision) {
+    private void OnTriggerEnter(Collider collision) {
         GameObject detected = collision.gameObject;
         PlacementHint hint = collision.gameObject.GetComponent<PlacementHint>();
 
@@ -101,7 +101,7 @@ public class EmojiBall : XRBaseInteractable {
 
     }
 
-    private void OnCollisionExit(Collision collision) {
+    private void OnTriggerExit(Collider collision) {
         GameObject leaving = collision.gameObject;
         PlacementHint hint = collision.gameObject.GetComponent<PlacementHint>();
 
