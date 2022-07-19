@@ -40,21 +40,13 @@ public class EmojiBall : XRBaseInteractable {
     // --- Scaling ---
     private void OnSecondHandGrab(SelectEnterEventArgs args) {
         _secondGrabContact = args.interactorObject.transform.gameObject;
-        _state = _state == EmojiBallState.Placed ? EmojiBallState.StretchingInPlace : EmojiBallState.Stretching;
+        _state = EmojiBallState.Stretching;
         _theoreticalScale = transform.localScale;
     }
 
     private void OnSecondHandRelease(SelectExitEventArgs args) {
         _secondGrabContact = null;
-        if(_state == EmojiBallState.StretchingInPlace) {
-            _state = EmojiBallState.Placed;
-        }
-        else if(_state == EmojiBallState.Stretching && _primaryGrabContact){
-            _state = EmojiBallState.Grabbed;
-        }
-        else {
-            _state = EmojiBallState.Released;   
-        }
+        _state = EmojiBallState.Placed;
     }
 
 
@@ -90,11 +82,12 @@ public class EmojiBall : XRBaseInteractable {
         if(_state == EmojiBallState.Released) {
             transform.parent = args.interactorObject.transform;
             _state = EmojiBallState.Grabbed;
+            AddGrabEvent(args.interactorObject.transform.gameObject);
         }
-        _primaryGrabContact = args.interactorObject.transform.gameObject;
-        _secondGrabPoint.gameObject.SetActive(true);
-        AddGrabEvent(args.interactorObject.transform.gameObject);
-
+        else if(_state == EmojiBallState.Placed) {
+            _primaryGrabContact = args.interactorObject.transform.gameObject;
+            _secondGrabPoint.gameObject.SetActive(true);
+        }
         _interactor = args.interactorObject;
     }
 
@@ -103,11 +96,12 @@ public class EmojiBall : XRBaseInteractable {
         if(_state == EmojiBallState.Grabbed) {
             transform.parent = null;
             _state = EmojiBallState.Released;
+            RemoveGrabEvent(args.interactorObject.transform.gameObject);
         }
-        _primaryGrabContact = null;
-        _secondGrabPoint.gameObject.SetActive(false);
-        RemoveGrabEvent(args.interactorObject.transform.gameObject);
-
+        else if(_state == EmojiBallState.Stretching) {
+            _primaryGrabContact = null;
+            _secondGrabPoint.gameObject.SetActive(false);
+        }
         _interactor = null;
     }
 
@@ -129,7 +123,6 @@ public class EmojiBall : XRBaseInteractable {
 
 
     // --- Placement / Interaction --- 
-
     private void OnTriggerEnter(Collider collision) {
         GameObject detected = collision.gameObject;
         PlacementHint hint = collision.gameObject.GetComponent<PlacementHint>();
@@ -163,7 +156,4 @@ public class EmojiBall : XRBaseInteractable {
             _state = EmojiBallState.Placed;
         }
     }
-
-
-
 }
