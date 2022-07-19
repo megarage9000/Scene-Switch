@@ -4,11 +4,12 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 
 public class EmojiBall : XRBaseInteractable { 
-    public enum EmojiBallState {
+    internal enum EmojiBallState {
         Grabbed,
         Released,
         Stretching,
-        Placed
+        StretchingInPlace,
+        Placed,
     }
 
     public XRSimpleInteractable _secondGrabPoint;
@@ -38,12 +39,15 @@ public class EmojiBall : XRBaseInteractable {
     // --- Scaling ---
     private void OnSecondHandGrab(SelectEnterEventArgs args) {
         _secondGrabContact = args.interactorObject.transform.gameObject;
-        _state = EmojiBallState.Stretching;
+        _state = _state == EmojiBallState.Placed ? EmojiBallState.StretchingInPlace : EmojiBallState.Stretching;
     }
 
     private void OnSecondHandRelease(SelectExitEventArgs args) {
         _secondGrabContact = null;
-        if(_primaryGrabContact) {
+        if(_state == EmojiBallState.StretchingInPlace) {
+            _state = EmojiBallState.Placed;
+        }
+        else if(_state == EmojiBallState.Stretching && _primaryGrabContact){
             _state = EmojiBallState.Grabbed;
         }
         else {

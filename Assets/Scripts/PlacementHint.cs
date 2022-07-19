@@ -10,19 +10,17 @@ public class PlacementHint : MonoBehaviour
         outline = GetComponent<Outline>();
         renderer = GetComponent<MeshRenderer>();
 
-        // HideHint();
+        HideHint();
     }
 
     public void ShowHint() {
         Debug.Log("Showing Hint");
         outline.enabled = true;
-        renderer.enabled = true;
     }
 
     public void HideHint() {
         Debug.Log("Hiding Hint");
         outline.enabled = false;
-        renderer.enabled = false;
     }
 
     private void OnTriggerEnter(Collider other) {
