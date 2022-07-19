@@ -12,20 +12,22 @@ public class EmojiBall : XRBaseInteractable {
     }
 
     public XRSimpleInteractable _secondGrabPoint;
-    private SphereCollider _collider;
+    private IXRSelectInteractor _interactor;
+    private XRInteractionManager _interactionManager;
 
     private GameObject _secondGrabContact;
     private GameObject _primaryGrabContact;
     private GameObject _placementLocation;
+    
 
     private EmojiBallState _state;
     
 
     protected override void Awake() {
         base.Awake();
+        _interactionManager = FindObjectOfType<XRInteractionManager>();
         _secondGrabPoint.selectEntered.AddListener(OnSecondHandGrab);
         _secondGrabPoint.selectExited.AddListener(OnSecondHandRelease);
-        _collider = GetComponent<SphereCollider>();
         _state = EmojiBallState.Released;
     }
 
@@ -70,6 +72,9 @@ public class EmojiBall : XRBaseInteractable {
         }
         _primaryGrabContact = args.interactorObject.transform.gameObject;
         _secondGrabPoint.gameObject.SetActive(true);
+        AddGrabEvent(args.interactorObject.transform.gameObject);
+
+        _interactor = args.interactorObject;
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args) {
@@ -80,7 +85,27 @@ public class EmojiBall : XRBaseInteractable {
         }
         _primaryGrabContact = null;
         _secondGrabPoint.gameObject.SetActive(false);
+        RemoveGrabEvent(args.interactorObject.transform.gameObject);
+
+        _interactor = null;
     }
+
+    private void AddGrabEvent(GameObject controller) {
+        ControllerAdditions controllerEvents = controller.GetComponent<ControllerAdditions>();
+        if(controllerEvents) {
+            controllerEvents.PrimaryPress.AddListener(PlaceEmojiBall);
+            controllerEvents.SecondaryPress.AddListener(PlaceEmojiBall);
+        }
+    }
+
+    private void RemoveGrabEvent(GameObject controller) {
+        ControllerAdditions controllerEvents = controller.GetComponent<ControllerAdditions>();
+        if (controllerEvents) {
+            controllerEvents.PrimaryPress.RemoveListener(PlaceEmojiBall);
+            controllerEvents.SecondaryPress.RemoveListener(PlaceEmojiBall);
+        }
+    }
+
 
     // --- Placement / Interaction --- 
 
@@ -111,8 +136,10 @@ public class EmojiBall : XRBaseInteractable {
         }
     }
 
-    public void PlaceEmojiBall() {
+    private void PlaceEmojiBall() {
         if(_placementLocation) {
+            _interactionManager.CancelInteractorSelection(_interactor);
+            transform.parent = null;
             transform.position = _placementLocation.transform.position;
             _state = EmojiBallState.Placed;
         }

@@ -195,6 +195,7 @@ GameObject:
   - component: {fileID: 146757340}
   - component: {fileID: 146757339}
   - component: {fileID: 146757338}
+  - component: {fileID: 146757342}
   m_Layer: 0
   m_Name: LeftHand Controller
   m_TagString: Untagged
@@ -691,6 +692,18 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 7779212132400271959, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!114 &146757342
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 146757336}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79176779536fd69438e910ef72d6654b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &171983962
 GameObject:
   m_ObjectHideFlags: 0
@@ -894,12 +907,12 @@ MonoBehaviour:
       m_Name: Position
       m_Type: 0
       m_ExpectedControlType: Vector3
-      m_Id: 
+      m_Id: 9cfbdcb0-feea-4b5a-b4eb-ea1d8dd426d2
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings:
       - m_Name: 
-        m_Id: 
+        m_Id: d8a8113c-75ec-443d-a2f7-74cf6f112a29
         m_Path: <XRHMD>/centerEyePosition
         m_Interactions: 
         m_Processors: 
@@ -914,12 +927,12 @@ MonoBehaviour:
       m_Name: Rotation
       m_Type: 0
       m_ExpectedControlType: Quaternion
-      m_Id: 
+      m_Id: 5378337d-3ba6-4db8-ab1b-09912f8300b8
       m_Processors: 
       m_Interactions: 
       m_SingletonActionBindings:
       - m_Name: 
-        m_Id: 
+        m_Id: eb2a828b-e099-461b-b6ef-b10032d10a98
         m_Path: <XRHMD>/centerEyeRotation
         m_Interactions: 
         m_Processors: 
@@ -1358,6 +1371,7 @@ GameObject:
   - component: {fileID: 1294574852}
   - component: {fileID: 1294574851}
   - component: {fileID: 1294574850}
+  - component: {fileID: 1294574854}
   m_Layer: 0
   m_Name: RightHand Controller
   m_TagString: Untagged
@@ -1854,6 +1868,18 @@ MonoBehaviour:
       m_Flags: 0
     m_Reference: {fileID: 875253871413052681, guid: c348712bda248c246b8c49b3db54643f, type: 3}
   m_ButtonPressPoint: 0.5
+--- !u!114 &1294574854
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1294574848}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 79176779536fd69438e910ef72d6654b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &1649275471
 GameObject:
   m_ObjectHideFlags: 0
