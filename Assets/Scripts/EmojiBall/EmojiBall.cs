@@ -5,16 +5,26 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 [RequireComponent(typeof(EmojiGrab))]
 [RequireComponent(typeof(EmojiStretch))]
+[RequireComponent(typeof(EmojiTap))]
 
 public class EmojiBall : MonoBehaviour {
 
+    /*
+     * NOTE
+     * 
+     * - The Emoji Ball needs to have the SecondGrabPoint child object inactive in the inspector! This avoids
+     * XRBaseInteractable issues present between the _emojiGrab and _emojiStreth scripts
+     * 
+     * - The Emoji Ball also needs the EmojiStretch component disabled on start!
+     */
     private EmojiGrab _emojiGrab;
     private EmojiStretch _emojiStretch;
+    private EmojiTap _emojiTap;
 
     private void Awake() {
-        _emojiGrab = GetComponent<EmojiGrab>(); 
         _emojiStretch = GetComponent<EmojiStretch>();
-        _emojiStretch.enabled = false;
+        _emojiGrab = GetComponent<EmojiGrab>();
+        _emojiTap = GetComponent<EmojiTap>();
     }
 
     private void Start() {
@@ -23,6 +33,6 @@ public class EmojiBall : MonoBehaviour {
 
     private void OnEmojiPlaced() {
         _emojiGrab.enabled = false;
-        _emojiStretch.enabled = true;
+        _emojiTap.enabled = true;
     }
 }
