@@ -19,9 +19,10 @@ public class EmojiBall : XRBaseInteractable {
     private GameObject _secondGrabContact;
     private GameObject _primaryGrabContact;
     private GameObject _placementLocation;
-    
 
     private EmojiBallState _state;
+
+    private Vector3 _theoreticalScale;
     
 
     protected override void Awake() {
@@ -40,6 +41,7 @@ public class EmojiBall : XRBaseInteractable {
     private void OnSecondHandGrab(SelectEnterEventArgs args) {
         _secondGrabContact = args.interactorObject.transform.gameObject;
         _state = _state == EmojiBallState.Placed ? EmojiBallState.StretchingInPlace : EmojiBallState.Stretching;
+        _theoreticalScale = transform.localScale;
     }
 
     private void OnSecondHandRelease(SelectExitEventArgs args) {
@@ -51,7 +53,7 @@ public class EmojiBall : XRBaseInteractable {
             _state = EmojiBallState.Grabbed;
         }
         else {
-            _state = EmojiBallState.Released;
+            _state = EmojiBallState.Released;   
         }
     }
 
@@ -62,10 +64,13 @@ public class EmojiBall : XRBaseInteractable {
 
             Vector3 scaleDirection = secondGrabPosition - primaryGrabPosition;
             float amount = scaleDirection.magnitude;
+            amount = Mathf.Lerp(-0.1f, 0.1f, Mathf.InverseLerp(0, 2f, amount));
+            Debug.Log(amount);
 
-            transform.localScale = Vector3.one * amount;
+            transform.localScale += Vector3.one * amount;
         }
     }
+
 
     // --- Grabbing ---
     protected override void OnSelectEntered(SelectEnterEventArgs args) {
@@ -117,8 +122,6 @@ public class EmojiBall : XRBaseInteractable {
         GameObject detected = collision.gameObject;
         PlacementHint hint = collision.gameObject.GetComponent<PlacementHint>();
 
-        Debug.Log($"detected {detected.name}");
-
         if(hint) {
             if(_placementLocation) {
                 _placementLocation.GetComponent<PlacementHint>().HideHint();
@@ -148,5 +151,7 @@ public class EmojiBall : XRBaseInteractable {
             _state = EmojiBallState.Placed;
         }
     }
+
+
 
 }
