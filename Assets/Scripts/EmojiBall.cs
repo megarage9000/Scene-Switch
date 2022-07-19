@@ -57,6 +57,18 @@ public class EmojiBall : XRBaseInteractable {
         }
     }
 
+
+    /**
+     * TODO:
+     * 
+     * Try scaling by measuring distance between center point and second grab position.
+     * 
+     * distance = second grab - center point
+     * mag = distance.mag
+     * scale = mag / (localScale.mag / 2);
+     * 
+     * - Consider the fact that radius is about half the diameter, so we need to divide by 2
+     */
     private void FixedUpdate() {
         if (_primaryGrabContact && _secondGrabContact) {
             Vector3 primaryGrabPosition = _primaryGrabContact.transform.position;
