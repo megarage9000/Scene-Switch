@@ -14,6 +14,7 @@ public class EmojiBall : MonoBehaviour {
     private void Awake() {
         _emojiGrab = GetComponent<EmojiGrab>(); 
         _emojiStretch = GetComponent<EmojiStretch>();
+        _emojiStretch.enabled = false;
     }
 
     private void Start() {

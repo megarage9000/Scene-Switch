@@ -15,9 +15,6 @@ public class EmojiStretch : XRBaseInteractable
         base.Awake();
         _secondGrabPoint.selectEntered.AddListener(OnSecondHandGrab);
         _secondGrabPoint.selectExited.AddListener(OnSecondHandRelease);
-    }
-
-    private void Start() {
         _secondGrabPoint.gameObject.SetActive(false);
     }
 
