@@ -2,8 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class EmojiTap : MonoBehaviour
-{
+public class EmojiTap : MonoBehaviour {
     public List<GameObject> subWords;
 
     // Start is called before the first frame update
@@ -18,7 +17,7 @@ public class EmojiTap : MonoBehaviour
         float radius = 2f;
         Vector3 center = Vector3.zero;
 
-        for(int i = 0; i < num; i++) {
+        for (int i = 0; i < num; i++) {
 
             /* Distance around the circle */
             var radians = 2 * Mathf.PI / num * i;
@@ -28,7 +27,7 @@ public class EmojiTap : MonoBehaviour
             var horizontal = Mathf.Cos(radians);
 
             var spawnDir = new Vector3(0, horizontal, vertical);
-             
+
 
             /* Get the spawn position */
             var spawnPos = center + spawnDir * radius; // Radius is just the distance away from the point
@@ -43,6 +42,21 @@ public class EmojiTap : MonoBehaviour
 
             /* Adjust height */
             // subword.transform.Translate(new Vector3(0, subword.transform.localScale.y / 2, 0));
+
+            SubWordTap tapScript = subword.GetComponent<SubWordTap>();
+            if (tapScript) {
+                tapScript.OnTap += ChangeMaterial;
+            }
         }
+
+        
     }
+    private void ChangeMaterial(Material material) {
+        Debug.Log("Changing material!");
+        GetComponent<Renderer>().material = material;
+    }
+
+
 }
+
+   

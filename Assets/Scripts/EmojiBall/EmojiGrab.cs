@@ -51,7 +51,7 @@ public class EmojiGrab : XRBaseInteractable
         GameObject detected = collision.gameObject;
         PlacementHint hint = collision.gameObject.GetComponent<PlacementHint>();
 
-        if (hint) {
+        if (detected && hint) {
             if (_placementLocation) {
                 _placementLocation.GetComponent<PlacementHint>().HideHint();
 
@@ -66,7 +66,7 @@ public class EmojiGrab : XRBaseInteractable
         GameObject leaving = collision.gameObject;
         PlacementHint hint = collision.gameObject.GetComponent<PlacementHint>();
 
-        if (leaving) {
+        if (leaving && hint) {
             _placementLocation = null;
             hint.HideHint();
         }
