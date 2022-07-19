@@ -23,6 +23,8 @@ public class EmojiBall : XRBaseInteractable {
     private EmojiBallState _state;
 
     private Vector3 _theoreticalScale;
+    private float _previousDistance = 0f;
+    private float _scaleValue = 1f;
     
 
     protected override void Awake() {
@@ -41,12 +43,12 @@ public class EmojiBall : XRBaseInteractable {
     private void OnSecondHandGrab(SelectEnterEventArgs args) {
         _secondGrabContact = args.interactorObject.transform.gameObject;
         _state = EmojiBallState.Stretching;
-        _theoreticalScale = transform.localScale;
     }
 
     private void OnSecondHandRelease(SelectExitEventArgs args) {
         _secondGrabContact = null;
         _state = EmojiBallState.Placed;
+        _previousDistance = 0f;
     }
 
 
@@ -62,16 +64,16 @@ public class EmojiBall : XRBaseInteractable {
      * - Consider the fact that radius is about half the diameter, so we need to divide by 2
      */
     private void FixedUpdate() {
-        if (_primaryGrabContact && _secondGrabContact) {
+        if (_primaryGrabContact && _secondGrabContact && !_primaryGrabContact.Equals(_secondGrabContact)) {
+            Debug.Log($"Primary = {_primaryGrabContact.name}, Secondary = {_secondGrabContact.name}");
             Vector3 primaryGrabPosition = _primaryGrabContact.transform.position;
             Vector3 secondGrabPosition = _secondGrabContact.transform.position;
+            Vector3 distanceVec3 = secondGrabPosition - primaryGrabPosition;
+            float distance = distanceVec3.magnitude;
 
-            Vector3 scaleDirection = secondGrabPosition - primaryGrabPosition;
-            float amount = scaleDirection.magnitude;
-            amount = Mathf.Lerp(-0.1f, 0.1f, Mathf.InverseLerp(0, 2f, amount));
-            Debug.Log(amount);
-
-            transform.localScale += Vector3.one * amount;
+            // Vector3 newScale = Vector3.Lerp(transform.localScale, Vector3.one * distance, 0.25f);
+            transform.localScale = Vector3.one * distance;
+            //Debug.Log(transform.localScale);
         }
     }
 
@@ -92,6 +94,7 @@ public class EmojiBall : XRBaseInteractable {
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args) {
+        Debug.Log("CAlling on exit");
         base.OnSelectExited(args);
         if(_state == EmojiBallState.Grabbed) {
             transform.parent = null;
@@ -150,10 +153,16 @@ public class EmojiBall : XRBaseInteractable {
 
     private void PlaceEmojiBall() {
         if(_placementLocation) {
+            Debug.Log("Cancelling interaction");
             _interactionManager.CancelInteractorSelection(_interactor);
+            Debug.Log("Cancelled interaction!");
             transform.parent = null;
             transform.position = _placementLocation.transform.position;
             _state = EmojiBallState.Placed;
+            PlacementHint hint = _placementLocation.GetComponent<PlacementHint>();
+            if(hint) {
+                hint.HideHint();
+            }
         }
     }
 }
