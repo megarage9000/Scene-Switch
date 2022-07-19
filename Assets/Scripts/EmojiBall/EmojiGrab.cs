@@ -77,10 +77,9 @@ public class EmojiGrab : XRBaseInteractable
             _interactionManager.CancelInteractorSelection(_interactor);
             transform.parent = null;
             transform.position = _placementLocation.transform.position;
-            PlacementHint hint = _placementLocation.GetComponent<PlacementHint>();
-            if (hint) {
-                hint.HideHint();
-            }
+            transform.rotation = _placementLocation.transform.rotation;
+
+            Destroy(_placementLocation);
             OnPlaced.Invoke();
         }
     }
