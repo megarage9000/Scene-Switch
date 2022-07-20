@@ -55,6 +55,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: Angry Variant
       objectReference: {fileID: 0}
+    - target: {fileID: 2963213436690231309, guid: b229fe4a012119645bce81c436ef408d, type: 3}
+      propertyPath: m_TagString
+      value: AngryEmoji
+      objectReference: {fileID: 0}
     - target: {fileID: 2963213436690231318, guid: b229fe4a012119645bce81c436ef408d, type: 3}
       propertyPath: emojiMaterial
       value: 

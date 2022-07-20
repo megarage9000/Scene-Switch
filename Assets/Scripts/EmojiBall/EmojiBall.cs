@@ -33,7 +33,6 @@ public class EmojiBall : MonoBehaviour {
     public UnityAction<GameObject> OnGrabbed;
     public UnityAction<GameObject> OnReleased;
 
-
     private void Awake() {
         _emojiGrab = GetComponent<EmojiGrab>();
         _emojiTap = GetComponent<EmojiTap>();

@@ -39,5 +39,13 @@ public class EmojiBallManager : MonoBehaviour
         _instantiatedEmojiBallPrefabs.Clear();
     }
 
+
+    private void OnEmojiBallPlaced(GameObject emojiBall) {
+        _placedEmojiBalls.Add(emojiBall);
+    }
+
+    private void OnEmojiBallGrabbed(GameObject emojiBall) {
+        _placedEmojiBalls.Remove(emojiBall);
+    }
     
 }
