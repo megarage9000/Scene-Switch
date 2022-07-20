@@ -8,6 +8,7 @@ public class EmojiBallManager : MonoBehaviour
     [SerializeField]
     public List<GameObject> EmojiBallPrefabs;
     private List<GameObject> _instantiatedEmojiBallPrefabs;
+    private List<GameObject> _placedEmojiBalls;
     private Transform[] _transforms;
    
     private void Awake() {

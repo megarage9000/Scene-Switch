@@ -6,17 +6,10 @@ using UnityEngine.Events;
 
 [RequireComponent(typeof(EmojiGrab))]
 [RequireComponent(typeof(EmojiStretch))]
+[RequireComponent(typeof(EmojiSubwordTap))]
 [RequireComponent(typeof(EmojiTap))]
 
 public class EmojiBall : MonoBehaviour {
-
-    internal enum EmojiBallState {
-        None,
-        Placed,
-        Tapped,
-        Changed,
-        Scaled
-    }
 
     public Material emojiMaterial;
     public List<Material> subWordMaterials;
@@ -31,63 +24,86 @@ public class EmojiBall : MonoBehaviour {
     private EmojiGrab _emojiGrab;
     private EmojiStretch _emojiStretch;
     private EmojiTap _emojiTap;
-    private EmojiBallState _state;
+    private EmojiSubwordTap _emojiSubwordTap;
 
     // UnityEvents to "bubble up" to manager 
     public UnityAction<GameObject> OnPlaced;
-    public UnityAction<GameObject> OnPretap;
-    public UnityAction<GameObject> OnTapped;
+    public UnityAction<GameObject> OnSubwordTapped;
     public UnityAction<GameObject> OnScaled;
+    public UnityAction<GameObject> OnGrabbed;
+    public UnityAction<GameObject> OnReleased;
+
 
     private void Awake() {
-        _state = EmojiBallState.None;
-        _emojiStretch = GetComponent<EmojiStretch>();
         _emojiGrab = GetComponent<EmojiGrab>();
         _emojiTap = GetComponent<EmojiTap>();
+        _emojiSubwordTap = GetComponent<EmojiSubwordTap>();
+        _emojiStretch = GetComponent<EmojiStretch>();
         GetComponent<Renderer>().material = emojiMaterial;
 
+        _emojiGrab.OnGrabbed.AddListener(OnEmojiGrabbed);
+        _emojiGrab.OnReleased.AddListener(OnEmojiReleased);
         _emojiGrab.OnPlaced.AddListener(OnEmojiPlaced);
-        _emojiTap.OnTap.AddListener(OnEmojiTapped);
+        _emojiTap.OnTap.AddListener(OnEmojiTap);
+        _emojiSubwordTap.OnSubwordTap.AddListener(OnEmojiSubwordTapped);
         _emojiStretch.OnRescaled.AddListener(OnEmojiScaled);
 
+        OnGrabbed += EmojiGrabbed;
+        OnReleased += EmojiReleased;
         OnPlaced += EmojiPlaced;
-        OnTapped += EmojiTapped;
+        OnSubwordTapped += EmojiSubwordTapped;
         OnScaled += EmojiScaled;
 
         EnableGrab();
     }
 
     // Dummy events for our emoji UnityAction events
+    private void EmojiGrabbed(GameObject gameObject) {
+        Debug.Log($"Emoji {gameObject.name} has been grabbed.");
+    }
+    private void EmojiReleased(GameObject gameObject) {
+        Debug.Log($"Emoji {gameObject.name} has been released.");
+    }
     private void EmojiPlaced(GameObject gameObject) {
         Debug.Log($"Emoji {gameObject.name} has been placed.");
     }
-    private void EmojiTapped(GameObject gameObject) {
+    private void EmojiSubwordTapped(GameObject gameObject) {
         Debug.Log($"Emoji {gameObject.name} has material changed.");
     }
     private void EmojiScaled(GameObject gameObject) {
         Debug.Log($"Emoji {gameObject.name} has been scaled.");
     }
 
-
     // Functions to "bubble up" to the manager
-    private void OnEmojiPlaced() {
-        _state = EmojiBallState.Placed;
-        OnPlaced.Invoke(gameObject);
-        // Demo purposes
-        DisableGrab();
+    private void OnEmojiGrabbed() {
+        OnGrabbed.Invoke(gameObject);
     }
 
-    private void OnEmojiTapped() {
-        _state = EmojiBallState.Changed;
-        OnTapped.Invoke(gameObject);   
-        // Demo purposes
-        DisableTap();
+    private void OnEmojiReleased() {
+        OnReleased.Invoke(gameObject);
+    }
+
+    private void OnEmojiPlaced() {
+        OnPlaced.Invoke(gameObject);
+
+        DisableGrab();
+        EnableEmojiTap();
+    }
+
+    private void OnEmojiSubwordTapped() {
+        OnSubwordTapped.Invoke(gameObject);
+
+        DisableSubwordTap();
         EnableScale();
     }
 
     private void OnEmojiScaled() {
-        _state = EmojiBallState.Scaled;
         OnScaled.Invoke(gameObject);
+    }
+
+    // Emoji Tap does not need to be bubbled up to the manager
+    private void OnEmojiTap() {
+        EnableSubwordTap();
     }
 
     // Enablers for the components 
@@ -99,14 +115,22 @@ public class EmojiBall : MonoBehaviour {
         _emojiGrab.enabled = false;
     }
 
-    public void EnableTap() {
+    public void EnableEmojiTap() {
         _emojiTap.enabled = true;
-        _emojiTap.SpawnSubWords(subWordMaterials);
     }
 
-    public void DisableTap() {
-        _emojiTap.RemoveSubWords();
+    public void DisableEmojiTap() {
         _emojiTap.enabled = false;
+    }
+
+    public void EnableSubwordTap() {
+        _emojiSubwordTap.enabled = true;
+        _emojiSubwordTap.SpawnSubWords(subWordMaterials);
+    }
+
+    public void DisableSubwordTap() {
+        _emojiSubwordTap.RemoveSubWords();
+        _emojiSubwordTap.enabled = false;
     }
 
     public void EnableScale() {
@@ -115,14 +139,5 @@ public class EmojiBall : MonoBehaviour {
 
     public void DisableScale() {
         _emojiStretch.enabled = false;
-    }
-
-    // Tapping the EmojiBall
-    private void OnTriggerEnter(Collider other) {
-        if(_state == EmojiBallState.Placed) {
-            _state = EmojiBallState.Tapped;
-            Debug.Log($"Detected {other.gameObject.name}");
-            EnableTap();
-        }
     }
 }

@@ -9,24 +9,32 @@ public class EmojiGrab : XRGrabInteractable
     private IXRSelectInteractor _interactor;
     private XRInteractionManager _interactionManager;
     private GameObject _placementLocation;
+    private Rigidbody _rigidBody;
 
     public UnityEvent OnPlaced;
+    public UnityEvent OnGrabbed;
+    public UnityEvent OnReleased;
 
     protected override void Awake() {
         base.Awake();
         _interactionManager = FindObjectOfType<XRInteractionManager>();
+        _rigidBody = GetComponent<Rigidbody>();
         OnPlaced = new UnityEvent();
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args) {
         base.OnSelectEntered(args);
         AddGrabEvent(args.interactorObject.transform.gameObject);
         _interactor = args.interactorObject;
+        _rigidBody.constraints = RigidbodyConstraints.None;
+        OnGrabbed.Invoke();
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args) {
         base.OnSelectExited(args);
         RemoveGrabEvent(args.interactorObject.transform.gameObject);
         _interactor = null;
+        _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        OnReleased.Invoke();
     }
 
     private void AddGrabEvent(GameObject controller) {
@@ -76,7 +84,7 @@ public class EmojiGrab : XRGrabInteractable
             transform.parent = null;
             transform.position = _placementLocation.transform.position;
             transform.rotation = _placementLocation.transform.rotation;
-
+            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
             Destroy(_placementLocation);
             OnPlaced.Invoke();
         }

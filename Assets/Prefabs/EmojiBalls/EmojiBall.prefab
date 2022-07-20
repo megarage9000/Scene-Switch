@@ -14,9 +14,10 @@ GameObject:
   - component: {fileID: 2963213436690231306}
   - component: {fileID: 2963213436690231317}
   - component: {fileID: 2963213436690231316}
-  - component: {fileID: 2963213436690231319}
   - component: {fileID: 2963213436690231318}
   - component: {fileID: 933949073179564878}
+  - component: {fileID: 4916465381614457439}
+  - component: {fileID: 6309114324329429523}
   m_Layer: 0
   m_Name: EmojiBall
   m_TagString: Untagged
@@ -221,6 +222,12 @@ MonoBehaviour:
   OnPlaced:
     m_PersistentCalls:
       m_Calls: []
+  OnGrabbed:
+    m_PersistentCalls:
+      m_Calls: []
+  OnReleased:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!114 &2963213436690231316
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -303,22 +310,6 @@ MonoBehaviour:
   OnRescaled:
     m_PersistentCalls:
       m_Calls: []
---- !u!114 &2963213436690231319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2963213436690231309}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e00c53018fefd21449042ef429d9c3bd, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  subwordPrefab: {fileID: 6423807498523682016, guid: 75990d4b66ac00a46abcfc5567ae4f57, type: 3}
-  OnTap:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!114 &2963213436690231318
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -349,6 +340,37 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 0
+--- !u!114 &4916465381614457439
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2963213436690231309}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e00c53018fefd21449042ef429d9c3bd, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  subwordPrefab: {fileID: 6423807498523682016, guid: 75990d4b66ac00a46abcfc5567ae4f57, type: 3}
+  OnSubwordTap:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &6309114324329429523
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2963213436690231309}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef61a472bfbb6bd4bb816a2c2def98b9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  OnTap:
+    m_PersistentCalls:
+      m_Calls: []
 --- !u!1 &4052911264582532308
 GameObject:
   m_ObjectHideFlags: 0
