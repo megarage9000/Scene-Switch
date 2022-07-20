@@ -105,7 +105,6 @@ public class EmojiBallManager : MonoBehaviour
 
             // Remove duplicate that spawned
             RemoveEmojiBallSpawn(emojiBall.tag);
-
             _instantiatedEmojiBallPrefabs[emojiBall.tag] = emojiBall;
         }
 
