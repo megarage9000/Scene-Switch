@@ -9,6 +9,9 @@ using UnityEngine.XR.Interaction.Toolkit;
 
 public class EmojiBall : MonoBehaviour {
 
+    public Material emojiMaterial;
+    public List<Material> subWordMaterials;
+
     /*
      * NOTE
      * 
@@ -21,10 +24,12 @@ public class EmojiBall : MonoBehaviour {
     private EmojiStretch _emojiStretch;
     private EmojiTap _emojiTap;
 
+
     private void Awake() {
         _emojiStretch = GetComponent<EmojiStretch>();
         _emojiGrab = GetComponent<EmojiGrab>();
         _emojiTap = GetComponent<EmojiTap>();
+        GetComponent<Renderer>().material = emojiMaterial;
     }
 
     private void Start() {
@@ -34,5 +39,9 @@ public class EmojiBall : MonoBehaviour {
     private void OnEmojiPlaced() {
         _emojiGrab.enabled = false;
         _emojiTap.enabled = true;
+    }
+
+    private void SpawnSubWords() {
+        _emojiTap.SpawnSubWords(subWordMaterials);
     }
 }

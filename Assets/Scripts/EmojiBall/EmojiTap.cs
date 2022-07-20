@@ -3,16 +3,12 @@ using System.Collections.Generic;
 using UnityEngine;
 
 public class EmojiTap : MonoBehaviour {
-    public List<GameObject> subWords;
 
-    // Start is called before the first frame update
-    void Start() {
-        SpawnSubWords();
-    }
+    public GameObject subwordPrefab;
 
     // Thanks to
     // https://answers.unity.com/questions/1661755/how-to-instantiate-objects-in-a-circle-formation-a.html
-    private void SpawnSubWords() {
+    public void SpawnSubWords(List<Material> subWords) {
         int num = subWords.Count;
         float radius = 2f;
         Vector3 center = Vector3.zero;
@@ -33,9 +29,10 @@ public class EmojiTap : MonoBehaviour {
             var spawnPos = center + spawnDir * radius; // Radius is just the distance away from the point
 
             /* Now spawn */
-            var subword = Instantiate(subWords[i], Vector3.zero, Quaternion.identity) as GameObject;
+            var subword = Instantiate(subwordPrefab, Vector3.zero, Quaternion.identity) as GameObject;
             subword.transform.parent = gameObject.transform;
             subword.transform.localPosition = spawnPos;
+            subword.GetComponent<Renderer>().material = subWords[i];
 
             /* Rotate the enemy to face towards player */
             subword.transform.rotation = Quaternion.LookRotation(Vector3.left);
@@ -52,11 +49,8 @@ public class EmojiTap : MonoBehaviour {
         
     }
     private void ChangeMaterial(Material material) {
-        Debug.Log("Changing material!");
         GetComponent<Renderer>().material = material;
     }
-
-
 }
 
    
