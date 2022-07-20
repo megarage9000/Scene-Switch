@@ -2,11 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using UnityEngine.Events;
 
 public class EmojiStretch : XRBaseInteractable
 {
 
     public XRSimpleInteractable _secondGrabPoint;
+    public UnityEvent OnRescaled;
 
     private GameObject _secondGrabContact;
     private GameObject _primaryGrabContact;
@@ -25,6 +27,7 @@ public class EmojiStretch : XRBaseInteractable
 
     private void OnSecondHandRelease(SelectExitEventArgs args) {
         _secondGrabContact = null;
+        OnRescaled.Invoke();
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args) {

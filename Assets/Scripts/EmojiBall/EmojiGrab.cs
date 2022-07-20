@@ -4,7 +4,7 @@ using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.Events;
 
-public class EmojiGrab : XRBaseInteractable
+public class EmojiGrab : XRGrabInteractable
 {
     private IXRSelectInteractor _interactor;
     private XRInteractionManager _interactionManager;
@@ -19,14 +19,12 @@ public class EmojiGrab : XRBaseInteractable
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args) {
         base.OnSelectEntered(args);
-        transform.parent = args.interactorObject.transform;
         AddGrabEvent(args.interactorObject.transform.gameObject);
         _interactor = args.interactorObject;
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args) {
         base.OnSelectExited(args);
-        transform.parent = null;
         RemoveGrabEvent(args.interactorObject.transform.gameObject);
         _interactor = null;
     }

@@ -1,10 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class EmojiTap : MonoBehaviour {
 
     public GameObject subwordPrefab;
+    public UnityEvent OnTap;
+
+    private List<GameObject> _subwordObjects;
+
+    private void Awake() {
+        _subwordObjects = new List<GameObject>();
+    }
 
     // Thanks to
     // https://answers.unity.com/questions/1661755/how-to-instantiate-objects-in-a-circle-formation-a.html
@@ -44,12 +52,21 @@ public class EmojiTap : MonoBehaviour {
             if (tapScript) {
                 tapScript.OnTap += ChangeMaterial;
             }
-        }
 
-        
+            _subwordObjects.Add(subword);
+        }   
+    }
+
+    public void RemoveSubWords() {
+        foreach(GameObject word in _subwordObjects) {
+            GameObject temp = word;
+            Destroy(word);
+            temp = null;
+        }
     }
     private void ChangeMaterial(Material material) {
         GetComponent<Renderer>().material = material;
+        OnTap.Invoke();
     }
 }
 
