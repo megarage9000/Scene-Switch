@@ -85,7 +85,9 @@ public class EmojiGrab : XRGrabInteractable
             transform.position = _placementLocation.transform.position;
             transform.rotation = _placementLocation.transform.rotation;
             _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
-            Destroy(_placementLocation);
+
+            _placementLocation = null;
+            // Destroy(_placementLocation);
             OnPlaced.Invoke();
         }
     }
