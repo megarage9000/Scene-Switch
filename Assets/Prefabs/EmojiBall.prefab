@@ -333,15 +333,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   emojiMaterial: {fileID: 0}
   subWordMaterials: []
-  OnPlaced:
-    m_PersistentCalls:
-      m_Calls: []
-  OnTapped:
-    m_PersistentCalls:
-      m_Calls: []
-  OnScaled:
-    m_PersistentCalls:
-      m_Calls: []
 --- !u!54 &933949073179564878
 Rigidbody:
   m_ObjectHideFlags: 0

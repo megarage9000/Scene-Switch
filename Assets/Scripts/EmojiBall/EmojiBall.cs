@@ -25,9 +25,9 @@ public class EmojiBall : MonoBehaviour {
     private EmojiTap _emojiTap;
 
     // UnityEvents to "bubble up" to manager 
-    public UnityEvent OnPlaced;
-    public UnityEvent OnTapped;
-    public UnityEvent OnScaled;
+    public UnityAction<GameObject> OnPlaced;
+    public UnityAction<GameObject> OnTapped;
+    public UnityAction<GameObject> OnScaled;
 
     private void Awake() {
         _emojiStretch = GetComponent<EmojiStretch>();
@@ -39,26 +39,44 @@ public class EmojiBall : MonoBehaviour {
         _emojiTap.OnTap.AddListener(OnEmojiTapped);
         _emojiStretch.OnRescaled.AddListener(OnEmojiScaled);
 
+        OnPlaced += EmojiPlaced;
+        OnTapped += EmojiTapped;
+        OnScaled += EmojiScaled;
+
         EnableGrab();
+    }
+
+    // Dummy events for our emoji UnityAction events
+    private void EmojiPlaced(GameObject gameObject) {
+        Debug.Log($"Emoji {gameObject.name} has been placed.");
+    }
+    private void EmojiTapped(GameObject gameObject) {
+        Debug.Log($"Emoji {gameObject.name} has material changed.");
+    }
+    private void EmojiScaled(GameObject gameObject) {
+        Debug.Log($"Emoji {gameObject.name} has been scaled.");
     }
 
 
     // Functions to "bubble up" to the manager
     private void OnEmojiPlaced() {
-        OnPlaced.Invoke();
+        OnPlaced.Invoke(gameObject);
+        // Demo purposes
         DisableGrab();
         EnableTap();
+    
     }
 
-    private void OnEmojiTapped() {
-        OnTapped.Invoke();
+    private void OnEmojiTapped() {     
+        OnTapped.Invoke(gameObject);   
+        // Demo purposes
         DisableTap();
         EnableScale();
     }
-    
+
 
     private void OnEmojiScaled() {
-        OnScaled.Invoke();
+        OnScaled.Invoke(gameObject);
     }
 
     // Enablers for the components 

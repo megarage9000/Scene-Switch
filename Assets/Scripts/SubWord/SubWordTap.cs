@@ -6,8 +6,9 @@ public class SubWordTap : MonoBehaviour {
 
     public UnityAction<Material> OnTap;
 
+    // TODO
+    // Do proper detection of hands
     private void OnTriggerEnter(Collider other) {
-        Debug.Log("subword detected someting");
         Material material = GetComponent<Renderer>().material;
         OnTap.Invoke(material);
     }
