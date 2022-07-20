@@ -10,6 +10,14 @@ using UnityEngine.Events;
 
 public class EmojiBall : MonoBehaviour {
 
+    internal enum EmojiBallState {
+        None,
+        Placed,
+        Tapped,
+        Changed,
+        Scaled
+    }
+
     public Material emojiMaterial;
     public List<Material> subWordMaterials;
     /*
@@ -23,13 +31,16 @@ public class EmojiBall : MonoBehaviour {
     private EmojiGrab _emojiGrab;
     private EmojiStretch _emojiStretch;
     private EmojiTap _emojiTap;
+    private EmojiBallState _state;
 
     // UnityEvents to "bubble up" to manager 
     public UnityAction<GameObject> OnPlaced;
+    public UnityAction<GameObject> OnPretap;
     public UnityAction<GameObject> OnTapped;
     public UnityAction<GameObject> OnScaled;
 
     private void Awake() {
+        _state = EmojiBallState.None;
         _emojiStretch = GetComponent<EmojiStretch>();
         _emojiGrab = GetComponent<EmojiGrab>();
         _emojiTap = GetComponent<EmojiTap>();
@@ -60,14 +71,14 @@ public class EmojiBall : MonoBehaviour {
 
     // Functions to "bubble up" to the manager
     private void OnEmojiPlaced() {
+        _state = EmojiBallState.Placed;
         OnPlaced.Invoke(gameObject);
         // Demo purposes
         DisableGrab();
-        EnableTap();
-    
     }
 
-    private void OnEmojiTapped() {     
+    private void OnEmojiTapped() {
+        _state = EmojiBallState.Changed;
         OnTapped.Invoke(gameObject);   
         // Demo purposes
         DisableTap();
@@ -75,6 +86,7 @@ public class EmojiBall : MonoBehaviour {
     }
 
     private void OnEmojiScaled() {
+        _state = EmojiBallState.Scaled;
         OnScaled.Invoke(gameObject);
     }
 
@@ -103,5 +115,14 @@ public class EmojiBall : MonoBehaviour {
 
     public void DisableScale() {
         _emojiStretch.enabled = false;
+    }
+
+    // Tapping the EmojiBall
+    private void OnTriggerEnter(Collider other) {
+        if(_state == EmojiBallState.Placed) {
+            _state = EmojiBallState.Tapped;
+            Debug.Log($"Detected {other.gameObject.name}");
+            EnableTap();
+        }
     }
 }
