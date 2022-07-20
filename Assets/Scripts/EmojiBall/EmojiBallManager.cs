@@ -4,18 +4,39 @@ using UnityEngine;
 
 public class EmojiBallManager : MonoBehaviour
 {
-    [Header("Material assignment for emoji balls")]
+    [Header("List of Emoji Balls to instantiate")]
     [SerializeField]
-    public List<Material> EmojiMaterials;
-    [SerializeField]
-    public List<List<Material>> SubwordMaterials;
-
-    // Start is called before the first frame update
-    void Start() {
-        GenerateSubWords();
+    public List<GameObject> EmojiBallPrefabs;
+    private List<GameObject> _instantiatedEmojiBallPrefabs;
+    private Transform[] _transforms;
+   
+    private void Awake() {
+        _instantiatedEmojiBallPrefabs = new List<GameObject>();
+        _transforms = GetComponentsInChildren<Transform>();
     }
 
-    public void GenerateSubWords() {
-
+    private void Start() {
+        GenerateEmojiBalls();
     }
+
+    private void GenerateEmojiBalls() {
+        int numPositions = _transforms.Length;
+        for(int i = 0; i < numPositions - 1; i++) {
+            Debug.Log(i);
+            Transform transform = _transforms[i];
+            GameObject emojiBall = Instantiate(EmojiBallPrefabs[i], transform);
+            _instantiatedEmojiBallPrefabs.Add(emojiBall);
+        }
+    }
+
+    private void ClearEmojiBalls() {
+        foreach(GameObject emojiBall in _instantiatedEmojiBallPrefabs) {
+            GameObject temp = emojiBall;
+            Destroy(emojiBall);
+            temp = null;
+        }
+        _instantiatedEmojiBallPrefabs.Clear();
+    }
+
+    
 }

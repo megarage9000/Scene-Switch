@@ -74,7 +74,6 @@ public class EmojiBall : MonoBehaviour {
         EnableScale();
     }
 
-
     private void OnEmojiScaled() {
         OnScaled.Invoke(gameObject);
     }

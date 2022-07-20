@@ -20,7 +20,6 @@ public class ControllerAdditions : MonoBehaviour
         StartCoroutine(FindController());
     }
 
-
     IEnumerator FindController() {
         var controllerCharacteristics = InputDeviceCharacteristics.Controller;
         string name = gameObject.name;
