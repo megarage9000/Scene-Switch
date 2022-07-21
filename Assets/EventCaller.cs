@@ -10,6 +10,8 @@ public class EventCaller : MonoBehaviour
     public UnityEvent OnContact;
 
     private PhotonView _photonView;
+    private bool _canDestroy = false;
+
     private void Awake() {
         _photonView = GetComponent<PhotonView>();
     }
@@ -36,8 +38,22 @@ public class EventCaller : MonoBehaviour
     [PunRPC]
     private void CallEvent() {
         OnContact.Invoke();
-        Destroy(gameObject); 
-        PhotonNetwork.Destroy(_photonView);
+        _photonView.RequestOwnership();
+        if(PhotonNetwork.IsMasterClient) {
+            if(_photonView.IsMine) {
+                PhotonNetwork.Destroy(gameObject.GetPhotonView());
+            }
+            else {
+                gameObject.GetPhotonView().TransferOwnership(PhotonNetwork.MasterClient);
+                _canDestroy = true;
+            }
+        }
+    }
+
+    private void Update() {
+        if(_photonView.IsMine && _canDestroy && PhotonNetwork.IsMasterClient) {
+            PhotonNetwork.Destroy(gameObject.GetPhotonView());
+        }
     }
 
 }

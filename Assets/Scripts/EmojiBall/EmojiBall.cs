@@ -158,23 +158,16 @@ public class EmojiBall : MonoBehaviour {
 
         _photonView.RequestOwnership();
         if (PhotonNetwork.IsMasterClient) {
-            if (_photonView.IsMine) {
-                Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} is under ownership of master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
+            if(_photonView.IsMine) {
+                Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} has executed PhotonNetwork.Destroy() on master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
+                PhotonNetwork.Destroy(gameObject.GetPhotonView());
+                Debug.Log("Successfuly destroyed object!");
             }
             else {
                 Debug.Log($"{gameObject.name} with {gameObject.GetPhotonView().ViewID} and owner actor number {gameObject.GetPhotonView().Owner.ActorNumber} transfering ownership to master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
                 gameObject.GetPhotonView().TransferOwnership(PhotonNetwork.MasterClient);
                 canDestroy = true;
                 Debug.Log($"{gameObject.name} with {gameObject.GetPhotonView().ViewID} and owner actor number {gameObject.GetPhotonView().Owner.ActorNumber} transferred ownership to master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
-            }
-            if (_photonView.IsOwnerActive) {
-                Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} has master client active that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
-            }
-
-            if(_photonView.IsMine) {
-                Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} has executed PhotonNetwork.Destroy() on master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
-                PhotonNetwork.Destroy(gameObject.GetPhotonView());
-                Debug.Log("Successfuly destroyed object!");
             }
         }
         else {

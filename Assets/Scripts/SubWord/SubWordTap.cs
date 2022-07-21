@@ -38,8 +38,15 @@ public class SubWordTap : MonoBehaviour {
     private void DestroyThis() {
         Debug.Log("Calling Destroy This! SubwordTap");
         _photonView.RequestOwnership();
-        gameObject.GetPhotonView().TransferOwnership(PhotonNetwork.MasterClient);
-        _canDestroy = true;
+        if(PhotonNetwork.IsMasterClient) {
+            if (_photonView.IsMine) {
+                PhotonNetwork.Destroy(gameObject.GetPhotonView());
+            }
+            else {
+                gameObject.GetPhotonView().TransferOwnership(PhotonNetwork.MasterClient);
+                _canDestroy = true;
+            }
+        }
     }
 
     private void Update() {
