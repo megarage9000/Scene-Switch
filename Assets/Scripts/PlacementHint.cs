@@ -14,12 +14,10 @@ public class PlacementHint : MonoBehaviour
     }
 
     public void ShowHint() {
-        Debug.Log("Showing Hint");
         outline.enabled = true;
     }
 
     public void HideHint() {
-        Debug.Log("Hiding Hint");
         outline.enabled = false;
     }
 

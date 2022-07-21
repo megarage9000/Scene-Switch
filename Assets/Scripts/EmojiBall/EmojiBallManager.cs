@@ -25,12 +25,15 @@ public class EmojiBallManager : MonoBehaviour
         _transforms = GetComponentsInChildren<Transform>();
     }
 
-    private void Start() {
-        GenerateEmojiBalls();
-    }
-
     // Will be called once
-    private void GenerateEmojiBalls() {
+    public void GenerateEmojiBalls() {
+
+        if(PhotonNetwork.IsMasterClient == false) {
+            Debug.Log("Balls have been generated already! Exiting function...");
+            return;
+        }
+        Debug.Log("Generating Emoji Balls...");
+
         int numPositions = _transforms.Length;
 
         // For some reason, numPositions also includes the parent
@@ -48,6 +51,8 @@ public class EmojiBallManager : MonoBehaviour
 
             HookupEmojiBallEvents(emojiBall);
         }
+
+        
     }
 
     // Hooks all necessary listeners on the manager onto the emoji balls
