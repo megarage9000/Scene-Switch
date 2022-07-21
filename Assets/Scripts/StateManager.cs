@@ -40,13 +40,11 @@ public class StateManager : MonoBehaviour
         
         Debug.Log("STATE: "  + currState); // STATE: Intro
         audioSource.clip = audioClips[0];
-        audioSource.Play();
+        // audioSource.Play();
     }
 
     void Update(){
         timer += Time.deltaTime;
-        
-        Debug.Log(HandPresence.bPressed);
 
         if(currState == State.Intro && !audioSource.isPlaying){
             currState = State.Mannequin;
@@ -78,45 +76,150 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > 54f){
+            if(timer > 24f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                     tmpText.text = "Click (B) to move to next body part";
 
-                // if B clicked
-                    // currState = State.Face;
-                    // turn prompt off
-                    // if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                        //tmpText.text = "";
-                    // playOneShot = true;
-                    // timer = 0f;
+                if(HandPresence.bPressed){
+                    currState = State.Face;
+                    if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        tmpText.text = "";
+                    playOneShot = true;
+                    timer = 0f;
+                }
+            }
+        }
+        else if(currState == State.Face && timer > 3f){
+            if(playOneShot){
+                Debug.Log("STATE: "  + currState); // STATE: Face
+                audioSource.clip = audioClips[3];
+                audioSource.Play();
+                playOneShot = false;
+            }
+
+            if(timer > 32f){
+                if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    tmpText.text = "Click (B) to move to next body part";
+
+                if(HandPresence.bPressed){
+                    currState = State.Shoulders;
+                    if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        tmpText.text = "";
+                    playOneShot = true;
+                    timer = 0f;
+                }
             }
         }
 
 
-        else if(currState == State.Face && timer > 3f){
-            Debug.Log("STATE: "  + currState); // STATE: Face
-            prevState = currState;
-        }
         else if(currState == State.Shoulders){
-            Debug.Log("STATE: "  + currState); // STATE: Shoulders
-            prevState = currState;
+            if(playOneShot){
+                Debug.Log("STATE: "  + currState); // STATE: Shoulders
+                audioSource.clip = audioClips[4];
+                audioSource.Play();
+                playOneShot = false;
+            }
+
+            if(timer > 15f){
+                if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    tmpText.text = "Click (B) to move to next body part";
+
+                if(HandPresence.bPressed){
+                    currState = State.Arms;
+                    if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        tmpText.text = "";
+                    playOneShot = true;
+                    timer = 0f;
+                }
+            }
         }
         else if(currState == State.Arms){
-            Debug.Log("STATE: "  + currState); // STATE: Arms
-            prevState = currState;
+            if(playOneShot){
+                Debug.Log("STATE: "  + currState); // STATE: Arms
+                audioSource.clip = audioClips[5];
+                audioSource.Play();
+                playOneShot = false;
+            }
+
+            if(timer > 2f){
+                if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    tmpText.text = "Click (B) to move to next body part";
+
+                if(HandPresence.bPressed){
+                    currState = State.Chest;
+                    if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        tmpText.text = "";
+                    playOneShot = true;
+                    timer = 0f;
+                }
+            }
         }
         else if(currState == State.Chest){
-            Debug.Log("STATE: "  + currState); // STATE: Chest
-            prevState = currState;
+            if(playOneShot){
+                Debug.Log("STATE: "  + currState); // STATE: Chest
+                audioSource.clip = audioClips[6];
+                audioSource.Play();
+                playOneShot = false;
+            }
+
+            if(timer > 11f){
+                if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    tmpText.text = "Click (B) to move to next body part";
+
+                if(HandPresence.bPressed){
+                    currState = State.Stomach;
+                    if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        tmpText.text = "";
+                    playOneShot = true;
+                    timer = 0f;
+                }
+            }
         }
         else if(currState == State.Stomach){
-            Debug.Log("STATE: "  + currState); // STATE: Stomach
-            prevState = currState;
+            if(playOneShot){
+                Debug.Log("STATE: "  + currState); // STATE: Stomach
+                audioSource.clip = audioClips[7];
+                audioSource.Play();
+                playOneShot = false;
+            }
+
+            if(timer > 12f){
+                if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    tmpText.text = "Click (B) to move to next body part";
+
+                if(HandPresence.bPressed){
+                    currState = State.Body;
+                    if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        tmpText.text = "";
+                    playOneShot = true;
+                    timer = 0f;
+                }
+            }
         }
         else if(currState == State.Body){
-            Debug.Log("STATE: "  + currState); // STATE: Body
-            prevState = currState;
+            if(playOneShot){
+                Debug.Log("STATE: "  + currState); // STATE: Body
+                audioSource.clip = audioClips[8];
+                audioSource.Play();
+                playOneShot = false;
+            }
+
+            if(timer > 12f){
+                if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    tmpText.text = "Click (B) to move to next body part";
+
+                if(HandPresence.bPressed){
+                    currState = State.Emojis;
+                    if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        tmpText.text = "";
+                    playOneShot = true;
+                    timer = 0f;
+                }
+            }
         }
+
+
+
         else if(currState == State.Emojis){
             Debug.Log("STATE: "  + currState); // STATE: Emojis
             prevState = currState;

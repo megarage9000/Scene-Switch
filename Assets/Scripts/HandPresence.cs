@@ -82,11 +82,8 @@ public class HandPresence : MonoBehaviour
         }
         else
         {
-            Debug.Log((InputDeviceCharacteristics.HeldInHand & InputDeviceCharacteristics.HandTracking & InputDeviceCharacteristics.Controller & InputDeviceCharacteristics.Right));
             // Debug.Log(targetDevice.characteristics == (InputDeviceCharacteristics.HeldInHand & InputDeviceCharacteristics.HandTracking & InputDeviceCharacteristics.Controller & InputDeviceCharacteristics.Right));
-            if((targetDevice.characteristics & InputDeviceCharacteristics.Right) == InputDeviceCharacteristics.Right){
-                targetDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out bPressed);
-            }
+            targetDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out bPressed);
 
             if (showController)
             {
