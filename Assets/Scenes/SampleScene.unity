@@ -498,11 +498,11 @@ GameObject:
   - component: {fileID: 181150460}
   - component: {fileID: 181150462}
   m_Layer: 0
-  m_Name: Scene Manager
+  m_Name: State Manager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
+  m_StaticEditorFlags: 2147483647
   m_IsActive: 1
 --- !u!114 &181150460
 MonoBehaviour:
@@ -519,6 +519,14 @@ MonoBehaviour:
   audioClips:
   - {fileID: 8300000, guid: bacb128bd8d2997489879ea74900e261, type: 3}
   - {fileID: 8300000, guid: ca7aed93256873d4786adcc36eaa19fe, type: 3}
+  - {fileID: 8300000, guid: b9ca4fa034196e64291e468d06a1ca37, type: 3}
+  - {fileID: 8300000, guid: ded6d7e5d81d6a54ea611a3e281d1195, type: 3}
+  - {fileID: 8300000, guid: 129cd6b5b8fe91243b4bbb39741287c2, type: 3}
+  - {fileID: 8300000, guid: b6949f802d70a6f4da39edc6bf786548, type: 3}
+  - {fileID: 8300000, guid: ace7a36de48e70a4686798274f493d58, type: 3}
+  - {fileID: 8300000, guid: 9c66b32849b28324ca8d049d24188307, type: 3}
+  - {fileID: 8300000, guid: 020c1174e2b05364eb9b41a6a886a686, type: 3}
+  mannequin: {fileID: 8999515008518450284}
 --- !u!4 &181150461
 Transform:
   m_ObjectHideFlags: 0
@@ -6885,4 +6893,4 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
