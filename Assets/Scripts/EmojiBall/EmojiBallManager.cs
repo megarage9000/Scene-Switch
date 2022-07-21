@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class EmojiBallManager : MonoBehaviour
 {
@@ -37,7 +38,7 @@ public class EmojiBallManager : MonoBehaviour
         // so add - 1
         for(int i = 0; i < numPositions - 1; i++) {
             Transform transform = _transforms[i];
-            GameObject emojiBall = Instantiate(EmojiBallPrefabs[i], transform);
+            GameObject emojiBall = PhotonNetwork.Instantiate(EmojiBallPrefabs[i].name, transform.position, transform.rotation);
 
             _instantiatedEmojiBallPrefabs[emojiBall.tag] = emojiBall;
 
@@ -83,7 +84,7 @@ public class EmojiBallManager : MonoBehaviour
         Transform emojiTransform = _emojiBallTransforms[tag];
 
         // Create the spawned ball and hookup manager listeners onto it
-        GameObject emojiBall = Instantiate(emojiBallPrefab, emojiTransform);
+        GameObject emojiBall = PhotonNetwork.Instantiate(emojiBallPrefab.name, emojiTransform.position, emojiTransform.rotation);
         HookupEmojiBallEvents(emojiBall);
         
         // Store it into the instantiated balls dictionary

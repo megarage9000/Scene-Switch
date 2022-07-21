@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using Photon.Pun;
 using UnityEngine.Events;
 
 public class EmojiStretch : XRBaseInteractable
@@ -12,9 +13,11 @@ public class EmojiStretch : XRBaseInteractable
 
     private GameObject _secondGrabContact;
     private GameObject _primaryGrabContact;
+    private PhotonView _photonView;
 
     protected override void Awake() {
         base.Awake();
+        _photonView = GetComponent<PhotonView>();
         _secondGrabPoint.selectEntered.AddListener(OnSecondHandGrab);
         _secondGrabPoint.selectExited.AddListener(OnSecondHandRelease);
         _secondGrabPoint.gameObject.SetActive(false);
@@ -31,6 +34,7 @@ public class EmojiStretch : XRBaseInteractable
     }
 
     protected override void OnSelectEntered(SelectEnterEventArgs args) {
+        _photonView.RequestOwnership();
         base.OnSelectEntered(args);
         _primaryGrabContact = args.interactorObject.transform.gameObject;
         _secondGrabPoint.gameObject.SetActive(true);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
+using Photon.Pun;
 using UnityEngine.Events;
 
 public class EmojiGrab : XRGrabInteractable
@@ -10,6 +11,7 @@ public class EmojiGrab : XRGrabInteractable
     private XRInteractionManager _interactionManager;
     private GameObject _placementLocation;
     private Rigidbody _rigidBody;
+    private PhotonView _photonView;
 
     public UnityEvent OnPlaced;
     public UnityEvent OnGrabbed;
@@ -19,9 +21,11 @@ public class EmojiGrab : XRGrabInteractable
         base.Awake();
         _interactionManager = FindObjectOfType<XRInteractionManager>();
         _rigidBody = GetComponent<Rigidbody>();
+        _photonView = GetComponent<PhotonView>();
         OnPlaced = new UnityEvent();
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args) {
+        _photonView.RequestOwnership();
         base.OnSelectEntered(args);
         AddGrabEvent(args.interactorObject.transform.gameObject);
         _interactor = args.interactorObject;
