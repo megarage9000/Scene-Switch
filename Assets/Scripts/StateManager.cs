@@ -1,7 +1,8 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using System.Threading;
+using Photon.Pun;
+using TMPro;
 
 public enum State : ushort
 {
@@ -24,6 +25,7 @@ public class StateManager : MonoBehaviour
 {
     [SerializeField] AudioClip[] audioClips;
     [SerializeField] GameObject mannequin;
+    [SerializeField] TMP_Text tmpText;
 
     private AudioSource audioSource;
     private State prevState = 0;
@@ -33,6 +35,7 @@ public class StateManager : MonoBehaviour
 
 
     void Start(){
+        tmpText.text = "";
         audioSource = this.GetComponent<AudioSource>();
         
         Debug.Log("STATE: "  + currState); // STATE: Intro
@@ -42,6 +45,7 @@ public class StateManager : MonoBehaviour
 
     void Update(){
         timer += Time.deltaTime;
+        // Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
 
         if(currState == State.Intro && !audioSource.isPlaying){
             currState = State.Mannequin;
