@@ -33,9 +33,11 @@ public class EmojiGrab : XRGrabInteractable
         _interactor = args.interactorObject;
 
         if(PhotonNetwork.IsMasterClient) {
+            Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called grab on master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
             OnGrabbedNetwork();
         }
         else {
+            Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called grab on non-master client that has actor number {PhotonNetwork.LocalPlayer.ActorNumber}");
             _photonView.RPC("OnGrabbedNetwork", RpcTarget.MasterClient);
             _rigidBody.constraints = RigidbodyConstraints.None;
         }
@@ -47,9 +49,11 @@ public class EmojiGrab : XRGrabInteractable
         _interactor = null;
    
         if (PhotonNetwork.IsMasterClient) {
+            Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called release on master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
             OnReleasedNetwork();
         }
         else {
+            Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called grab on non-master client that has actor number {PhotonNetwork.LocalPlayer.ActorNumber}"); ;
             _photonView.RPC("OnReleasedNetwork", RpcTarget.MasterClient);
             _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
         }
@@ -105,9 +109,11 @@ public class EmojiGrab : XRGrabInteractable
 
             // Destroy(_placementLocation);
             if (PhotonNetwork.IsMasterClient) {
+                Debug.Log($"{gameObject.name} with {_photonView.ViewID} called release on master client");
                 OnPlacedNetwork();
             }
             else {
+                Debug.Log($"{gameObject.name} with {_photonView.ViewID} called release on non-master client");
                 _photonView.RPC("OnPlacedNetwork", RpcTarget.MasterClient);
                 _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
             }
@@ -117,20 +123,22 @@ public class EmojiGrab : XRGrabInteractable
     // Networking RPC calls 
     [PunRPC]
     private void OnPlacedNetwork() {
+        Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been placed");
         OnPlaced.Invoke();
-
         _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
         _placementLocation = null;
     }
 
     [PunRPC]
     private void OnGrabbedNetwork() {
+        Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been grabbed");
         OnGrabbed.Invoke();
         _rigidBody.constraints = RigidbodyConstraints.None;
     }
 
     [PunRPC]
     private void OnReleasedNetwork() {
+        Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been released");
         OnReleased.Invoke();
         _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
     }

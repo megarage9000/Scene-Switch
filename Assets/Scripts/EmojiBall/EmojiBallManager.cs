@@ -138,10 +138,11 @@ public class EmojiBallManager : MonoBehaviour
     private void OnEmojiBallPlaced(GameObject emojiBall) {
         // If that emoji is placed, spawn a duplicate
         if (PhotonNetwork.IsMasterClient) {
+            Debug.Log($"{emojiBall.name} with {emojiBall.GetComponent<EmojiBall>().GetViewID()} called OnEmojiBallPlaced on master client");
             AddToPlacedEmojis(emojiBall.tag);
         }
         else {
-            Debug.Log("Spawning emoji ball client side");
+            Debug.Log($"{emojiBall.name} with {emojiBall.GetComponent<EmojiBall>().GetViewID()} called OnEmojiBallPlaced on non-master client");
             _photonView.RPC("AddToPlacedEmojis", RpcTarget.MasterClient, emojiBall.tag);
         }
 
@@ -152,11 +153,12 @@ public class EmojiBallManager : MonoBehaviour
         // Remove duplicate that spawned
         if(PhotonNetwork.IsMasterClient) {
             int id = emojiBall.GetComponent<EmojiBall>().GetViewID();
+            Debug.Log($"{emojiBall.name} with {emojiBall.GetComponent<EmojiBall>().GetViewID()} called OnEmojiBallGrabbed grab on master client");
             RemoveFromPlacedEmojis(id);
         }
         else {
             int id = emojiBall.GetComponent<EmojiBall>().GetViewID();
-            Debug.Log("Removing emoji ball client side");
+            Debug.Log($"{emojiBall.name} with {emojiBall.GetComponent<EmojiBall>().GetViewID()} called OnEmojiBallGrabbed grab on non-master client");
             _photonView.RPC("RemoveFromPlacedEmojis", RpcTarget.MasterClient, id);
         }
     }
