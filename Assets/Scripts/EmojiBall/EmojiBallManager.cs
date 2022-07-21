@@ -11,6 +11,7 @@ public class EmojiBallManager : MonoBehaviour
    
     private List<GameObject> _placedEmojiBalls;
     private Transform[] _transforms;
+    private PhotonView _photonView;
 
     // To track duplicates
     private Dictionary<string, GameObject> _tagToEmojiBall;
@@ -23,6 +24,11 @@ public class EmojiBallManager : MonoBehaviour
         _instantiatedEmojiBallPrefabs = new Dictionary<string, GameObject>();
         _emojiBallTransforms = new Dictionary<string, Transform>();
         _transforms = GetComponentsInChildren<Transform>();
+        _photonView = GetComponent<PhotonView>();
+    }
+
+    private void Start() {
+        GenerateEmojiBalls();
     }
 
     // Will be called once
@@ -145,7 +151,8 @@ public class EmojiBallManager : MonoBehaviour
     // ---- Emoji Ball State Changes ----- //
 
     public void EnableEmojiBallTap() {
-
+        Debug.Log("Enabling Emoji Balls Tap");
+        _photonView.RequestOwnership();
         ClearEmojiBalls();
 
         foreach (GameObject emojiBall in _placedEmojiBalls) {
@@ -159,11 +166,14 @@ public class EmojiBallManager : MonoBehaviour
     }
 
     public void EnableEmojiBallScale() {
+        Debug.Log("Enabling Emoji Balls Scale");
+        _photonView.RequestOwnership();
         foreach (GameObject emojiBall in _placedEmojiBalls) {
             EmojiBall emojiBallScript = emojiBall.GetComponent<EmojiBall>();
 
             if (emojiBallScript) {
                 emojiBallScript.DisableEmojiTap();
+                emojiBallScript.DisableSubwordTap();
                 emojiBallScript.EnableScale();
             }
         }

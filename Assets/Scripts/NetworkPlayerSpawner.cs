@@ -18,7 +18,10 @@ public class NetworkPlayerSpawner : MonoBehaviourPunCallbacks
         randPos.z += Random.Range(-5, 5);
 
         spawnedPlayerPrefab = PhotonNetwork.Instantiate("Network Player", randPos, transform.rotation);
-        OnPlayerSpawned.Invoke();
+        if(PhotonNetwork.IsMasterClient) {
+            Debug.Log("Spawning the emoji ball manager man");
+            OnPlayerSpawned.Invoke();
+        }
     }
 
     public override void OnLeftRoom(){

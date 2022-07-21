@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 using UnityEngine.Events;
 
 public class EmojiSubwordTap : MonoBehaviour {
@@ -35,12 +36,11 @@ public class EmojiSubwordTap : MonoBehaviour {
 
             var spawnDir = new Vector3(0, horizontal, vertical);
 
-
             /* Get the spawn position */
             var spawnPos = center + spawnDir * radius; // Radius is just the distance away from the point
 
             /* Now spawn */
-            var subword = Instantiate(subwordPrefab, Vector3.zero, Quaternion.identity) as GameObject;
+            var subword = PhotonNetwork.Instantiate(subwordPrefab.name, Vector3.zero, Quaternion.identity) as GameObject;
             subword.transform.parent = gameObject.transform;
             subword.transform.localPosition = spawnPos;
             subword.GetComponent<Renderer>().material = subWords[i];

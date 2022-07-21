@@ -134,6 +134,8 @@ GameObject:
   m_Component:
   - component: {fileID: 7366153509059815498}
   - component: {fileID: 1893441299627801509}
+  - component: {fileID: -5860853402382239295}
+  - component: {fileID: 6935709783019198574}
   m_Layer: 0
   m_Name: EmojiBallManager
   m_TagString: Untagged
@@ -181,6 +183,45 @@ MonoBehaviour:
   - {fileID: 7877160002807246415, guid: 5ba0f58def5b8224f9f19da2a8fd1d60, type: 3}
   - {fileID: 2707494592523873074, guid: 1144effc53c38364e9b67d28ddce6d87, type: 3}
   - {fileID: 7796924344250509922, guid: 9fafe896cbf31044a8d46b2dc135cee6, type: 3}
+--- !u!114 &-5860853402382239295
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720861818981255920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 1
+  observableSearch: 2
+  ObservedComponents:
+  - {fileID: 6935709783019198574}
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
+--- !u!114 &6935709783019198574
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5720861818981255920}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_SynchronizePosition: 1
+  m_SynchronizeRotation: 1
+  m_SynchronizeScale: 0
+  m_UseLocal: 0
 --- !u!1 &8117482799015995261
 GameObject:
   m_ObjectHideFlags: 0

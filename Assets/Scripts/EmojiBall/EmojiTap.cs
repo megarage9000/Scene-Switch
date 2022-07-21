@@ -12,8 +12,16 @@ public class EmojiTap : MonoBehaviour
         _canDetectTap = true;
     }
 
+    private void OnEnable() {
+        _canDetectTap = true;
+    }
+
+    private void OnDisable() {
+        _canDetectTap = false;
+    }
+
     private void OnTriggerEnter(Collider other) {
-        if(_canDetectTap) {
+        if(_canDetectTap && other.gameObject.tag.Equals("GameController")) {
             OnTap.Invoke();
         }
     }
