@@ -27,6 +27,7 @@ public class EmojiGrab : XRGrabInteractable
         OnReleased = new UnityEvent();
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args) {
+        Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} requested ownership by master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
         _photonView.RequestOwnership();
         base.OnSelectEntered(args);
         AddGrabEvent(args.interactorObject.transform.gameObject);

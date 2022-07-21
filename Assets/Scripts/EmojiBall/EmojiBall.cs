@@ -27,6 +27,7 @@ public class EmojiBall : MonoBehaviour {
     private EmojiTap _emojiTap;
     private EmojiSubwordTap _emojiSubwordTap;
     private PhotonView _photonView;
+    private bool canDestroy = false;
 
     // UnityEvents to "bubble up" to manager 
     public UnityAction<GameObject> OnPlaced;
@@ -161,17 +162,31 @@ public class EmojiBall : MonoBehaviour {
             if (_photonView.IsMine) {
                 Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} is under ownership of master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
             }
+            else {
+                Debug.Log($"{gameObject.name} with {gameObject.GetPhotonView().ViewID} and owner actor number {gameObject.GetPhotonView().Owner.ActorNumber} transfering ownership to master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
+                gameObject.GetPhotonView().TransferOwnership(PhotonNetwork.MasterClient);
+                canDestroy = true;
+                Debug.Log($"{gameObject.name} with {gameObject.GetPhotonView().ViewID} and owner actor number {gameObject.GetPhotonView().Owner.ActorNumber} transferred ownership to master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
+            }
             if (_photonView.IsOwnerActive) {
                 Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} has master client active that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
             }
 
-            Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} has executed PhotonNetwork.Destroy() on master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
-            PhotonNetwork.Destroy(gameObject.GetPhotonView());
-            Destroy(gameObject);
-            Debug.Log("Successfuly destroyed object!");
+            if(_photonView.IsMine) {
+                Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} has executed PhotonNetwork.Destroy() on master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
+                PhotonNetwork.Destroy(gameObject.GetPhotonView());
+                Debug.Log("Successfuly destroyed object!");
+            }
         }
         else {
             Debug.Log("Calling DestroyThis on non-master client");
+        }
+    }
+
+    private void Update() {
+        if(_photonView.IsMine && canDestroy && PhotonNetwork.IsMasterClient) {
+            Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} destroyed in Update on master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
+            PhotonNetwork.Destroy(gameObject.GetPhotonView());
         }
     }
 
