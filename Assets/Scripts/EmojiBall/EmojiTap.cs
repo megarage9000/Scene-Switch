@@ -22,6 +22,7 @@ public class EmojiTap : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
         if(_canDetectTap && other.gameObject.tag.Equals("GameController")) {
+            Debug.Log($"{gameObject.name} tap Detected {other.gameObject.name}");
             OnTap.Invoke();
         }
     }

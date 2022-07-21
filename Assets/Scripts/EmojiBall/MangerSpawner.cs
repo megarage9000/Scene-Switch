@@ -22,15 +22,18 @@ public class MangerSpawner : MonoBehaviour
         EventCaller tapCaller = tapObject.GetComponent<EventCaller>();
         if(tapCaller) {
             Debug.Log("Adding listener tap");
-            tapCaller.OnContact.AddListener(manager.GetComponent<EmojiBallManager>().EnableEmojiBallTap);
+            tapCaller.OnContact.AddListener(manager.GetComponent<EmojiBallManager>().EnableEmojiTapNetwork);
         }
 
         EventCaller scaleCaller = scaleObject.GetComponent<EventCaller>();
         if (scaleCaller) {
             Debug.Log("Adding listener scale");
-            scaleCaller.OnContact.AddListener(manager.GetComponent<EmojiBallManager>().EnableEmojiBallScale);
+            scaleCaller.OnContact.AddListener(manager.GetComponent<EmojiBallManager>().EnableEmojiScaleNetwork);
         }
 
+        Debug.Log("Calling master client ball generation");
+        manager.GetComponent<EmojiBallManager>().GenerateEmojiBalls();
+        
         Destroy(gameObject, 2f);
     }
 }

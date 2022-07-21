@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR.Interaction.Toolkit;
 using UnityEngine.Events;
+using Photon.Pun;
 
 [RequireComponent(typeof(EmojiGrab))]
 [RequireComponent(typeof(EmojiStretch))]
@@ -25,6 +26,7 @@ public class EmojiBall : MonoBehaviour {
     private EmojiStretch _emojiStretch;
     private EmojiTap _emojiTap;
     private EmojiSubwordTap _emojiSubwordTap;
+    private PhotonView _photonView;
 
     // UnityEvents to "bubble up" to manager 
     public UnityAction<GameObject> OnPlaced;
@@ -38,6 +40,7 @@ public class EmojiBall : MonoBehaviour {
         _emojiTap = GetComponent<EmojiTap>();
         _emojiSubwordTap = GetComponent<EmojiSubwordTap>();
         _emojiStretch = GetComponent<EmojiStretch>();
+        _photonView = GetComponent<PhotonView>();
         GetComponent<Renderer>().material = emojiMaterial;
 
         _emojiGrab.OnGrabbed.AddListener(OnEmojiGrabbed);
@@ -136,4 +139,23 @@ public class EmojiBall : MonoBehaviour {
     public void DisableScale() {
         _emojiStretch.enabled = false;
     }
+
+    
+    public void DestroyEmojiBall() {
+        Debug.Log($"Destroying {gameObject.name}");
+        if(PhotonNetwork.IsMasterClient) {
+            Debug.Log($"Destroying On Master");
+            PhotonNetwork.Destroy(_photonView);
+        }
+        else {
+            _photonView.RPC("DestroyThis", RpcTarget.MasterClient);
+            Destroy(gameObject);
+        }
+    }
+    [PunRPC]
+    private void DestroyThis() {
+        Debug.Log("Calling Destroy This!");
+        Destroy(gameObject);
+    }
+
 }

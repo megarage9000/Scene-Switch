@@ -42,6 +42,11 @@ MonoBehaviour:
   - CantHearYou
   - ChangeColour
   - HeresWhy
+  - DestroyEmojiBall
+  - DestroyThis
+  - EnableEmojiBallScale
+  - EnableEmojiBallTap
+  - CallEvent
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

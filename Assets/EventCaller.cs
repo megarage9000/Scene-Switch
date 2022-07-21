@@ -17,11 +17,30 @@ public class EventCaller : MonoBehaviour
     private void OnTriggerEnter(Collider other) {
         _photonView.RequestOwnership();
         GetComponent<Renderer>().material.color = Color.green;
-        OnContact.Invoke();
-        Destroy(gameObject, 3f);
+        
+
+        if(PhotonNetwork.IsMasterClient) {
+            Debug.Log("Destroying on master client side");
+            CallEvent();
+        }
+        else {
+            Debug.Log("Destroying on client side");
+            _photonView.RPC("CallEvent", RpcTarget.MasterClient);
+        }
     }
+
+
 
     private void OnTriggerExit(Collider other) {
         GetComponent<Renderer>().material.color = Color.white;
     }
+
+
+    [PunRPC]
+    private void CallEvent() {
+        OnContact.Invoke();
+        Destroy(gameObject); 
+        PhotonNetwork.Destroy(_photonView);
+    }
+
 }

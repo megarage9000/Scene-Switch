@@ -27,10 +27,6 @@ public class EmojiBallManager : MonoBehaviour
         _photonView = GetComponent<PhotonView>();
     }
 
-    private void Start() {
-        GenerateEmojiBalls();
-    }
-
     // Will be called once
     public void GenerateEmojiBalls() {
 
@@ -74,7 +70,7 @@ public class EmojiBallManager : MonoBehaviour
     private void ClearEmojiBalls() {
         foreach(KeyValuePair<string, GameObject> pair in _instantiatedEmojiBallPrefabs) {
             GameObject emojiBall = pair.Value;
-            Destroy(emojiBall);
+            emojiBall.GetComponent<EmojiBall>().DestroyEmojiBall();
             emojiBall = null;
         }
         _instantiatedEmojiBallPrefabs.Clear();
@@ -108,7 +104,7 @@ public class EmojiBallManager : MonoBehaviour
         // deletes it if there is
         GameObject duplicate = _instantiatedEmojiBallPrefabs[tag];
         if (duplicate) {
-            Destroy(duplicate);
+            duplicate.GetComponent<EmojiBall>().DestroyEmojiBall();
             _instantiatedEmojiBallPrefabs[tag] = null;
         }
     }
@@ -150,6 +146,30 @@ public class EmojiBallManager : MonoBehaviour
 
     // ---- Emoji Ball State Changes ----- //
 
+    public void EnableEmojiTapNetwork() {
+        if(PhotonNetwork.IsMasterClient) {
+            Debug.Log("Calling emoji tap master side");
+            EnableEmojiBallTap();
+        }
+        else {
+            Debug.Log("Calling emoji tap client side");
+            _photonView.RPC("EnableEmojiBallTap", RpcTarget.All);
+            EnableEmojiBallTap();
+        }
+    }
+    public void EnableEmojiScaleNetwork() {
+        if (PhotonNetwork.IsMasterClient) {
+            Debug.Log("Calling emoji scale master side");
+            EnableEmojiBallScale();
+        }
+        else {
+            Debug.Log("Calling emoji scale client side");
+            _photonView.RPC("EnableEmojiBallScale", RpcTarget.All);
+            EnableEmojiBallScale();
+        }
+    }
+
+    [PunRPC]
     public void EnableEmojiBallTap() {
         Debug.Log("Enabling Emoji Balls Tap");
         _photonView.RequestOwnership();
@@ -164,7 +184,7 @@ public class EmojiBallManager : MonoBehaviour
             }
         }
     }
-
+    [PunRPC]
     public void EnableEmojiBallScale() {
         Debug.Log("Enabling Emoji Balls Scale");
         _photonView.RequestOwnership();
@@ -180,7 +200,6 @@ public class EmojiBallManager : MonoBehaviour
     }
 
     private void PrintAllPlacedEmojis() {
-
         string placedEmojis = "Placed emojis: ";
         foreach(GameObject emojiBall in _placedEmojiBalls) {
             placedEmojis += emojiBall.tag + " | ";
