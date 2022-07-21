@@ -169,7 +169,7 @@ public class EmojiBallManager : MonoBehaviour
             EnableEmojiBallTapNetwork();
         }
         else {
-            _photonView.RPC("EnableEmojiBallTapNetwork", RpcTarget.MasterClient);
+            _photonView.RPC("EnableEmojiBallTapNetwork", RpcTarget.All);
         }
     }
 
@@ -178,7 +178,7 @@ public class EmojiBallManager : MonoBehaviour
             EnableEmojiBallScaleNetwork();
         }
         else {
-            _photonView.RPC("EnableEmojiBallScaleNetwork", RpcTarget.MasterClient);
+            _photonView.RPC("EnableEmojiBallScaleNetwork", RpcTarget.All);
         }
     }
 
