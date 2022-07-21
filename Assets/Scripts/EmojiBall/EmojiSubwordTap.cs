@@ -17,6 +17,9 @@ public class EmojiSubwordTap : MonoBehaviour {
     // Thanks to
     // https://answers.unity.com/questions/1661755/how-to-instantiate-objects-in-a-circle-formation-a.html
     public void SpawnSubWords(List<Material> subWords) {
+        if (_subwordObjects.Count > 0) {
+            return;
+        }
         int num = subWords.Count;
         float radius = 2f;
         Vector3 center = Vector3.zero;
@@ -43,7 +46,7 @@ public class EmojiSubwordTap : MonoBehaviour {
             subword.GetComponent<Renderer>().material = subWords[i];
 
             /* Rotate the enemy to face towards player */
-            subword.transform.rotation = Quaternion.LookRotation(Vector3.left);
+            subword.transform.rotation = Quaternion.LookRotation(transform.TransformDirection(Vector3.forward));
 
             /* Adjust height */
             // subword.transform.Translate(new Vector3(0, subword.transform.localScale.y / 2, 0));
@@ -63,9 +66,11 @@ public class EmojiSubwordTap : MonoBehaviour {
             Destroy(word);
             temp = null;
         }
+        _subwordObjects.Clear();
     }
     private void ChangeMaterial(Material material) {
         GetComponent<Renderer>().material = material;
+        RemoveSubWords();
         OnSubwordTap.Invoke();
     }
 }

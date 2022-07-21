@@ -7,7 +7,6 @@ public class EmojiBallManager : MonoBehaviour
     [Header("List of Emoji Balls to instantiate")]
     [SerializeField]
     public List<GameObject> EmojiBallPrefabs;
-
    
     private List<GameObject> _placedEmojiBalls;
     private Transform[] _transforms;
@@ -32,6 +31,10 @@ public class EmojiBallManager : MonoBehaviour
     // Will be called once
     private void GenerateEmojiBalls() {
         int numPositions = _transforms.Length;
+
+        // For some reason, numPositions also includes the parent
+        // transform collected from getting children transforms,
+        // so add - 1
         for(int i = 0; i < numPositions - 1; i++) {
             Transform transform = _transforms[i];
             GameObject emojiBall = Instantiate(EmojiBallPrefabs[i], transform);
@@ -46,6 +49,7 @@ public class EmojiBallManager : MonoBehaviour
         }
     }
 
+    // Hooks all necessary listeners on the manager onto the emoji balls
     private void HookupEmojiBallEvents(GameObject emojiBall) {
         EmojiBall emojiBallScript = emojiBall.GetComponent<EmojiBall>();
         if(emojiBallScript) {
@@ -72,15 +76,24 @@ public class EmojiBallManager : MonoBehaviour
      * _placedEmojiBalls = simply stores a list of those emoji balls that are placed
      */
     private void SpawnEmojiBall(string tag) {
+
+        // Get the tag and the transform of the emoji ball
+        // to spawn
         GameObject emojiBallPrefab = _tagToEmojiBall[tag];
         Transform emojiTransform = _emojiBallTransforms[tag];
 
+        // Create the spawned ball and hookup manager listeners onto it
         GameObject emojiBall = Instantiate(emojiBallPrefab, emojiTransform);
-        _instantiatedEmojiBallPrefabs[tag] = emojiBall;
         HookupEmojiBallEvents(emojiBall);
+        
+        // Store it into the instantiated balls dictionary
+        _instantiatedEmojiBallPrefabs[tag] = emojiBall;
     }
 
     private void RemoveEmojiBallSpawn(string tag) {
+
+        // Checks if there exists an emoji ball with given tag,
+        // deletes it if there is
         GameObject duplicate = _instantiatedEmojiBallPrefabs[tag];
         if (duplicate) {
             Destroy(duplicate);
@@ -88,8 +101,14 @@ public class EmojiBallManager : MonoBehaviour
         }
     }
 
+    // ---- Emoji Ball Listeners ---- // 
     private void OnEmojiBallPlaced(GameObject emojiBall) {
+
+        // Add emoji ball on list of placed emoji balls
         _placedEmojiBalls.Add(emojiBall);
+
+        // Since its placed, we need to set the instatiated emoji ball prefabs
+        // on its tag to be null to spawn its replacement
         _instantiatedEmojiBallPrefabs[emojiBall.tag] = null;
 
         // If that emoji is placed, spawn a duplicate
@@ -100,15 +119,48 @@ public class EmojiBallManager : MonoBehaviour
 
     private void OnEmojiBallGrabbed(GameObject emojiBall) {
 
+        // Only applies to balls placed
         if(_placedEmojiBalls.Contains(emojiBall)) {
+
+            // Remove emoji ball if it is in placed ball list
             _placedEmojiBalls.Remove(emojiBall);
 
             // Remove duplicate that spawned
             RemoveEmojiBallSpawn(emojiBall.tag);
+
+            // Reset instaitated emoji ball prefabs at that tag
+            // to this ball
             _instantiatedEmojiBallPrefabs[emojiBall.tag] = emojiBall;
         }
 
         PrintAllPlacedEmojis();
+    }
+
+    // ---- Emoji Ball State Changes ----- //
+
+    public void EnableEmojiBallTap() {
+
+        ClearEmojiBalls();
+
+        foreach (GameObject emojiBall in _placedEmojiBalls) {
+            EmojiBall emojiBallScript = emojiBall.GetComponent<EmojiBall>();
+
+            if(emojiBallScript) {
+                emojiBallScript.DisableGrab();
+                emojiBallScript.EnableEmojiTap();
+            }
+        }
+    }
+
+    public void EnableEmojiBallScale() {
+        foreach (GameObject emojiBall in _placedEmojiBalls) {
+            EmojiBall emojiBallScript = emojiBall.GetComponent<EmojiBall>();
+
+            if (emojiBallScript) {
+                emojiBallScript.DisableEmojiTap();
+                emojiBallScript.EnableScale();
+            }
+        }
     }
 
     private void PrintAllPlacedEmojis() {

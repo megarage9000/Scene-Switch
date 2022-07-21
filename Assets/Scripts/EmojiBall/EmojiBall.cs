@@ -84,9 +84,6 @@ public class EmojiBall : MonoBehaviour {
 
     private void OnEmojiPlaced() {
         OnPlaced.Invoke(gameObject);
-
-        // DisableGrab();
-        // EnableEmojiTap();
     }
 
     private void OnEmojiSubwordTapped() {
