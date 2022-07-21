@@ -145,7 +145,6 @@ public class EmojiBall : MonoBehaviour {
     public void DestroyEmojiBall() {
         
         if(PhotonNetwork.IsMasterClient) {
-            _photonView.TransferOwnership(PhotonNetwork.LocalPlayer.ActorNumber);
             Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called DestroyThis on master client that has actor number {PhotonNetwork.MasterClient.ActorNumber}");
             DestroyThis();
         }
