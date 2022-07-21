@@ -25,11 +25,10 @@ public class PlacementHint : MonoBehaviour
 
     private void OnTriggerEnter(Collider other) {
        // Debug.Log($"Placement detected {other.gameObject.name}");
-       // ShowHint();
+       ShowHint();
     }
 
     private void OnTriggerExit(Collider other) {
-       // HideHint();
-        
+       HideHint(); 
     }
 }

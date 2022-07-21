@@ -16,6 +16,8 @@ public class ControllerAdditions : MonoBehaviour
     public UnityEvent SecondaryPress;
 
     private void Awake() {
+        PrimaryPress = new UnityEvent();
+        SecondaryPress = new UnityEvent();
         devices = new List<InputDevice>();
         StartCoroutine(FindController());
     }
@@ -37,9 +39,6 @@ public class ControllerAdditions : MonoBehaviour
             }
             yield return null;
         }
-
-        PrimaryPress = new UnityEvent();
-        SecondaryPress = new UnityEvent();
     }
 
     private void Update() {
