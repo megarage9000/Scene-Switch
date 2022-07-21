@@ -64,7 +64,6 @@ public class EmojiBallManager : MonoBehaviour
             emojiBallScript.OnGrabbed += OnEmojiBallGrabbed;
             emojiBallScript.OnPlaced += OnEmojiBallPlaced;
         }
-
     }
 
     private void ClearEmojiBalls() {
@@ -83,6 +82,8 @@ public class EmojiBallManager : MonoBehaviour
      * _instantiatedEmojiBallPrefabs = tracks which emoji balls are in world, but not placed
      * _placedEmojiBalls = simply stores a list of those emoji balls that are placed
      */
+
+    [PunRPC]
     private void SpawnEmojiBall(string tag) {
 
         // Get the tag and the transform of the emoji ball
@@ -98,6 +99,7 @@ public class EmojiBallManager : MonoBehaviour
         _instantiatedEmojiBallPrefabs[tag] = emojiBall;
     }
 
+    [PunRPC]
     private void RemoveEmojiBallSpawn(string tag) {
 
         // Checks if there exists an emoji ball with given tag,
@@ -109,68 +111,78 @@ public class EmojiBallManager : MonoBehaviour
         }
     }
 
+    [PunRPC]
+    private void AddToPlacedEmojis(string tag) {
+        GameObject emojiBall = _instantiatedEmojiBallPrefabs[tag];
+        _placedEmojiBalls.Add(emojiBall);
+        _instantiatedEmojiBallPrefabs[tag] = null;
+
+        SpawnEmojiBall(tag);
+    }
+
+    [PunRPC]
+    private void RemoveFromPlacedEmojis(int id) {
+        foreach (var emojiBall in _placedEmojiBalls) {
+            EmojiBall emojiScript = emojiBall.GetComponent<EmojiBall>();    
+            if(emojiScript && emojiScript.GetViewID() == id) {
+                _placedEmojiBalls.Remove(emojiBall);
+                RemoveEmojiBallSpawn(emojiBall.tag);
+                // Reset instaitated emoji ball prefabs at that tag
+                // to this ball
+                _instantiatedEmojiBallPrefabs[emojiBall.tag] = emojiBall;
+                break;
+            }
+        }
+    }
     // ---- Emoji Ball Listeners ---- // 
     private void OnEmojiBallPlaced(GameObject emojiBall) {
-
-        // Add emoji ball on list of placed emoji balls
-        _placedEmojiBalls.Add(emojiBall);
-
-        // Since its placed, we need to set the instatiated emoji ball prefabs
-        // on its tag to be null to spawn its replacement
-        _instantiatedEmojiBallPrefabs[emojiBall.tag] = null;
-
         // If that emoji is placed, spawn a duplicate
-        SpawnEmojiBall(emojiBall.tag);
+        if (PhotonNetwork.IsMasterClient) {
+            AddToPlacedEmojis(emojiBall.tag);
+        }
+        else {
+            Debug.Log("Spawning emoji ball client side");
+            _photonView.RPC("AddToPlacedEmojis", RpcTarget.MasterClient, emojiBall.tag);
+        }
 
         PrintAllPlacedEmojis();
     }
 
     private void OnEmojiBallGrabbed(GameObject emojiBall) {
-
-        // Only applies to balls placed
-        if(_placedEmojiBalls.Contains(emojiBall)) {
-
-            // Remove emoji ball if it is in placed ball list
-            _placedEmojiBalls.Remove(emojiBall);
-
-            // Remove duplicate that spawned
-            RemoveEmojiBallSpawn(emojiBall.tag);
-
-            // Reset instaitated emoji ball prefabs at that tag
-            // to this ball
-            _instantiatedEmojiBallPrefabs[emojiBall.tag] = emojiBall;
+        // Remove duplicate that spawned
+        if(PhotonNetwork.IsMasterClient) {
+            int id = emojiBall.GetComponent<EmojiBall>().GetViewID();
+            RemoveFromPlacedEmojis(id);
         }
-
-        PrintAllPlacedEmojis();
+        else {
+            int id = emojiBall.GetComponent<EmojiBall>().GetViewID();
+            Debug.Log("Removing emoji ball client side");
+            _photonView.RPC("RemoveFromPlacedEmojis", RpcTarget.MasterClient, id);
+        }
     }
 
     // ---- Emoji Ball State Changes ----- //
-
-    public void EnableEmojiTapNetwork() {
+    public void EnableEmojiBallTap() {
         if(PhotonNetwork.IsMasterClient) {
-            Debug.Log("Calling emoji tap master side");
-            EnableEmojiBallTap();
+            EnableEmojiBallTapNetwork();
         }
         else {
-            Debug.Log("Calling emoji tap client side");
-            _photonView.RPC("EnableEmojiBallTap", RpcTarget.All);
-            EnableEmojiBallTap();
+            _photonView.RPC("EnableEmojiBallTapNetwork", RpcTarget.MasterClient);
         }
     }
-    public void EnableEmojiScaleNetwork() {
+
+    public void EnableEmojiBallScale() {
         if (PhotonNetwork.IsMasterClient) {
-            Debug.Log("Calling emoji scale master side");
-            EnableEmojiBallScale();
+            EnableEmojiBallScaleNetwork();
         }
         else {
-            Debug.Log("Calling emoji scale client side");
-            _photonView.RPC("EnableEmojiBallScale", RpcTarget.All);
-            EnableEmojiBallScale();
+            _photonView.RPC("EnableEmojiBallScaleNetwork", RpcTarget.MasterClient);
         }
     }
+
 
     [PunRPC]
-    public void EnableEmojiBallTap() {
+    private void EnableEmojiBallTapNetwork() {
         Debug.Log("Enabling Emoji Balls Tap");
         _photonView.RequestOwnership();
         ClearEmojiBalls();
@@ -185,7 +197,7 @@ public class EmojiBallManager : MonoBehaviour
         }
     }
     [PunRPC]
-    public void EnableEmojiBallScale() {
+    private void EnableEmojiBallScaleNetwork() {
         Debug.Log("Enabling Emoji Balls Scale");
         _photonView.RequestOwnership();
         foreach (GameObject emojiBall in _placedEmojiBalls) {

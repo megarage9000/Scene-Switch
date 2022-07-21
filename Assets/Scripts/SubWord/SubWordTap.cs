@@ -25,18 +25,19 @@ public class SubWordTap : MonoBehaviour {
         Debug.Log($"Destroying {gameObject.name}");
         if (PhotonNetwork.IsMasterClient) {
             Debug.Log("Destroying on Master");
-            PhotonNetwork.Destroy(_photonView);
-            Destroy(gameObject);
+            DestroyThis();
+            
         }
         else {
-            _photonView.RPC("DestroyThis", RpcTarget.All);
-            Destroy(gameObject);
+            _photonView.RPC("DestroyThis", RpcTarget.MasterClient);
         }
     }
 
     [PunRPC]
     private void DestroyThis() {
         Debug.Log("Calling Destroy This! SubwordTap");
+        _photonView.RequestOwnership();
+        PhotonNetwork.Destroy(_photonView);
         Destroy(gameObject);
     }
 }

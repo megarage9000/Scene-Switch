@@ -23,22 +23,36 @@ public class EmojiGrab : XRGrabInteractable
         _rigidBody = GetComponent<Rigidbody>();
         _photonView = GetComponent<PhotonView>();
         OnPlaced = new UnityEvent();
+        OnGrabbed = new UnityEvent();
+        OnReleased = new UnityEvent();
     }
     protected override void OnSelectEntered(SelectEnterEventArgs args) {
         _photonView.RequestOwnership();
         base.OnSelectEntered(args);
         AddGrabEvent(args.interactorObject.transform.gameObject);
         _interactor = args.interactorObject;
-        _rigidBody.constraints = RigidbodyConstraints.None;
-        OnGrabbed.Invoke();
+
+        if(PhotonNetwork.IsMasterClient) {
+            OnGrabbedNetwork();
+        }
+        else {
+            _photonView.RPC("OnGrabbedNetwork", RpcTarget.MasterClient);
+            _rigidBody.constraints = RigidbodyConstraints.None;
+        }
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args) {
         base.OnSelectExited(args);
         RemoveGrabEvent(args.interactorObject.transform.gameObject);
         _interactor = null;
-        _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
-        OnReleased.Invoke();
+   
+        if (PhotonNetwork.IsMasterClient) {
+            OnReleasedNetwork();
+        }
+        else {
+            _photonView.RPC("OnReleasedNetwork", RpcTarget.MasterClient);
+            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        }
     }
 
     private void AddGrabEvent(GameObject controller) {
@@ -85,14 +99,41 @@ public class EmojiGrab : XRGrabInteractable
     private void PlaceEmojiBall() {
         if (_placementLocation) {
             _interactionManager.CancelInteractorSelection(_interactor);
-            transform.parent = null;
+
             transform.position = _placementLocation.transform.position;
             transform.rotation = _placementLocation.transform.rotation;
-            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
 
-            _placementLocation = null;
             // Destroy(_placementLocation);
-            OnPlaced.Invoke();
+            if (PhotonNetwork.IsMasterClient) {
+                OnPlacedNetwork();
+            }
+            else {
+                _photonView.RPC("OnPlacedNetwork", RpcTarget.MasterClient);
+                _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+            }
         }
     }
+
+    // Networking RPC calls 
+    [PunRPC]
+    private void OnPlacedNetwork() {
+        OnPlaced.Invoke();
+
+        _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        _placementLocation = null;
+    }
+
+    [PunRPC]
+    private void OnGrabbedNetwork() {
+        OnGrabbed.Invoke();
+        _rigidBody.constraints = RigidbodyConstraints.None;
+    }
+
+    [PunRPC]
+    private void OnReleasedNetwork() {
+        OnReleased.Invoke();
+        _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+    }
+
+
 }

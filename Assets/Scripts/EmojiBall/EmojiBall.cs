@@ -145,17 +145,21 @@ public class EmojiBall : MonoBehaviour {
         Debug.Log($"Destroying {gameObject.name}");
         if(PhotonNetwork.IsMasterClient) {
             Debug.Log($"Destroying On Master");
-            PhotonNetwork.Destroy(_photonView);
+            DestroyThis();
         }
         else {
             _photonView.RPC("DestroyThis", RpcTarget.MasterClient);
-            Destroy(gameObject);
         }
     }
     [PunRPC]
     private void DestroyThis() {
         Debug.Log("Calling Destroy This!");
-        Destroy(gameObject);
+        _photonView.TransferOwnership(PhotonNetwork.MasterClient);
+        PhotonNetwork.Destroy(_photonView);
+    }
+
+    public int GetViewID() {
+        return _photonView.ViewID;
     }
 
 }

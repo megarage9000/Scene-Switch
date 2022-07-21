@@ -15,7 +15,6 @@ public class EventCaller : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-        _photonView.RequestOwnership();
         GetComponent<Renderer>().material.color = Color.green;
         
 
@@ -28,8 +27,6 @@ public class EventCaller : MonoBehaviour
             _photonView.RPC("CallEvent", RpcTarget.MasterClient);
         }
     }
-
-
 
     private void OnTriggerExit(Collider other) {
         GetComponent<Renderer>().material.color = Color.white;
