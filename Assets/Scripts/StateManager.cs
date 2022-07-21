@@ -45,7 +45,8 @@ public class StateManager : MonoBehaviour
 
     void Update(){
         timer += Time.deltaTime;
-        // Debug.Log(PhotonNetwork.LocalPlayer.ActorNumber);
+        
+        Debug.Log(HandPresence.bPressed);
 
         if(currState == State.Intro && !audioSource.isPlaying){
             currState = State.Mannequin;
@@ -63,7 +64,8 @@ public class StateManager : MonoBehaviour
             
             if(!audioSource.isPlaying){
                 currState = State.Head;
-                //end of audio put purple subtitles
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1)
+                    tmpText.text = "Place emoji on mannequin";
                 playOneShot = true;
                 timer = 0f;
             }
@@ -77,11 +79,14 @@ public class StateManager : MonoBehaviour
             }
 
             if(timer > 54f){
-                //make green player prompt appear
+                if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                    tmpText.text = "Click (B) to move to next body part";
 
                 // if B clicked
                     // currState = State.Face;
                     // turn prompt off
+                    // if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+                        //tmpText.text = "";
                     // playOneShot = true;
                     // timer = 0f;
             }
