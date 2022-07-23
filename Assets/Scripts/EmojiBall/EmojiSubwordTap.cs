@@ -43,6 +43,7 @@ public class EmojiSubwordTap : NetworkAdditions {
             var subword = PhotonNetwork.Instantiate(subwordPrefab.name, Vector3.zero, Quaternion.identity) as GameObject;
             subword.transform.parent = gameObject.transform;
             subword.transform.localPosition = spawnPos;
+            Debug.Log("Calling SetMaterial hereerr?");
             subword.GetComponent<NetworkAdditions>().SetMaterial(subWords[i]);
 
             /* Rotate the enemy to face towards player */

@@ -7,8 +7,6 @@ public class SubWordTap : NetworkAdditions {
 
     public UnityAction<Material> OnTap;
 
-
-
     // TODO
     // Do proper detection of hands
     private void OnTriggerEnter(Collider other) {

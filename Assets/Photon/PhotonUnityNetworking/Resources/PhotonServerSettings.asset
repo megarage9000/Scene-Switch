@@ -58,6 +58,9 @@ MonoBehaviour:
   - OnReleasedNetwork
   - EnableEmojiBallTapClient
   - EnableEmojiBallScaleClient
+  - SetMaterial
+  - SetMaterialById
+  - SetMaterialByName
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
