@@ -41,14 +41,17 @@ public class NetworkAdditions : MonoBehaviour {
 
     public void SetMaterial(Material material) {
         PhotonView photonView = gameObject.GetPhotonView();
-        GetComponent<Renderer>().material = material;
-        int id = MaterialsTable.GetIdFromMaterial(material);
+        if (photonView.IsMine) {
+            GetComponent<Renderer>().material = material;
+        }
+        string name = material.name;
         Debug.Log("Calling SetMaterialByName");
-        gameObject.GetPhotonView().RPC("SetMaterialByName", RpcTarget.All, id); 
+        gameObject.GetPhotonView().RPC("SetMaterialByName", RpcTarget.All, name); 
     }
 
     [PunRPC]
-    public void SetMaterialByName(int id) {
-        GetComponent<Renderer>().material = MaterialsTable.GetMaterialFromId(id);
+    public void SetMaterialByName(string name) {
+        GetComponent<Renderer>().material = MaterialsTable.GetMaterialFromName(name);
     }
+
 }
