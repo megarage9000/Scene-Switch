@@ -41,6 +41,7 @@ public class EmojiSubwordTap : NetworkAdditions {
 
             /* Now spawn */
             var subword = PhotonNetwork.Instantiate(subwordPrefab.name, Vector3.zero, Quaternion.identity) as GameObject;
+            subword.name = subwordPrefab.name;
             subword.transform.parent = gameObject.transform;
             subword.transform.localPosition = spawnPos;
             Debug.Log("Calling SetMaterial hereerr?");
