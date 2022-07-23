@@ -169,7 +169,7 @@ public class EmojiBallManager : MonoBehaviour
             EnableEmojiBallTapNetwork();
         }
         else {
-            _photonView.RPC("EnableEmojiBallTapNetwork", RpcTarget.All);
+            _photonView.RPC("EnableEmojiBallTapNetwork", RpcTarget.MasterClient);
         }
     }
 
@@ -178,11 +178,11 @@ public class EmojiBallManager : MonoBehaviour
             EnableEmojiBallScaleNetwork();
         }
         else {
-            _photonView.RPC("EnableEmojiBallScaleNetwork", RpcTarget.All);
+            _photonView.RPC("EnableEmojiBallScaleNetwork", RpcTarget.MasterClient);
         }
     }
 
-
+    // Master client call to enable emoji tap
     [PunRPC]
     private void EnableEmojiBallTapNetwork() {
         Debug.Log("Enabling Emoji Balls Tap");
@@ -191,20 +191,63 @@ public class EmojiBallManager : MonoBehaviour
 
         foreach (GameObject emojiBall in _placedEmojiBalls) {
             EmojiBall emojiBallScript = emojiBall.GetComponent<EmojiBall>();
+            int id = emojiBallScript.GetViewID();
 
-            if(emojiBallScript) {
+            if (emojiBallScript) {
+                emojiBallScript.DisableGrab();
+                emojiBallScript.EnableEmojiTap();
+            }
+
+            // Also call for clients
+            _photonView.RPC("EnableEmojiBallTapClient", RpcTarget.All, id);
+        }
+    }
+
+    // Other client call to enable emoji tap
+    [PunRPC]
+    private void EnableEmojiBallTapClient(int id) {
+        if(PhotonNetwork.IsMasterClient) {
+            return;
+        }
+        PhotonView emojiBallView = PhotonView.Find(id);
+        if(emojiBallView) {
+            EmojiBall emojiBallScript = emojiBallView.gameObject.GetComponent<EmojiBall>();
+            if (emojiBallScript) {
                 emojiBallScript.DisableGrab();
                 emojiBallScript.EnableEmojiTap();
             }
         }
+
     }
+
     [PunRPC]
     private void EnableEmojiBallScaleNetwork() {
         Debug.Log("Enabling Emoji Balls Scale");
         _photonView.RequestOwnership();
         foreach (GameObject emojiBall in _placedEmojiBalls) {
-            EmojiBall emojiBallScript = emojiBall.GetComponent<EmojiBall>();
 
+            EmojiBall emojiBallScript = emojiBall.GetComponent<EmojiBall>();
+            int id = emojiBallScript.GetViewID();
+
+            if (emojiBallScript) {
+                emojiBallScript.DisableEmojiTap();
+                emojiBallScript.DisableSubwordTap();
+                emojiBallScript.EnableScale();
+            }
+
+            _photonView.RPC("EnableEmojiBallTapClient", RpcTarget.All, id);
+        }
+    }
+
+    // Other client call to enable emoji scale
+    [PunRPC]
+    private void EnableEmojiBallScaleClient(int id) {
+        if (PhotonNetwork.IsMasterClient) {
+            return;
+        }
+        PhotonView emojiBallView = PhotonView.Find(id);
+        if (emojiBallView) {
+            EmojiBall emojiBallScript = emojiBallView.gameObject.GetComponent<EmojiBall>();
             if (emojiBallScript) {
                 emojiBallScript.DisableEmojiTap();
                 emojiBallScript.DisableSubwordTap();
