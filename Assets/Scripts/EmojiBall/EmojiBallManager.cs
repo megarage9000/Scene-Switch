@@ -195,7 +195,7 @@ public class EmojiBallManager : MonoBehaviour
 
             if (emojiBallScript) {
                 emojiBallScript.DisableGrab();
-                // emojiBallScript.EnableEmojiTap();
+                emojiBallScript.EnableEmojiTap();
             }
 
             // Also call for clients
@@ -217,7 +217,7 @@ public class EmojiBallManager : MonoBehaviour
             if (emojiBallScript) {
                 Debug.Log($"Found emojiballscript on id {id}");
                 emojiBallScript.DisableGrab();
-                emojiBallScript.EnableEmojiTap();
+                // emojiBallScript.EnableEmojiTap();
             }
         }
 
@@ -233,8 +233,8 @@ public class EmojiBallManager : MonoBehaviour
             int id = emojiBallScript.GetViewID();
 
             if (emojiBallScript) {
-/*                emojiBallScript.DisableEmojiTap();
-                emojiBallScript.DisableSubwordTap();*/
+                emojiBallScript.DisableEmojiTap();
+                emojiBallScript.DisableSubwordTap();
                 emojiBallScript.EnableScale();
             }
 
@@ -253,8 +253,8 @@ public class EmojiBallManager : MonoBehaviour
         if (emojiBallView) {
             EmojiBall emojiBallScript = emojiBallView.gameObject.GetComponent<EmojiBall>();
             if (emojiBallScript) {
-                emojiBallScript.DisableEmojiTap();
-                emojiBallScript.DisableSubwordTap();
+                // emojiBallScript.DisableEmojiTap();
+                // emojiBallScript.DisableSubwordTap();
                 emojiBallScript.EnableScale();
             }
         }
