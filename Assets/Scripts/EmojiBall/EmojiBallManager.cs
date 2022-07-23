@@ -209,10 +209,13 @@ public class EmojiBallManager : MonoBehaviour
         if(PhotonNetwork.IsMasterClient) {
             return;
         }
+        Debug.Log($"Calling client side tap on id {id}");
         PhotonView emojiBallView = PhotonView.Find(id);
         if(emojiBallView) {
+            Debug.Log($"Found photonview on id {id}");
             EmojiBall emojiBallScript = emojiBallView.gameObject.GetComponent<EmojiBall>();
             if (emojiBallScript) {
+                Debug.Log($"Found emojiballscript on id {id}");
                 emojiBallScript.DisableGrab();
                 emojiBallScript.EnableEmojiTap();
             }
@@ -235,7 +238,7 @@ public class EmojiBallManager : MonoBehaviour
                 emojiBallScript.EnableScale();
             }
 
-            _photonView.RPC("EnableEmojiBallTapClient", RpcTarget.All, id);
+            _photonView.RPC("EnableEmojiBallScaleClient", RpcTarget.All, id);
         }
     }
 
@@ -245,6 +248,7 @@ public class EmojiBallManager : MonoBehaviour
         if (PhotonNetwork.IsMasterClient) {
             return;
         }
+        Debug.Log($"Calling client side scale on id {id}");
         PhotonView emojiBallView = PhotonView.Find(id);
         if (emojiBallView) {
             EmojiBall emojiBallScript = emojiBallView.gameObject.GetComponent<EmojiBall>();
