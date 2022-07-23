@@ -39,10 +39,13 @@ public class NetworkAdditions : MonoBehaviour {
         PhotonNetwork.Destroy(photonView);
     }
 
-    [PunRPC]
     public void SetMaterial(Material material) {
-        GetComponent<Renderer>().material = material;
-        gameObject.GetPhotonView().RPC("SetMaterialByName", RpcTarget.Others, MaterialsTable.GetNameFromMaterial(material));
+        PhotonView photonView = gameObject.GetPhotonView();
+        if (photonView.IsMine) {
+            GetComponent<Renderer>().material = material;
+        }
+        string name = MaterialsTable.GetNameFromMaterial(material);
+        gameObject.GetPhotonView().RPC("SetMaterialByName", RpcTarget.All, name); 
     }
 
     [PunRPC]
