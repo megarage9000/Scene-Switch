@@ -27,11 +27,18 @@ public class EmojiBallManager : MonoBehaviour
         _photonView = GetComponent<PhotonView>();
     }
 
+
+    public void Start() {
+        
+    }
+
     // Will be called once
     public void GenerateEmojiBalls() {
 
         if(PhotonNetwork.IsMasterClient == false) {
             Debug.Log("Balls have been generated already! Exiting function...");
+            // Destroy self if not in master client
+            Destroy(gameObject);
             return;
         }
         Debug.Log("Generating Emoji Balls...");
@@ -69,7 +76,7 @@ public class EmojiBallManager : MonoBehaviour
     private void ClearEmojiBalls() {
         foreach(KeyValuePair<string, GameObject> pair in _instantiatedEmojiBallPrefabs) {
             GameObject emojiBall = pair.Value;
-            emojiBall.GetComponent<EmojiBall>().DestroyEmojiBall();
+            emojiBall.GetComponent<EmojiBall>().DestroyNetworkObject();
             emojiBall = null;
         }
         _instantiatedEmojiBallPrefabs.Clear();
@@ -106,7 +113,7 @@ public class EmojiBallManager : MonoBehaviour
         // deletes it if there is
         GameObject duplicate = _instantiatedEmojiBallPrefabs[tag];
         if (duplicate) {
-            duplicate.GetComponent<EmojiBall>().DestroyEmojiBall();
+            duplicate.GetComponent<EmojiBall>().DestroyNetworkObject();
             _instantiatedEmojiBallPrefabs[tag] = null;
         }
     }

@@ -63,7 +63,7 @@ public class EmojiSubwordTap : MonoBehaviour {
     public void RemoveSubWords() {
         foreach (GameObject word in _subwordObjects) {
             GameObject temp = word;
-            word.GetComponent<SubWordTap>().DestroySubword();
+            word.GetComponent<SubWordTap>().DestroyNetworkObject();
             temp = null;
         }
         _subwordObjects.Clear();
