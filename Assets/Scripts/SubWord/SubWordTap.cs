@@ -12,8 +12,10 @@ public class SubWordTap : NetworkAdditions {
     // TODO
     // Do proper detection of hands
     private void OnTriggerEnter(Collider other) {
-        Debug.Log($"{gameObject.name} Detected {other.gameObject.name}");
-        Material material = GetComponent<Renderer>().material;
-        OnTap.Invoke(material);
+        if(PhotonNetwork.IsMasterClient) {
+            Debug.Log($"{gameObject.name} Detected {other.gameObject.name}");
+            Material material = GetComponent<Renderer>().material;
+            OnTap.Invoke(material);
+        }
     }
 }
