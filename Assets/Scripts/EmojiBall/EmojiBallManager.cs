@@ -195,7 +195,7 @@ public class EmojiBallManager : MonoBehaviour
 
             if (emojiBallScript) {
                 emojiBallScript.DisableGrab();
-                emojiBallScript.EnableEmojiTap();
+                // emojiBallScript.EnableEmojiTap();
             }
 
             // Also call for clients
@@ -233,8 +233,8 @@ public class EmojiBallManager : MonoBehaviour
             int id = emojiBallScript.GetViewID();
 
             if (emojiBallScript) {
-                emojiBallScript.DisableEmojiTap();
-                emojiBallScript.DisableSubwordTap();
+/*                emojiBallScript.DisableEmojiTap();
+                emojiBallScript.DisableSubwordTap();*/
                 emojiBallScript.EnableScale();
             }
 
