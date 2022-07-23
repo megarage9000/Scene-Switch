@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using UnityEngine.Events;
 
-public class EmojiSubwordTap : MonoBehaviour {
+public class EmojiSubwordTap : NetworkAdditions {
 
     public GameObject subwordPrefab;
     public UnityEvent OnSubwordTap;
@@ -43,7 +43,7 @@ public class EmojiSubwordTap : MonoBehaviour {
             var subword = PhotonNetwork.Instantiate(subwordPrefab.name, Vector3.zero, Quaternion.identity) as GameObject;
             subword.transform.parent = gameObject.transform;
             subword.transform.localPosition = spawnPos;
-            subword.GetComponent<Renderer>().material = subWords[i];
+            subword.GetComponent<NetworkAdditions>().SetMaterial(subWords[i]);
 
             /* Rotate the enemy to face towards player */
             subword.transform.rotation = Quaternion.LookRotation(transform.TransformDirection(Vector3.forward));
@@ -69,7 +69,7 @@ public class EmojiSubwordTap : MonoBehaviour {
         _subwordObjects.Clear();
     }
     private void ChangeMaterial(Material material) {
-        GetComponent<Renderer>().material = material;
+        SetMaterial(material);
         RemoveSubWords();
         OnSubwordTap.Invoke();
     }

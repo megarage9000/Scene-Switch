@@ -6,7 +6,6 @@ using Photon.Pun;
 public class NetworkAdditions : MonoBehaviour {
 
     bool _canDestroy = false;
-
     
     public void DestroyNetworkObject() {
         if (PhotonNetwork.IsMasterClient) {
@@ -39,4 +38,16 @@ public class NetworkAdditions : MonoBehaviour {
         }
         PhotonNetwork.Destroy(photonView);
     }
+
+    
+    public void SetMaterial(Material material) {
+        GetComponent<Renderer>().material = material;
+        gameObject.GetPhotonView().RPC("SetMaterialById", RpcTarget.Others, MaterialsTable.GetNameFromMaterial(material));
+    }
+
+    [PunRPC]
+    public void SetMaterialByName(string name) {
+        GetComponent<Renderer>().material = MaterialsTable.GetMaterialFromName(name);
+    }
+
 }
