@@ -42,7 +42,7 @@ public class NetworkAdditions : MonoBehaviour {
     
     public void SetMaterial(Material material) {
         GetComponent<Renderer>().material = material;
-        gameObject.GetPhotonView().RPC("SetMaterialById", RpcTarget.Others, MaterialsTable.GetNameFromMaterial(material));
+        gameObject.GetPhotonView().RPC("SetMaterialByName", RpcTarget.Others, MaterialsTable.GetNameFromMaterial(material));
     }
 
     [PunRPC]
