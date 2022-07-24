@@ -39,6 +39,8 @@ public class StateManager : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         
         Debug.Log("STATE: "  + currState); // STATE: Intro
+        if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
+        if(PhotonNetwork.LocalPlayer.ActorNumber > 1)
         audioSource.clip = audioClips[0];
         // audioSource.Play();
     }

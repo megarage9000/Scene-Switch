@@ -517,18 +517,25 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   audioClips:
-  - {fileID: 8300000, guid: bacb128bd8d2997489879ea74900e261, type: 3}
-  - {fileID: 8300000, guid: ca7aed93256873d4786adcc36eaa19fe, type: 3}
-  - {fileID: 8300000, guid: b9ca4fa034196e64291e468d06a1ca37, type: 3}
-  - {fileID: 8300000, guid: ded6d7e5d81d6a54ea611a3e281d1195, type: 3}
-  - {fileID: 8300000, guid: 129cd6b5b8fe91243b4bbb39741287c2, type: 3}
-  - {fileID: 8300000, guid: b6949f802d70a6f4da39edc6bf786548, type: 3}
-  - {fileID: 8300000, guid: ace7a36de48e70a4686798274f493d58, type: 3}
-  - {fileID: 8300000, guid: 9c66b32849b28324ca8d049d24188307, type: 3}
-  - {fileID: 8300000, guid: 020c1174e2b05364eb9b41a6a886a686, type: 3}
+  - {fileID: 8300000, guid: 12ae51e4cf09e234bb6abc68e2eedaef, type: 3}
+  - {fileID: 8300000, guid: 9f9be3c53b483ee44a6d7d1231540f8a, type: 3}
+  - {fileID: 8300000, guid: 737cb1fc5b0024543bafad7b132ad4f2, type: 3}
+  - {fileID: 8300000, guid: 6c0c210ba7faf9c4d8791fc23f0263c9, type: 3}
+  - {fileID: 8300000, guid: 1c1d49ee7ff23de4f98e18f3e2e5ec00, type: 3}
+  - {fileID: 8300000, guid: c4081009ba84f8e499c7aaa92d8c61a1, type: 3}
+  - {fileID: 8300000, guid: 2364a2480f24d5342b83a2b42eb0bcf7, type: 3}
+  - {fileID: 8300000, guid: 390a6a0ff8d67d445a247c03269e4f9a, type: 3}
+  - {fileID: 8300000, guid: d33c222b31e9c824f9113a6bbb402952, type: 3}
+  - {fileID: 8300000, guid: 4416e4bbfc6775c46b22f4d8787caa58, type: 3}
+  - {fileID: 8300000, guid: 4e1833fdc33314943a065b5f56a0e386, type: 3}
+  - {fileID: 8300000, guid: 7f19aa2f3014d0a42aef0af472309053, type: 3}
+  - {fileID: 8300000, guid: 1442b941e1bd8854c9fa2f72e2e386d3, type: 3}
+  - {fileID: 8300000, guid: 66055adcb605c72419bd81712a6449a6, type: 3}
+  - {fileID: 8300000, guid: fad857ec535050c4fada9fef02c3d1fd, type: 3}
+  - {fileID: 8300000, guid: 83db6f56a89122440a5d0f573da3e4d4, type: 3}
+  - {fileID: 8300000, guid: 8dc88df83c29ec74ba06ebc54b99d6b4, type: 3}
   mannequin: {fileID: 8999515008518450284}
   tmpText: {fileID: 1137300978}
-  subtitles: {fileID: 1137300976}
 --- !u!4 &181150461
 Transform:
   m_ObjectHideFlags: 0
