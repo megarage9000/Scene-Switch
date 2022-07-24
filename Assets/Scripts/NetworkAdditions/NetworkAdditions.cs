@@ -43,7 +43,6 @@ public class NetworkAdditions : MonoBehaviour {
         PhotonView photonView = gameObject.GetPhotonView();
         GetComponent<Renderer>().material = material;        
         string name = material.name;
-        Debug.Log("Calling SetMaterialByName");
         gameObject.GetPhotonView().RPC("SetMaterialByName", RpcTarget.Others, name); 
     }
 
@@ -52,4 +51,23 @@ public class NetworkAdditions : MonoBehaviour {
         GetComponent<Renderer>().material = MaterialsTable.GetMaterialFromName(name);
     }
 
+    public void FreezeRigidbody() {
+        FreezeRigidBodyNetwork();
+        gameObject.GetPhotonView().RPC("FreezeRigidBodyNetwork", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    private void FreezeRigidBodyNetwork() {
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+    }
+
+    public void UnFreezeRigidbody() {
+        UnFreezeRigidBodyNetwork();
+        gameObject.GetPhotonView().RPC("UnFreezeRigidBodyNetwork", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    private void UnFreezeRigidBodyNetwork() {
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+    }
 }

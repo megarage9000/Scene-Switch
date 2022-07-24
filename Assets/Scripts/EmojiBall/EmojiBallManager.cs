@@ -27,12 +27,9 @@ public class EmojiBallManager : MonoBehaviour
         _photonView = GetComponent<PhotonView>();
     }
 
-
-    public void Start() {
-        
-    }
-
-    // Will be called once
+   
+    // Generates all the given emoji balls. Ideally this should be called once,
+    // and will execute properly if under the master client
     public void GenerateEmojiBalls() {
 
         if(PhotonNetwork.IsMasterClient == false) {
@@ -70,9 +67,12 @@ public class EmojiBallManager : MonoBehaviour
         if(emojiBallScript) {
             emojiBallScript.OnGrabbed += OnEmojiBallGrabbed;
             emojiBallScript.OnPlaced += OnEmojiBallPlaced;
+            emojiBallScript.OnSubwordTapped += OnEmojiBallMaterialChanged;
+            emojiBallScript.OnScaled += OnEmojiBallScaled;
         }
     }
 
+    // Clears all the emoji balls in the _instantiatedEmojiBallPrefabs
     private void ClearEmojiBalls() {
         foreach(KeyValuePair<string, GameObject> pair in _instantiatedEmojiBallPrefabs) {
             GameObject emojiBall = pair.Value;
@@ -90,6 +90,8 @@ public class EmojiBallManager : MonoBehaviour
      * _placedEmojiBalls = simply stores a list of those emoji balls that are placed
      */
 
+    // Creates a duplicate of the emoji ball with its given tag,
+    // and places it in the _instantiatedEmojiBallPrefabs dictionary
     [PunRPC]
     private void SpawnEmojiBall(string tag) {
 
@@ -106,6 +108,8 @@ public class EmojiBallManager : MonoBehaviour
         _instantiatedEmojiBallPrefabs[tag] = emojiBall;
     }
 
+    // Removes the duplicate found in the _instantiatedEmojiBallPrefabs dictionary,
+    // sets the value at the given tag in the dictionary to null as well.
     [PunRPC]
     private void RemoveEmojiBallSpawn(string tag) {
 
@@ -118,22 +122,38 @@ public class EmojiBallManager : MonoBehaviour
         }
     }
 
+    // Simply looks through the _instantiatedEmojiBallPrefabs for the 
+    // emojiBall that just got placed, and adds it to the _placedEmojiBalls
+    // list. Also calls SpawnEmojiBall(tag)
     [PunRPC]
     private void AddToPlacedEmojis(string tag) {
+        // Get the placed emojiBall, and put it in 
+        // the _placeEmojiBalls
         GameObject emojiBall = _instantiatedEmojiBallPrefabs[tag];
         _placedEmojiBalls.Add(emojiBall);
-        _instantiatedEmojiBallPrefabs[tag] = null;
 
+        // Spawn a duplicate of the placed ball
+        _instantiatedEmojiBallPrefabs[tag] = null;
         SpawnEmojiBall(tag);
     }
 
+    // Looks for the the emoji ball with a given view id
+    // and removes it from the _placeEmojiBalls list. Also
+    // calls RemoveEmojiBallSpawn(emojiBall.tag)
     [PunRPC]
     private void RemoveFromPlacedEmojis(int id) {
         foreach (var emojiBall in _placedEmojiBalls) {
+
+            // Get the emojiBall script, and make sure it matches the given
+            // Photon View Id
             EmojiBall emojiScript = emojiBall.GetComponent<EmojiBall>();    
             if(emojiScript && emojiScript.GetViewID() == id) {
+
+                // Remove the emojiBall from the placed emoji balls,
+                // and remove the duplicate spawn
                 _placedEmojiBalls.Remove(emojiBall);
                 RemoveEmojiBallSpawn(emojiBall.tag);
+
                 // Reset instaitated emoji ball prefabs at that tag
                 // to this ball
                 _instantiatedEmojiBallPrefabs[emojiBall.tag] = emojiBall;
@@ -141,14 +161,20 @@ public class EmojiBallManager : MonoBehaviour
             }
         }
     }
-    // ---- Emoji Ball Listeners ---- // 
+    // ------------------------------------------------------------------ Emoji Ball Listeners ------------------------------------------------------------------ //
+
+    // Called everytime any one emojiBall gets placed
     private void OnEmojiBallPlaced(GameObject emojiBall) {
         // If that emoji is placed, spawn a duplicate
+
+        // Again, we want to make sure we update the master client if the event
+        // is not triggered there.
         if (PhotonNetwork.IsMasterClient) {
             Debug.Log($"{emojiBall.name} with {emojiBall.GetComponent<EmojiBall>().GetViewID()} called OnEmojiBallPlaced on master client");
             AddToPlacedEmojis(emojiBall.tag);
         }
         else {
+            // If on a remote client, perform the RPC call to the master client
             Debug.Log($"{emojiBall.name} with {emojiBall.GetComponent<EmojiBall>().GetViewID()} called OnEmojiBallPlaced on non-master client");
             _photonView.RPC("AddToPlacedEmojis", RpcTarget.MasterClient, emojiBall.tag);
         }
@@ -156,21 +182,46 @@ public class EmojiBallManager : MonoBehaviour
         PrintAllPlacedEmojis();
     }
 
+    // Called everytime any one emojiBall gets grabbed
     private void OnEmojiBallGrabbed(GameObject emojiBall) {
         // Remove duplicate that spawned
-        if(PhotonNetwork.IsMasterClient) {
+
+        // Again, we want to make sure we update the master client if the event
+        // is not triggered there.
+        if (PhotonNetwork.IsMasterClient) {
             int id = emojiBall.GetComponent<EmojiBall>().GetViewID();
             Debug.Log($"{emojiBall.name} with {emojiBall.GetComponent<EmojiBall>().GetViewID()} called OnEmojiBallGrabbed grab on master client");
             RemoveFromPlacedEmojis(id);
         }
         else {
+            // If on a remote client, perform the RPC call to the master client
             int id = emojiBall.GetComponent<EmojiBall>().GetViewID();
             Debug.Log($"{emojiBall.name} with {emojiBall.GetComponent<EmojiBall>().GetViewID()} called OnEmojiBallGrabbed grab on non-master client");
             _photonView.RPC("RemoveFromPlacedEmojis", RpcTarget.MasterClient, id);
         }
     }
 
-    // ---- Emoji Ball State Changes ----- //
+    // Called everytime any one emojiBall gets their material changed
+    private void OnEmojiBallMaterialChanged(GameObject emojiBall) {
+
+        if (PhotonNetwork.IsMasterClient) {
+
+        }
+
+    }
+
+    // Called everytime any one emojiBall is rescaled
+    private void OnEmojiBallScaled(GameObject emojiBall) {
+
+        if (PhotonNetwork.IsMasterClient) {
+
+        }
+    }
+
+
+    // ------------------------------------------------------------------ Emoji Ball State Changes ------------------------------------------------------------------ //
+
+    // Enables all placed emoji balls to be tappable by users
     public void EnableEmojiBallTap() {
         if(PhotonNetwork.IsMasterClient) {
             EnableEmojiBallTapNetwork();
@@ -180,6 +231,7 @@ public class EmojiBallManager : MonoBehaviour
         }
     }
 
+    // Enables all placed emoji balls to be scaled by users
     public void EnableEmojiBallScale() {
         if (PhotonNetwork.IsMasterClient) {
             EnableEmojiBallScaleNetwork();
@@ -192,7 +244,6 @@ public class EmojiBallManager : MonoBehaviour
     // Master client call to enable emoji tap
     [PunRPC]
     private void EnableEmojiBallTapNetwork() {
-        Debug.Log("Enabling Emoji Balls Tap");
         _photonView.RequestOwnership();
         ClearEmojiBalls();
 
@@ -206,33 +257,36 @@ public class EmojiBallManager : MonoBehaviour
             }
 
             // Also call for clients
-            _photonView.RPC("EnableEmojiBallTapClient", RpcTarget.All, id);
+            _photonView.RPC("EnableEmojiBallScaleTap", RpcTarget.Others, id);
         }
     }
 
-    // Other client call to enable emoji tap
+    // Non-master client call to enable emoji tap
     [PunRPC]
     private void EnableEmojiBallTapClient(int id) {
         if(PhotonNetwork.IsMasterClient) {
             return;
         }
-        Debug.Log($"Calling client side tap on id {id}");
         PhotonView emojiBallView = PhotonView.Find(id);
         if(emojiBallView) {
-            Debug.Log($"Found photonview on id {id}");
             EmojiBall emojiBallScript = emojiBallView.gameObject.GetComponent<EmojiBall>();
             if (emojiBallScript) {
-                Debug.Log($"Found emojiballscript on id {id}");
                 emojiBallScript.DisableGrab();
-                // emojiBallScript.EnableEmojiTap();
+
+                // Note that we don't need to call EnableEmojiTap() for all the emojiBalls
+                // on other clients, since that only needs to be done once for the master
+                // and all NetworkPlayers have the necessary colliders to tap.
+
+                // If tap was enabled on the client side, the subwords generation would happen
+                // on all clients, causing many networked objects to be pooled.
             }
         }
 
     }
 
+    // Master client call to enable emoji scale
     [PunRPC]
     private void EnableEmojiBallScaleNetwork() {
-        Debug.Log("Enabling Emoji Balls Scale");
         _photonView.RequestOwnership();
         foreach (GameObject emojiBall in _placedEmojiBalls) {
 
@@ -245,11 +299,11 @@ public class EmojiBallManager : MonoBehaviour
                 emojiBallScript.EnableScale();
             }
 
-            _photonView.RPC("EnableEmojiBallScaleClient", RpcTarget.All, id);
+            _photonView.RPC("EnableEmojiBallScaleClient", RpcTarget.Others, id);
         }
     }
 
-    // Other client call to enable emoji scale
+    // Non-master client call to enable emoji scale
     [PunRPC]
     private void EnableEmojiBallScaleClient(int id) {
         if (PhotonNetwork.IsMasterClient) {
@@ -260,8 +314,11 @@ public class EmojiBallManager : MonoBehaviour
         if (emojiBallView) {
             EmojiBall emojiBallScript = emojiBallView.gameObject.GetComponent<EmojiBall>();
             if (emojiBallScript) {
-                // emojiBallScript.DisableEmojiTap();
-                // emojiBallScript.DisableSubwordTap();
+
+                // As mentioned before, we don't need clients to have tap enabled on their end, since
+                // NetworkPlayers have the correct colliders on there controllers to simulate tap
+                // on the Master Client.
+
                 emojiBallScript.EnableScale();
             }
         }

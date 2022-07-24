@@ -72,7 +72,6 @@ public class EmojiSubwordTap : NetworkAdditions {
     }
     private void ChangeMaterial(Material material) {
         SetMaterial(material);
-        RemoveSubWords();
         OnSubwordTap.Invoke();
     }
 }

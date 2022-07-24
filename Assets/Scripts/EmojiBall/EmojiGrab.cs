@@ -10,7 +10,6 @@ public class EmojiGrab : XRGrabInteractable
     private IXRSelectInteractor _interactor;
     private XRInteractionManager _interactionManager;
     private GameObject _placementLocation;
-    private Rigidbody _rigidBody;
     private PhotonView _photonView;
 
     public UnityEvent OnPlaced;
@@ -40,7 +39,6 @@ public class EmojiGrab : XRGrabInteractable
         else {
             Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called grab on non-master client that has actor number {PhotonNetwork.LocalPlayer.ActorNumber}");
             _photonView.RPC("OnGrabbedNetwork", RpcTarget.MasterClient);
-            _rigidBody.constraints = RigidbodyConstraints.None;
         }
     }
 
@@ -56,7 +54,6 @@ public class EmojiGrab : XRGrabInteractable
         else {
             Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called grab on non-master client that has actor number {PhotonNetwork.LocalPlayer.ActorNumber}"); ;
             _photonView.RPC("OnReleasedNetwork", RpcTarget.MasterClient);
-            _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
         }
     }
 
@@ -116,7 +113,6 @@ public class EmojiGrab : XRGrabInteractable
             else {
                 Debug.Log($"{gameObject.name} with {_photonView.ViewID} called release on non-master client");
                 _photonView.RPC("OnPlacedNetwork", RpcTarget.MasterClient);
-                _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
             }
         }
     }
@@ -126,7 +122,7 @@ public class EmojiGrab : XRGrabInteractable
     private void OnPlacedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been placed");
         OnPlaced.Invoke();
-        _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        gameObject.GetComponent<NetworkAdditions>().FreezeRigidbody();
         _placementLocation = null;
     }
 
@@ -134,14 +130,14 @@ public class EmojiGrab : XRGrabInteractable
     private void OnGrabbedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been grabbed");
         OnGrabbed.Invoke();
-        _rigidBody.constraints = RigidbodyConstraints.None;
+        gameObject.GetComponent<NetworkAdditions>().UnFreezeRigidbody();
     }
 
     [PunRPC]
     private void OnReleasedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been released");
         OnReleased.Invoke();
-        _rigidBody.constraints = RigidbodyConstraints.FreezeAll;
+        gameObject.GetComponent<NetworkAdditions>().FreezeRigidbody();
     }
 
 
