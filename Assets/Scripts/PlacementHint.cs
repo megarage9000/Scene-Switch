@@ -21,6 +21,14 @@ public class PlacementHint : MonoBehaviour
         outline.enabled = false;
     }
 
+    public void ShowPlacement() {
+        renderer.enabled = true;
+    }
+
+    public void HidePlacement() {
+        renderer.enabled = false;
+    }
+
     private void OnTriggerEnter(Collider other) {
        // Debug.Log($"Placement detected {other.gameObject.name}");
        ShowHint();

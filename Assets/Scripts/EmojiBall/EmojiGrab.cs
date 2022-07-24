@@ -124,13 +124,18 @@ public class EmojiGrab : XRGrabInteractable
     private void OnPlacedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been placed");
         OnPlaced.Invoke();
-        _placementLocation = null;
+        if (_placementLocation) {
+            _placementLocation.GetComponent<PlacementHint>().HidePlacement();
+        }
     }
 
     [PunRPC]
     private void OnGrabbedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been grabbed");
         OnGrabbed.Invoke();
+        if(_placementLocation) {
+            _placementLocation.GetComponent<PlacementHint>().ShowPlacement();
+        }
     }
 
     [PunRPC]
