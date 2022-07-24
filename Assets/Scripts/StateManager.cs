@@ -30,8 +30,8 @@ public class StateManager : MonoBehaviour
     private AudioSource audioSource;
     private State prevState = 0;
     private State currState = 0;
-    private bool playOneShot = false;
-    private float timer = 0f;
+    private bool playOneShot = true;
+    private float timer;
 
 
     void Start(){
@@ -39,25 +39,30 @@ public class StateManager : MonoBehaviour
         audioSource = this.GetComponent<AudioSource>();
         
         Debug.Log("STATE: "  + currState); // STATE: Intro
-        if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-        if(PhotonNetwork.LocalPlayer.ActorNumber > 1)
-        audioSource.clip = audioClips[0];
-        // audioSource.Play();
+        audioSource.clip = audioClips[3];
+        timer = 0f;
     }
 
     void Update(){
         timer += Time.deltaTime;
 
-        if(currState == State.Intro && !audioSource.isPlaying){
-            currState = State.Mannequin;
-            playOneShot = true;
-            timer = 0f;
+        if(currState == State.Intro && timer > 3f){
+            if(playOneShot){
+                audioSource.Play();
+                playOneShot = false;
+            }
+
+            if(!audioSource.isPlaying){
+                currState = State.Mannequin;
+                playOneShot = true;
+                timer = 0f;
+            }
         }
         else if(currState == State.Mannequin && timer > 3f){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Mannequin
                 mannequin.SetActive(true);
-                audioSource.clip = audioClips[1];
+                audioSource.clip = audioClips[4];
                 audioSource.Play();
                 playOneShot = false;
             }
@@ -65,7 +70,7 @@ public class StateManager : MonoBehaviour
             if(!audioSource.isPlaying){
                 currState = State.Head;
                 if(PhotonNetwork.LocalPlayer.ActorNumber > 1)
-                    tmpText.text = "Place emoji on mannequin";
+                    tmpText.text = "Place an emoji on the mannequin";
                 playOneShot = true;
                 timer = 0f;
             }
@@ -73,14 +78,14 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Head && timer > 3f){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Head
-                audioSource.clip = audioClips[2];
+                audioSource.clip = audioClips[5];
                 audioSource.Play();
                 playOneShot = false;
             }
 
-            if(timer > 24f){
+            if(timer > /*30f*/ + 35f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                    tmpText.text = "Click (B) to move to next body part";
+                    tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
                     currState = State.Face;
@@ -94,14 +99,14 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Face && timer > 3f){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Face
-                audioSource.clip = audioClips[3];
+                audioSource.clip = audioClips[6];
                 audioSource.Play();
                 playOneShot = false;
             }
 
-            if(timer > 32f){
+            if(timer > /*30f*/ + 23f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                    tmpText.text = "Click (B) to move to next body part";
+                    tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
                     currState = State.Shoulders;
@@ -117,14 +122,14 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Shoulders){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Shoulders
-                audioSource.clip = audioClips[4];
+                audioSource.clip = audioClips[7];
                 audioSource.Play();
                 playOneShot = false;
             }
 
-            if(timer > 15f){
+            if(timer > /*30f*/ + 20f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                    tmpText.text = "Click (B) to move to next body part";
+                    tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
                     currState = State.Arms;
@@ -138,14 +143,14 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Arms){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Arms
-                audioSource.clip = audioClips[5];
+                audioSource.clip = audioClips[8];
                 audioSource.Play();
                 playOneShot = false;
             }
 
-            if(timer > 2f){
+            if(timer > /*30f*/ + 7f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                    tmpText.text = "Click (B) to move to next body part";
+                    tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
                     currState = State.Chest;
@@ -159,14 +164,14 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Chest){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Chest
-                audioSource.clip = audioClips[6];
+                audioSource.clip = audioClips[9];
                 audioSource.Play();
                 playOneShot = false;
             }
 
-            if(timer > 11f){
+            if(timer > /*30f*/ + 17f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                    tmpText.text = "Click (B) to move to next body part";
+                    tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
                     currState = State.Stomach;
@@ -180,14 +185,14 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Stomach){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Stomach
-                audioSource.clip = audioClips[7];
+                audioSource.clip = audioClips[10];
                 audioSource.Play();
                 playOneShot = false;
             }
 
-            if(timer > 12f){
+            if(timer > /*30f*/ + 17f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                    tmpText.text = "Click (B) to move to next body part";
+                    tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
                     currState = State.Body;
@@ -201,14 +206,14 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Body){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Body
-                audioSource.clip = audioClips[8];
+                audioSource.clip = audioClips[11];
                 audioSource.Play();
                 playOneShot = false;
             }
 
-            if(timer > 12f){
+            if(timer > /*30f*/ + 17f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                    tmpText.text = "Click (B) to move to next body part";
+                    tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
                     currState = State.Emojis;
