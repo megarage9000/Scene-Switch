@@ -257,7 +257,7 @@ public class EmojiBallManager : MonoBehaviour
             }
 
             // Also call for clients
-            _photonView.RPC("EnableEmojiBallScaleTap", RpcTarget.Others, id);
+            _photonView.RPC("EnableEmojiBallTapClient", RpcTarget.Others, id);
         }
     }
 
