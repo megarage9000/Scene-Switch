@@ -44,7 +44,6 @@ public class EmojiSubwordTap : NetworkAdditions {
             subword.name = subwordPrefab.name;
             subword.transform.parent = gameObject.transform;
             subword.transform.localPosition = spawnPos;
-            Debug.Log("Calling SetMaterial hereerr?");
             subword.GetComponent<NetworkAdditions>().SetMaterial(subWords[i]);
 
             /* Rotate the enemy to face towards player */
