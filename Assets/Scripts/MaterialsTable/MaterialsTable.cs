@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using UnityEditor;
+using System.Linq;
 
 public class MaterialsTable  {
 
@@ -15,17 +15,15 @@ public class MaterialsTable  {
         _nameToMaterial = new Dictionary<string, Material>();
         _materialToName = new Dictionary<Material, string>();
 
-        Debug.Log("Loading materials");
-        string[] guids = AssetDatabase.FindAssets("t:material", _folderFiter);
+        var materials = Resources.LoadAll("Materials", typeof(Material)).Cast<Material>().ToArray();
 
-        foreach (string guid in guids) {
-            string path = AssetDatabase.GUIDToAssetPath(guid);
-            Material material = AssetDatabase.LoadAssetAtPath<Material>(path);
+        foreach (Material material in materials) {
             string name = material.name;
 
             _nameToMaterial[name] = material;
             _materialToName[material] = name;
         }
+
 
         printMaterials();
     }
