@@ -19,7 +19,6 @@ public class EmojiGrab : XRGrabInteractable
     protected override void Awake() {
         base.Awake();
         _interactionManager = FindObjectOfType<XRInteractionManager>();
-        _rigidBody = GetComponent<Rigidbody>();
         _photonView = GetComponent<PhotonView>();
         OnPlaced = new UnityEvent();
         OnGrabbed = new UnityEvent();
@@ -122,7 +121,7 @@ public class EmojiGrab : XRGrabInteractable
     private void OnPlacedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been placed");
         OnPlaced.Invoke();
-        gameObject.GetComponent<NetworkAdditions>().FreezeRigidbody();
+        gameObject.GetComponent<EmojiBall>().FreezeRigidbody();
         _placementLocation = null;
     }
 
@@ -130,14 +129,14 @@ public class EmojiGrab : XRGrabInteractable
     private void OnGrabbedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been grabbed");
         OnGrabbed.Invoke();
-        gameObject.GetComponent<NetworkAdditions>().UnFreezeRigidbody();
+        gameObject.GetComponent<EmojiBall>().UnFreezeRigidbody();
     }
 
     [PunRPC]
     private void OnReleasedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been released");
         OnReleased.Invoke();
-        gameObject.GetComponent<NetworkAdditions>().FreezeRigidbody();
+        gameObject.GetComponent<EmojiBall>().FreezeRigidbody();
     }
 
 
