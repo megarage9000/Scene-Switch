@@ -6,6 +6,7 @@ using Photon.Pun;
 public class MangerSpawner : MonoBehaviour
 {
     public GameObject EmojiBallManagerPrefab;
+    public GameObject MannequinPrefab;
 
     // For testing only, not needed
     public GameObject ProcTap;
@@ -13,11 +14,13 @@ public class MangerSpawner : MonoBehaviour
 
     public Transform TapLocation;
     public Transform ScaleLocation;
+    public Transform MannequinLocation;
    
     public void SpawnEmojiBallManager() {
         GameObject manager = PhotonNetwork.Instantiate(EmojiBallManagerPrefab.name, transform.position, transform.rotation);
         GameObject tapObject = PhotonNetwork.Instantiate(ProcTap.name, TapLocation.position, TapLocation.rotation);
         GameObject scaleObject = PhotonNetwork.Instantiate(ProcScale.name, ScaleLocation.position, ScaleLocation.rotation);
+        PhotonNetwork.Instantiate(MannequinPrefab.name, MannequinLocation.position, MannequinLocation.rotation);
 
         EventCaller tapCaller = tapObject.GetComponent<EventCaller>();
         if(tapCaller) {

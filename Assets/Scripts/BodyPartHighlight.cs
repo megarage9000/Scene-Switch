@@ -10,10 +10,20 @@ public class BodyPartHighlight : MonoBehaviour
     void Start()
     {
         _outline = GetComponent<Outline>();
-        HighlightBodyPart(true);
+        StartCoroutine(HighlightSequence());
     }
 
     public void HighlightBodyPart(bool canHighlight) {
         _outline.enabled = canHighlight;
+    }
+
+    // Demo purposes only
+    IEnumerator HighlightSequence() {
+        bool _canHighlight = false;
+        while(true) {
+            HighlightBodyPart(_canHighlight);
+            _canHighlight = !_canHighlight;
+            yield return new WaitForSecondsRealtime(1f);
+        }
     }
 }
