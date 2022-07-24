@@ -27,11 +27,11 @@ public class StateManager : MonoBehaviour
     [SerializeField] GameObject mannequin;
     [SerializeField] TMP_Text tmpText;
 
+    [SerializeField] State currState = State.Intro;
+    [SerializeField] float timer;
+
     private AudioSource audioSource;
-    private State prevState = 0;
-    private State currState = 0;
     private bool playOneShot = true;
-    private float timer;
 
 
     void Start(){
@@ -78,6 +78,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Head && timer > 3f){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Head
+                mannequin.transform.Find("Head").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[5];
                 audioSource.Play();
                 playOneShot = false;
@@ -110,6 +111,7 @@ public class StateManager : MonoBehaviour
 
                 if(HandPresence.bPressed){
                     currState = State.Shoulders;
+                    mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
                     playOneShot = true;
@@ -143,6 +145,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Arms){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Arms
+                mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[8];
                 audioSource.Play();
                 playOneShot = false;
@@ -154,6 +157,7 @@ public class StateManager : MonoBehaviour
 
                 if(HandPresence.bPressed){
                     currState = State.Chest;
+                    mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
                     playOneShot = true;
@@ -164,6 +168,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Chest){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Chest
+                mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[9];
                 audioSource.Play();
                 playOneShot = false;
@@ -175,6 +180,7 @@ public class StateManager : MonoBehaviour
 
                 if(HandPresence.bPressed){
                     currState = State.Stomach;
+                    mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
                     playOneShot = true;
@@ -185,6 +191,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Stomach){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Stomach
+                mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[10];
                 audioSource.Play();
                 playOneShot = false;
@@ -196,6 +203,7 @@ public class StateManager : MonoBehaviour
 
                 if(HandPresence.bPressed){
                     currState = State.Body;
+                    mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
                     playOneShot = true;
@@ -206,6 +214,13 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Body){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Body
+                mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = true;
+                mannequin.transform.Find("Extras").GetComponent<Outline>().enabled = true;
+                mannequin.transform.Find("Head").GetComponent<Outline>().enabled = true;
+                mannequin.transform.Find("Joints").GetComponent<Outline>().enabled = true;
+                mannequin.transform.Find("Legs").GetComponent<Outline>().enabled = true;
+                mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = true;
+                mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[11];
                 audioSource.Play();
                 playOneShot = false;
@@ -213,10 +228,17 @@ public class StateManager : MonoBehaviour
 
             if(timer > /*30f*/ + 17f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                    tmpText.text = "Click (B) to move to the next body part";
+                    tmpText.text = "Click (B) to go to the next exercise";
 
                 if(HandPresence.bPressed){
                     currState = State.Emojis;
+                    mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
+                    mannequin.transform.Find("Extras").GetComponent<Outline>().enabled = false;
+                    mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
+                    mannequin.transform.Find("Joints").GetComponent<Outline>().enabled = false;
+                    mannequin.transform.Find("Legs").GetComponent<Outline>().enabled = false;
+                    mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
+                    mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
                     playOneShot = true;
@@ -229,19 +251,15 @@ public class StateManager : MonoBehaviour
 
         else if(currState == State.Emojis){
             Debug.Log("STATE: "  + currState); // STATE: Emojis
-            prevState = currState;
         }
         else if(currState == State.Eword){
             Debug.Log("STATE: "  + currState); // STATE: Eword
-            prevState = currState;
         }
         else if(currState == State.Resize){
             Debug.Log("STATE: "  + currState); // STATE: Resize
-            prevState = currState;
         }
         else if(currState == State.End){
             Debug.Log("STATE: "  + currState); // STATE: End
-            prevState = currState;
         }
     }
 }
