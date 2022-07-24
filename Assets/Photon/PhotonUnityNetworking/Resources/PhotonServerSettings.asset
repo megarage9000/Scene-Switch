@@ -42,6 +42,27 @@ MonoBehaviour:
   - CantHearYou
   - ChangeColour
   - HeresWhy
+  - DestroyEmojiBall
+  - DestroyThis
+  - EnableEmojiBallScale
+  - EnableEmojiBallTap
+  - CallEvent
+  - AddToPlacedEmojis
+  - EnableEmojiBallScaleNetwork
+  - EnableEmojiBallTapNetwork
+  - RemoveEmojiBallSpawn
+  - RemoveFromPlacedEmojis
+  - SpawnEmojiBall
+  - OnGrabbedNetwork
+  - OnPlacedNetwork
+  - OnReleasedNetwork
+  - EnableEmojiBallTapClient
+  - EnableEmojiBallScaleClient
+  - SetMaterial
+  - SetMaterialById
+  - SetMaterialByName
+  - FreezeRigidBodyNetwork
+  - UnFreezeRigidBodyNetwork
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

@@ -3,15 +3,21 @@
 --- !u!78 &1
 TagManager:
   serializedVersion: 2
-  tags: []
+  tags:
+  - AngryEmoji
+  - DisgustedEmoji
+  - HappyEmoji
+  - SadEmoji
+  - ScaredEmoji
+  - SurprisedEmoji
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - GrabLayer
   - Water
   - UI
-  - 
+  - SecondGrabLayer
   - 
   - 
   - 
