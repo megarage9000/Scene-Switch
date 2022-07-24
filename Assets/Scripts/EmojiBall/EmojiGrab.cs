@@ -39,6 +39,7 @@ public class EmojiGrab : XRGrabInteractable
             Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called grab on non-master client that has actor number {PhotonNetwork.LocalPlayer.ActorNumber}");
             _photonView.RPC("OnGrabbedNetwork", RpcTarget.MasterClient);
         }
+        UnFreezeRigidbody();
     }
 
     protected override void OnSelectExited(SelectExitEventArgs args) {
@@ -54,6 +55,7 @@ public class EmojiGrab : XRGrabInteractable
             Debug.Log($"{gameObject.name} with {_photonView.ViewID} and owner actor number {_photonView.Owner.ActorNumber} called grab on non-master client that has actor number {PhotonNetwork.LocalPlayer.ActorNumber}"); ;
             _photonView.RPC("OnReleasedNetwork", RpcTarget.MasterClient);
         }
+        FreezeRigidbody();
     }
 
     private void AddGrabEvent(GameObject controller) {
@@ -113,6 +115,7 @@ public class EmojiGrab : XRGrabInteractable
                 Debug.Log($"{gameObject.name} with {_photonView.ViewID} called release on non-master client");
                 _photonView.RPC("OnPlacedNetwork", RpcTarget.MasterClient);
             }
+            FreezeRigidbody();
         }
     }
 
@@ -121,7 +124,6 @@ public class EmojiGrab : XRGrabInteractable
     private void OnPlacedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been placed");
         OnPlaced.Invoke();
-        gameObject.GetComponent<EmojiBall>().FreezeRigidbody();
         _placementLocation = null;
     }
 
@@ -129,15 +131,31 @@ public class EmojiGrab : XRGrabInteractable
     private void OnGrabbedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been grabbed");
         OnGrabbed.Invoke();
-        gameObject.GetComponent<EmojiBall>().UnFreezeRigidbody();
     }
 
     [PunRPC]
     private void OnReleasedNetwork() {
         Debug.Log($"{gameObject.name} with {_photonView.ViewID} has been released");
         OnReleased.Invoke();
-        gameObject.GetComponent<EmojiBall>().FreezeRigidbody();
     }
 
+    public void FreezeRigidbody() {
+        FreezeRigidBodyNetwork();
+        gameObject.GetPhotonView().RPC("FreezeRigidBodyNetwork", RpcTarget.Others);
+    }
 
+    [PunRPC]
+    private void FreezeRigidBodyNetwork() {
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
+    }
+
+    public void UnFreezeRigidbody() {
+        UnFreezeRigidBodyNetwork();
+        gameObject.GetPhotonView().RPC("UnFreezeRigidBodyNetwork", RpcTarget.Others);
+    }
+
+    [PunRPC]
+    private void UnFreezeRigidBodyNetwork() {
+        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
+    }
 }

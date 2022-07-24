@@ -51,23 +51,5 @@ public class NetworkAdditions : MonoBehaviour {
         GetComponent<Renderer>().material = MaterialsTable.GetMaterialFromName(name);
     }
 
-    public void FreezeRigidbody() {
-        FreezeRigidBodyNetwork();
-        gameObject.GetPhotonView().RPC("FreezeRigidBodyNetwork", RpcTarget.Others);
-    }
 
-    [PunRPC]
-    private void FreezeRigidBodyNetwork() {
-        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.FreezeAll;
-    }
-
-    public void UnFreezeRigidbody() {
-        UnFreezeRigidBodyNetwork();
-        gameObject.GetPhotonView().RPC("UnFreezeRigidBodyNetwork", RpcTarget.Others);
-    }
-
-    [PunRPC]
-    private void UnFreezeRigidBodyNetwork() {
-        gameObject.GetComponent<Rigidbody>().constraints = RigidbodyConstraints.None;
-    }
 }
