@@ -241,6 +241,8 @@ MonoBehaviour:
   rightHand: {fileID: 728045517925465525}
   leftHandAnimator: {fileID: 3361288050481746215}
   rightHandAnimator: {fileID: 5666443371566536343}
+  purpleMat: {fileID: 2100000, guid: 51857da6b3273984da42834c3a46daaf, type: 2}
+  greenMat: {fileID: 2100000, guid: 503ad55dea3c80f46be1d90641c19a52, type: 2}
 --- !u!114 &361208564837730897
 MonoBehaviour:
   m_ObjectHideFlags: 0
