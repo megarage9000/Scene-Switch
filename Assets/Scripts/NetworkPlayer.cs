@@ -13,6 +13,10 @@ public class NetworkPlayer : MonoBehaviour
     [SerializeField] Transform rightHand;
     [SerializeField] Animator leftHandAnimator;
     [SerializeField] Animator rightHandAnimator;
+    [SerializeField] Material purpleMat;
+    [SerializeField] Material greenMat;
+
+    static public bool changePlayerHandColor = false;
 
     private Transform headRig;
     private Transform leftHandRig;
@@ -26,9 +30,19 @@ public class NetworkPlayer : MonoBehaviour
         headRig = rig.transform.Find("Camera Offset/Main Camera");
         leftHandRig = rig.transform.Find("Camera Offset/LeftHand Controller");
         rightHandRig = rig.transform.Find("Camera Offset/RightHand Controller");
-    
+
+        foreach (var mesh in GetComponentsInChildren<Renderer>()) {
+            if(PhotonNetwork.IsMasterClient){
+                mesh.material = (photonView.IsMine) ? greenMat : purpleMat;
+            }
+            else{
+                mesh.material = (photonView.IsMine) ? purpleMat : greenMat;
+            }
+        }
+
         // Disabling mesh renderers if its the local player
         if(photonView.IsMine) {
+            changePlayerHandColor = true;
             foreach (var mesh in GetComponentsInChildren<Renderer>()) {
                 mesh.enabled = false;
             }
