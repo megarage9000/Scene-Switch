@@ -11,14 +11,24 @@ public class BodyPartHighlight : MonoBehaviour
     void Start()
     {
         _outline = GetComponent<Outline>();
-        StartCoroutine(HighlightSequence());
+        if(PhotonNetwork.IsMasterClient) {
+            StartCoroutine(HighlightSequence());
+        }
     }
 
+    [PunRPC]
     public void HighlightBodyPart(bool canHighlight) {
-        HighlightBodyPartNetwork(canHighlight);
-        gameObject.GetPhotonView().RPC("HighlightBodyPartNetwork", RpcTarget.Others, canHighlight);
+
+        if(PhotonNetwork.IsMasterClient) {
+            HighlightBodyPartNetwork(canHighlight);
+            gameObject.GetPhotonView().RPC("HighlightBodyPartNetwork", RpcTarget.Others, canHighlight);
+        }
+        else {
+            gameObject.GetPhotonView().RPC("HighlightBodyPart", RpcTarget.MasterClient, canHighlight);
+        }    
     }
 
+    [PunRPC]
     private void HighlightBodyPartNetwork(bool canHighlight) {
         _outline.enabled = canHighlight;
     }

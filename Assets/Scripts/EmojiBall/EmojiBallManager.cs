@@ -223,6 +223,7 @@ public class EmojiBallManager : MonoBehaviour
 
     // Enables all placed emoji balls to be tappable by users
     public void EnableEmojiBallTap() {
+        
         if(PhotonNetwork.IsMasterClient) {
             EnableEmojiBallTapNetwork();
         }
@@ -243,7 +244,8 @@ public class EmojiBallManager : MonoBehaviour
 
     // Master client call to enable emoji tap
     [PunRPC]
-    private void EnableEmojiBallTapNetwork() {
+    public void EnableEmojiBallTapNetwork() {
+        Debug.Log("Enabling tap");
         _photonView.RequestOwnership();
         ClearEmojiBalls();
 
@@ -263,7 +265,7 @@ public class EmojiBallManager : MonoBehaviour
 
     // Non-master client call to enable emoji tap
     [PunRPC]
-    private void EnableEmojiBallTapClient(int id) {
+    public void EnableEmojiBallTapClient(int id) {
         if(PhotonNetwork.IsMasterClient) {
             return;
         }
@@ -286,7 +288,8 @@ public class EmojiBallManager : MonoBehaviour
 
     // Master client call to enable emoji scale
     [PunRPC]
-    private void EnableEmojiBallScaleNetwork() {
+    public void EnableEmojiBallScaleNetwork() {
+        Debug.Log("Enabling scale");
         _photonView.RequestOwnership();
         foreach (GameObject emojiBall in _placedEmojiBalls) {
 
@@ -305,7 +308,7 @@ public class EmojiBallManager : MonoBehaviour
 
     // Non-master client call to enable emoji scale
     [PunRPC]
-    private void EnableEmojiBallScaleClient(int id) {
+    public void EnableEmojiBallScaleClient(int id) {
         if (PhotonNetwork.IsMasterClient) {
             return;
         }

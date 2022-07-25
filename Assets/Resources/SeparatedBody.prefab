@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 2906389507836924084}
   - component: {fileID: 6454633153208680330}
   - component: {fileID: 1271886113608333354}
+  - component: {fileID: 8158313265286318913}
   m_Layer: 0
   m_Name: Head
   m_TagString: Untagged
@@ -3072,6 +3073,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f70f8d6e813ba144bd7f11afdb0960a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &8158313265286318913
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1332067828209441987}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &1994087148898951963
 GameObject:
   m_ObjectHideFlags: 0
@@ -3085,6 +3108,7 @@ GameObject:
   - component: {fileID: 3778920413256627815}
   - component: {fileID: 1871252364657250321}
   - component: {fileID: 2915421718374018811}
+  - component: {fileID: 645650395718397720}
   m_Layer: 0
   m_Name: Torso
   m_TagString: Untagged
@@ -9879,6 +9903,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f70f8d6e813ba144bd7f11afdb0960a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &645650395718397720
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1994087148898951963}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &3247985780553828444
 GameObject:
   m_ObjectHideFlags: 0
@@ -9892,6 +9938,7 @@ GameObject:
   - component: {fileID: 8877683200011185713}
   - component: {fileID: 7129408703077447376}
   - component: {fileID: 6026875826234353876}
+  - component: {fileID: 5339153805253729836}
   m_Layer: 0
   m_Name: Arms
   m_TagString: Untagged
@@ -12590,6 +12637,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f70f8d6e813ba144bd7f11afdb0960a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &5339153805253729836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3247985780553828444}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &4382078610205713605
 GameObject:
   m_ObjectHideFlags: 0
@@ -12639,6 +12708,7 @@ GameObject:
   - component: {fileID: 2235562907501379168}
   - component: {fileID: 8906519459045874967}
   - component: {fileID: 3572202006152518882}
+  - component: {fileID: 2760374636027894592}
   m_Layer: 0
   m_Name: Legs
   m_TagString: Untagged
@@ -14455,6 +14525,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f70f8d6e813ba144bd7f11afdb0960a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &2760374636027894592
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4449879544818327401}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &5541732672891216678
 GameObject:
   m_ObjectHideFlags: 0
@@ -14468,6 +14560,7 @@ GameObject:
   - component: {fileID: 1220722994675825273}
   - component: {fileID: 2300493125745465367}
   - component: {fileID: 9117477850815487774}
+  - component: {fileID: 814438191518650515}
   m_Layer: 0
   m_Name: Stomach
   m_TagString: Untagged
@@ -17355,6 +17448,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f70f8d6e813ba144bd7f11afdb0960a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &814438191518650515
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5541732672891216678}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 3
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 0
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &6225875216608987832
 GameObject:
   m_ObjectHideFlags: 0
@@ -17690,6 +17805,10 @@ PrefabInstance:
       propertyPath: ObservedComponents.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8187138210570471161, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+      propertyPath: ObservedComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 3885020242408507058}
     - target: {fileID: 9109145842069068454, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: m_Name
       value: StomachPlacement
@@ -17752,6 +17871,17 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+--- !u!114 &3885020242408507058 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3295560871205434632, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+  m_PrefabInstance: {fileID: 1753714953658201018}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &7366865984899426576 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9109145842069068458, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
@@ -17768,6 +17898,10 @@ PrefabInstance:
       propertyPath: ObservedComponents.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8187138210570471161, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+      propertyPath: ObservedComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 8035461228740527670}
     - target: {fileID: 9109145842069068454, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: m_Name
       value: ChestPlacement
@@ -17835,6 +17969,17 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9109145842069068458, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
   m_PrefabInstance: {fileID: 4773708192819491646}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8035461228740527670 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3295560871205434632, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+  m_PrefabInstance: {fileID: 4773708192819491646}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &5541771262905877217
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -17968,6 +18113,10 @@ PrefabInstance:
       propertyPath: ObservedComponents.Array.size
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -8187138210570471161, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+      propertyPath: ObservedComponents.Array.data[0]
+      value: 
+      objectReference: {fileID: 8634592867566913063}
     - target: {fileID: 9109145842069068454, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: m_Name
       value: NeckAndShouldersPlacement
@@ -18035,3 +18184,14 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 9109145842069068458, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
   m_PrefabInstance: {fileID: 6514478103305319215}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &8634592867566913063 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 3295560871205434632, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+  m_PrefabInstance: {fileID: 6514478103305319215}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 627855c7f81362d41938ffe0b1475957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 

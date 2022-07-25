@@ -6,7 +6,7 @@ using Photon.Pun;
 public class NetworkAdditions : MonoBehaviour {
 
     bool _canDestroy = false;
-    
+
     public void DestroyNetworkObject() {
         if (PhotonNetwork.IsMasterClient) {
             DestroyThis();
@@ -20,7 +20,7 @@ public class NetworkAdditions : MonoBehaviour {
     private void DestroyThis() {
         PhotonView photonView = gameObject.GetPhotonView();
         photonView.RequestOwnership();
-        if(photonView.IsMine) {
+        if (photonView.IsMine) {
             PhotonNetwork.Destroy(photonView);
         }
         else {
@@ -39,17 +39,20 @@ public class NetworkAdditions : MonoBehaviour {
         PhotonNetwork.Destroy(photonView);
     }
 
+
     public void SetMaterial(Material material) {
-        PhotonView photonView = gameObject.GetPhotonView();
-        GetComponent<Renderer>().material = material;        
-        string name = material.name;
-        gameObject.GetPhotonView().RPC("SetMaterialByName", RpcTarget.Others, name); 
+        gameObject.GetPhotonView().RPC("SetMaterialByName", RpcTarget.MasterClient, material.name);
     }
 
     [PunRPC]
     public void SetMaterialByName(string name) {
-        GetComponent<Renderer>().material = MaterialsTable.GetMaterialFromName(name);
+        if(PhotonNetwork.IsMasterClient) {
+            gameObject.GetPhotonView().RPC("SetMaterialByNameNetwork", RpcTarget.All, name);
+        }
     }
 
-
+    [PunRPC]
+    public void SetMaterialByNameNetwork(string name) {
+        GetComponent<Renderer>().material = MaterialsTable.GetMaterialFromName(name);
+    }
 }
