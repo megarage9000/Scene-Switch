@@ -37,6 +37,9 @@ public class StateManager : MonoBehaviour
 
     [PunRPC]
     void ChangeState(short s){
+        timer = 0f;
+        playOneShot = true;
+        audioSource.Stop();
         currState = (State)s;
     }
 
@@ -52,6 +55,7 @@ public class StateManager : MonoBehaviour
 
     void Update(){
         timer += Time.deltaTime;
+        Debug.Log("CURRENT STATE: " + currState); // STATE: Intro
 
         if(currState == State.Intro && timer > 3f){
             if(playOneShot){
@@ -62,8 +66,6 @@ public class StateManager : MonoBehaviour
             if(!audioSource.isPlaying){
                 // currState = State.Mannequin;
                 pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Mannequin);
-                playOneShot = true;
-                timer = 0f;
             }
         }
         else if(currState == State.Mannequin && timer > 3f){
@@ -80,8 +82,6 @@ public class StateManager : MonoBehaviour
                 pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Head);
                 if(PhotonNetwork.LocalPlayer.ActorNumber > 1)
                     tmpText.text = "Place an emoji on the mannequin";
-                playOneShot = true;
-                timer = 0f;
             }
         }
         else if(currState == State.Head && timer > 3f){
@@ -102,8 +102,6 @@ public class StateManager : MonoBehaviour
                     pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Face);
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
-                    playOneShot = true;
-                    timer = 0f;
                 }
             }
         }
@@ -125,8 +123,6 @@ public class StateManager : MonoBehaviour
                     mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
-                    playOneShot = true;
-                    timer = 0f;
                 }
             }
         }
@@ -147,8 +143,6 @@ public class StateManager : MonoBehaviour
                     pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Arms);
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
-                    playOneShot = true;
-                    timer = 0f;
                 }
             }
         }
@@ -171,8 +165,6 @@ public class StateManager : MonoBehaviour
                     mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
-                    playOneShot = true;
-                    timer = 0f;
                 }
             }
         }
@@ -195,8 +187,6 @@ public class StateManager : MonoBehaviour
                     mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
-                    playOneShot = true;
-                    timer = 0f;
                 }
             }
         }
@@ -219,8 +209,6 @@ public class StateManager : MonoBehaviour
                     mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
-                    playOneShot = true;
-                    timer = 0f;
                 }
             }
         }
@@ -255,8 +243,6 @@ public class StateManager : MonoBehaviour
                     mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
-                    playOneShot = true;
-                    timer = 0f;
                 }
             }
         }
