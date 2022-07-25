@@ -6,6 +6,7 @@ using TMPro;
 
 public enum State : short
 {
+    Welcome,
     Intro,
     Mannequin,
     Head,
@@ -27,8 +28,9 @@ public class StateManager : MonoBehaviour
     [SerializeField] GameObject mannequin;
     [SerializeField] TMP_Text tmpText;
 
-    [SerializeField] State currState = State.Intro;
+    [SerializeField] State currState = State.Welcome;
     [SerializeField] float timer;
+    [SerializeField] int test_playerCount = 1;
 
     private AudioSource audioSource;
     private bool playOneShot = true;
@@ -49,16 +51,32 @@ public class StateManager : MonoBehaviour
         pv = GetComponent<PhotonView>();
         
         Debug.Log("STATE: "  + currState); // STATE: Intro
-        audioSource.clip = audioClips[3];
+        audioSource.clip = audioClips[0];
         timer = 0f;
     }
 
     void Update(){
-        timer += Time.deltaTime;
-        Debug.Log("CURRENT STATE: " + currState); // STATE: Intro
+        if(PhotonNetwork.CurrentRoom.PlayerCount > 1 || test_playerCount > 1)
+            timer += Time.deltaTime;
 
-        if(currState == State.Intro && timer > 3f){
+        Debug.Log("CURRENT STATE: " + currState);
+        Debug.Log("COUNT: " + PhotonNetwork.CurrentRoom.PlayerCount);
+
+        if(currState == State.Welcome && timer > 3f){
             if(playOneShot){
+                audioSource.Play();
+                playOneShot = false;
+            }
+
+            if(timer > 142f){
+                // currState = State.Intro;
+                pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Intro);
+            }
+        }
+        else if(currState == State.Intro && timer > 3f){
+            if(playOneShot){
+                Debug.Log("STATE: "  + currState); // STATE: Intro
+                audioSource.clip = audioClips[3];
                 audioSource.Play();
                 playOneShot = false;
             }

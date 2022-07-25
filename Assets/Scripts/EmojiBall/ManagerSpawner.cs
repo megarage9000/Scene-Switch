@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Photon.Pun;
 
-public class MangerSpawner : MonoBehaviour
+public class ManagerSpawner : MonoBehaviour
 {
     public GameObject EmojiBallManagerPrefab;
     public GameObject MannequinPrefab;
