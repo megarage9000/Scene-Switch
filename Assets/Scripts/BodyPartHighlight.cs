@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using Photon.Pun;
 
 public class BodyPartHighlight : MonoBehaviour
 {
@@ -14,6 +15,11 @@ public class BodyPartHighlight : MonoBehaviour
     }
 
     public void HighlightBodyPart(bool canHighlight) {
+        HighlightBodyPartNetwork(canHighlight);
+        gameObject.GetPhotonView().RPC("HighlightBodyPartNetwork", RpcTarget.Others, canHighlight);
+    }
+
+    private void HighlightBodyPartNetwork(bool canHighlight) {
         _outline.enabled = canHighlight;
     }
 
