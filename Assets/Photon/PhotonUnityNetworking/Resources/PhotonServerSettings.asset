@@ -63,15 +63,7 @@ MonoBehaviour:
   - SetMaterialByName
   - FreezeRigidBodyNetwork
   - UnFreezeRigidBodyNetwork
-<<<<<<< HEAD
-  - SetHintNetwork
-  - SetPlacementNetwork
-  - HighlightBodyPart
-  - SetMaterialByNameNetwork
-  - HighlightBodyPartNetwork
-=======
   - ChangeState
->>>>>>> main
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1
