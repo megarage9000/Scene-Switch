@@ -94,7 +94,6 @@ public class EmojiBall : NetworkAdditions {
         OnSubwordTapped.Invoke(gameObject);
 
         DisableSubwordTap();
-        EnableScale();
     }
 
     private void OnEmojiScaled() {

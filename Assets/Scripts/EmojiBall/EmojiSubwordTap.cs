@@ -44,11 +44,11 @@ public class EmojiSubwordTap : NetworkAdditions {
             subword.name = subwordPrefab.name;
             subword.transform.parent = gameObject.transform;
             subword.transform.localPosition = spawnPos;
-            Debug.Log("Calling SetMaterial hereerr?");
             subword.GetComponent<NetworkAdditions>().SetMaterial(subWords[i]);
 
             /* Rotate the enemy to face towards player */
             subword.transform.rotation = Quaternion.LookRotation(transform.TransformDirection(Vector3.forward));
+            subword.transform.position -= Vector3.forward * 0.2f;
 
             /* Adjust height */
             // subword.transform.Translate(new Vector3(0, subword.transform.localScale.y / 2, 0));
