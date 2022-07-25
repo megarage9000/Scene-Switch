@@ -4,7 +4,7 @@ using UnityEngine;
 using Photon.Pun;
 using TMPro;
 
-public enum State : ushort
+public enum State : short
 {
     Intro,
     Mannequin,
@@ -32,11 +32,18 @@ public class StateManager : MonoBehaviour
 
     private AudioSource audioSource;
     private bool playOneShot = true;
+    private PhotonView pv;
 
+
+    [PunRPC]
+    void ChangeState(short s){
+        currState = (State)s;
+    }
 
     void Start(){
         tmpText.text = "";
-        audioSource = this.GetComponent<AudioSource>();
+        audioSource = GetComponent<AudioSource>();
+        pv = GetComponent<PhotonView>();
         
         Debug.Log("STATE: "  + currState); // STATE: Intro
         audioSource.clip = audioClips[3];
@@ -53,7 +60,8 @@ public class StateManager : MonoBehaviour
             }
 
             if(!audioSource.isPlaying){
-                currState = State.Mannequin;
+                // currState = State.Mannequin;
+                pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Mannequin);
                 playOneShot = true;
                 timer = 0f;
             }
@@ -68,7 +76,8 @@ public class StateManager : MonoBehaviour
             }
             
             if(!audioSource.isPlaying){
-                currState = State.Head;
+                // currState = State.Head;
+                pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Head);
                 if(PhotonNetwork.LocalPlayer.ActorNumber > 1)
                     tmpText.text = "Place an emoji on the mannequin";
                 playOneShot = true;
@@ -89,7 +98,8 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
-                    currState = State.Face;
+                    // currState = State.Face;
+                    pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Face);
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
                     playOneShot = true;
@@ -110,7 +120,8 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
-                    currState = State.Shoulders;
+                    // currState = State.Shoulders;
+                    pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Shoulders);
                     mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
@@ -119,8 +130,6 @@ public class StateManager : MonoBehaviour
                 }
             }
         }
-
-
         else if(currState == State.Shoulders){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Shoulders
@@ -134,7 +143,8 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
-                    currState = State.Arms;
+                    // currState = State.Arms;
+                    pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Arms);
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
                     playOneShot = true;
@@ -156,7 +166,8 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
-                    currState = State.Chest;
+                    // currState = State.Chest;
+                    pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Chest);
                     mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
@@ -179,7 +190,8 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
-                    currState = State.Stomach;
+                    // currState = State.Stomach;
+                    pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Stomach);
                     mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
@@ -202,7 +214,8 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                 if(HandPresence.bPressed){
-                    currState = State.Body;
+                    // currState = State.Body;
+                    pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Body);
                     mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
                     if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
                         tmpText.text = "";
@@ -231,7 +244,8 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to go to the next exercise";
 
                 if(HandPresence.bPressed){
-                    currState = State.Emojis;
+                    // currState = State.Emojis;
+                    pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Emojis);
                     mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
                     mannequin.transform.Find("Extras").GetComponent<Outline>().enabled = false;
                     mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;

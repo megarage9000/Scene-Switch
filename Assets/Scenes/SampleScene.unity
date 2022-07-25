@@ -497,6 +497,7 @@ GameObject:
   - component: {fileID: 181150461}
   - component: {fileID: 181150460}
   - component: {fileID: 181150462}
+  - component: {fileID: 181150463}
   m_Layer: 0
   m_Name: State Manager
   m_TagString: Untagged
@@ -649,6 +650,28 @@ AudioSource:
     m_PreInfinity: 2
     m_PostInfinity: 2
     m_RotationOrder: 4
+--- !u!114 &181150463
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181150459}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: aa584fbee541324448dd18d8409c7a41, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  ObservedComponentsFoldoutOpen: 1
+  Group: 0
+  prefixField: -1
+  Synchronization: 1
+  OwnershipTransfer: 0
+  observableSearch: 2
+  ObservedComponents: []
+  sceneViewId: 1
+  InstantiationId: 0
+  isRuntimeInstantiated: 0
 --- !u!1 &186859794
 GameObject:
   m_ObjectHideFlags: 0
@@ -1842,7 +1865,7 @@ MonoBehaviour:
   m_Camera: {fileID: 1881107719}
   m_OriginBaseGameObject: {fileID: 328317868}
   m_CameraFloorOffsetObject: {fileID: 1582100049}
-  m_RequestedTrackingOriginMode: 0
+  m_RequestedTrackingOriginMode: 1
   m_CameraYOffset: 1.1176
 --- !u!4 &328317870
 Transform:
