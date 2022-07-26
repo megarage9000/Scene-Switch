@@ -25,7 +25,7 @@ public class MaterialsTable  {
         }
 
 
-        printMaterials();
+        // printMaterials();
     }
 
     static private void printMaterials() {
