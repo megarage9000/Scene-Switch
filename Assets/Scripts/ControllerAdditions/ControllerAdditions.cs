@@ -14,6 +14,10 @@ public class ControllerAdditions : MonoBehaviour
 
     public UnityEvent PrimaryPress;
     public UnityEvent SecondaryPress;
+    
+    static public bool bPressed = false;
+    private bool bPressedNow = false;
+    private bool bPressedLast = false;
 
     private void Awake() {
         PrimaryPress = new UnityEvent();
@@ -50,6 +54,11 @@ public class ControllerAdditions : MonoBehaviour
             }
 
             _controller.TryGetFeatureValue(CommonUsages.secondaryButton, out bool secondaryPress);
+            if(gameObject.name == "RightHand Controller"){
+                bPressedLast = bPressedNow;
+                bPressedNow = secondaryPress;
+                bPressed = (bPressedNow && !bPressedLast) ? true : false;
+            }
             if (secondaryPress) {
                 SecondaryPress.Invoke();
                 Debug.Log($"Secondary press on {gameObject.name}");

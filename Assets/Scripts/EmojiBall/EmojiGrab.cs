@@ -62,7 +62,7 @@ public class EmojiGrab : XRGrabInteractable
         ControllerAdditions controllerEvents = controller.GetComponent<ControllerAdditions>();
         if (controllerEvents) {
             controllerEvents.PrimaryPress.AddListener(PlaceEmojiBall);
-            controllerEvents.SecondaryPress.AddListener(PlaceEmojiBall);
+            // controllerEvents.SecondaryPress.AddListener(PlaceEmojiBall);
         }
     }
 
@@ -70,7 +70,7 @@ public class EmojiGrab : XRGrabInteractable
         ControllerAdditions controllerEvents = controller.GetComponent<ControllerAdditions>();
         if (controllerEvents) {
             controllerEvents.PrimaryPress.RemoveListener(PlaceEmojiBall);
-            controllerEvents.SecondaryPress.RemoveListener(PlaceEmojiBall);
+            // controllerEvents.SecondaryPress.RemoveListener(PlaceEmojiBall);
         }
     }
 

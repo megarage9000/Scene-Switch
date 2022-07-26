@@ -5,14 +5,15 @@ using UnityEngine.XR;
 
 public class HandPresence : MonoBehaviour
 {
+    [SerializeField] Material greenMat;
+    [SerializeField] Material purpleMat;
+
     public bool showController = false;
     public InputDeviceCharacteristics controllerCharacteristics;
     public List<GameObject> controllerPrefabs;
     public GameObject handModelPrefab;
-
-    static public bool bPressed = false;
     
-    public InputDevice targetDevice;
+    private InputDevice targetDevice;
     private GameObject spawnedController;
     private GameObject spawnedHandModel;
     private Animator handAnimator;
@@ -37,15 +38,14 @@ public class HandPresence : MonoBehaviour
         if (devices.Count > 0)
         {
             targetDevice = devices[0];
-            GameObject prefab = controllerPrefabs.Find(controller => controller.name == targetDevice.name);
-            if (prefab)
-            {
-                spawnedController = Instantiate(prefab, transform);
-            }
-            else
-            {
-                Debug.Log("Did not find corresponding controller model");
-            }
+
+            // GameObject prefab = controllerPrefabs.Find(controller => controller.name == targetDevice.name);
+            // if (prefab){
+            //     spawnedController = Instantiate(prefab, transform);
+            // }
+            // else{
+            //     Debug.Log("Did not find corresponding controller model");
+            // }
 
             spawnedHandModel = Instantiate(handModelPrefab, transform);
             handAnimator = spawnedHandModel.GetComponent<Animator>();
@@ -82,9 +82,6 @@ public class HandPresence : MonoBehaviour
         }
         else
         {
-            // Debug.Log(targetDevice.characteristics == (InputDeviceCharacteristics.HeldInHand & InputDeviceCharacteristics.HandTracking & InputDeviceCharacteristics.Controller & InputDeviceCharacteristics.Right));
-            targetDevice.TryGetFeatureValue(CommonUsages.secondaryButton, out bPressed);
-
             if (showController)
             {
                 if(spawnedHandModel)
