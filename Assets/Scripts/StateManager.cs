@@ -62,7 +62,9 @@ public class StateManager : MonoBehaviour
         Debug.Log("CURRENT STATE: " + currState);
         Debug.Log("PLAYER COUNT: " + PhotonNetwork.CurrentRoom.PlayerCount);
         Debug.Log("B DOWN: " + ControllerAdditions.bPressed);
+        // Debug.Log("IS MASTER: " + PhotonNetwork.IsMasterClient);
 
+        
         if(currState == State.Welcome && timer > 3f){
             if(playOneShot){
                 audioSource.Play();

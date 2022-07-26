@@ -44,6 +44,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 99b4a737903b82a43bb95804a2149147, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  greenMat: {fileID: 2100000, guid: 503ad55dea3c80f46be1d90641c19a52, type: 2}
+  purpleMat: {fileID: 2100000, guid: 51857da6b3273984da42834c3a46daaf, type: 2}
   showController: 0
   controllerCharacteristics: 576
   controllerPrefabs: []

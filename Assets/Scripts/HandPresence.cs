@@ -5,6 +5,9 @@ using UnityEngine.XR;
 
 public class HandPresence : MonoBehaviour
 {
+    [SerializeField] Material greenMat;
+    [SerializeField] Material purpleMat;
+
     public bool showController = false;
     public InputDeviceCharacteristics controllerCharacteristics;
     public List<GameObject> controllerPrefabs;
@@ -35,15 +38,14 @@ public class HandPresence : MonoBehaviour
         if (devices.Count > 0)
         {
             targetDevice = devices[0];
-            GameObject prefab = controllerPrefabs.Find(controller => controller.name == targetDevice.name);
-            if (prefab)
-            {
-                spawnedController = Instantiate(prefab, transform);
-            }
-            else
-            {
-                Debug.Log("Did not find corresponding controller model");
-            }
+
+            // GameObject prefab = controllerPrefabs.Find(controller => controller.name == targetDevice.name);
+            // if (prefab){
+            //     spawnedController = Instantiate(prefab, transform);
+            // }
+            // else{
+            //     Debug.Log("Did not find corresponding controller model");
+            // }
 
             spawnedHandModel = Instantiate(handModelPrefab, transform);
             handAnimator = spawnedHandModel.GetComponent<Animator>();

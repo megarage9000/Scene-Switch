@@ -17,6 +17,7 @@ public class PlayerHandColor : MonoBehaviour
 
     public void SetPlayerHandColor(){
         foreach (var mesh in GetComponentsInChildren<Renderer>()) {
+            Debug.Log("MESH FOUND");
             if(PhotonNetwork.IsMasterClient){
                 mesh.material = greenMat;
             }
