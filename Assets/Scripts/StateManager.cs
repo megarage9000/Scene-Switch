@@ -46,7 +46,7 @@ public class StateManager : MonoBehaviour
     }
 
     void Start(){
-        // tmpText.text = "";
+        tmpText.text = "";
         audioSource = GetComponent<AudioSource>();
         pv = GetComponent<PhotonView>();
         
@@ -59,10 +59,9 @@ public class StateManager : MonoBehaviour
         if(PhotonNetwork.CurrentRoom.PlayerCount > 1 || test_playerCount > 1)
             timer += Time.deltaTime;
 
-        Debug.Log("CURRENT STATE: " + currState);
-        Debug.Log("PLAYER COUNT: " + PhotonNetwork.CurrentRoom.PlayerCount);
-        Debug.Log("B DOWN: " + ControllerAdditions.bPressed);
-        // Debug.Log("IS MASTER: " + PhotonNetwork.IsMasterClient);
+        // Debug.Log("CURRENT STATE: " + currState);
+        // Debug.Log("PLAYER COUNT: " + PhotonNetwork.CurrentRoom.PlayerCount);
+        // Debug.Log("B DOWN: " + ControllerAdditions.bPressed);
 
         
         if(currState == State.Welcome && timer > 3f){
