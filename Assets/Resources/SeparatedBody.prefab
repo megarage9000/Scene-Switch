@@ -1099,7 +1099,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
@@ -1212,7 +1212,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
@@ -1325,7 +1325,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
@@ -1434,7 +1434,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
@@ -1592,7 +1592,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b

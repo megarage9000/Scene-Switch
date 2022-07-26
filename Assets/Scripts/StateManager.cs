@@ -27,6 +27,7 @@ public class StateManager : MonoBehaviour
     [SerializeField] AudioClip[] audioClips;
     [SerializeField] GameObject mannequin;
     [SerializeField] TMP_Text tmpText;
+    [SerializeField] EmojiBallManager ebm;
 
     [SerializeField] State currState = State.Welcome;
     [SerializeField] float timer;
@@ -56,7 +57,7 @@ public class StateManager : MonoBehaviour
     }
 
     void Update(){
-        if(PhotonNetwork.CurrentRoom.PlayerCount > 1 || test_playerCount > 1)
+        if(/*PhotonNetwork.CurrentRoom.PlayerCount > 1 ||*/ test_playerCount > 1)
             timer += Time.deltaTime;
 
         // Debug.Log("CURRENT STATE: " + currState);

@@ -46,8 +46,7 @@ public class EmojiBallManager : MonoBehaviour
         // transform collected from getting children transforms,
         // so add - 1
         for(int i = 0; i < numPositions - 1; i++) {
-            Debug.Log("i:" + i);
-            Transform transform = _transforms[i];
+            Transform transform = _transforms[i+1];
             GameObject emojiBall = PhotonNetwork.Instantiate(EmojiBallPrefabs[i].name, transform.position, transform.rotation);
 
             _instantiatedEmojiBallPrefabs[emojiBall.tag] = emojiBall;
