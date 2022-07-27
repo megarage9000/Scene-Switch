@@ -22,7 +22,7 @@ public class EmojiSubwordTap : NetworkAdditions {
             return;
         }
         int num = subWords.Count;
-        float radius = 2f;
+        float radius = 3f;
         Vector3 center = Vector3.zero;
 
         for (int i = 0; i < num; i++) {
@@ -47,8 +47,8 @@ public class EmojiSubwordTap : NetworkAdditions {
             subword.GetComponent<NetworkAdditions>().SetMaterial(subWords[i]);
 
             /* Rotate the enemy to face towards player */
-            subword.transform.rotation = Quaternion.LookRotation(transform.TransformDirection(Vector3.forward));
-            subword.transform.position -= Vector3.forward * 0.2f;
+            subword.transform.localRotation = Quaternion.LookRotation(transform.TransformDirection(Vector3.right));
+            subword.transform.localPosition -= Vector3.forward * 0.4f;
 
             /* Adjust height */
             // subword.transform.Translate(new Vector3(0, subword.transform.localScale.y / 2, 0));
