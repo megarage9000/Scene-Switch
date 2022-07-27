@@ -681,7 +681,7 @@ PrefabInstance:
       objectReference: {fileID: 991058890}
     - target: {fileID: 7302076425324243041, guid: a760141daea25684eab8c5fa11596e30, type: 3}
       propertyPath: currState
-      value: 11
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7302076425324243041, guid: a760141daea25684eab8c5fa11596e30, type: 3}
       propertyPath: mannequin
@@ -689,7 +689,7 @@ PrefabInstance:
       objectReference: {fileID: 1715393747}
     - target: {fileID: 7302076425324243041, guid: a760141daea25684eab8c5fa11596e30, type: 3}
       propertyPath: test_playerCount
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7302076425324243042, guid: a760141daea25684eab8c5fa11596e30, type: 3}
       propertyPath: sceneViewId
