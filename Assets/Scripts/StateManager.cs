@@ -67,12 +67,11 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > 142f){
-                // currState = State.Intro;
+            if(timer > 144f){
                 pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Intro);
             }
         }
-        else if(currState == State.Intro && timer > 3f){
+        else if(currState == State.Intro && timer > 1f){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Intro
                 audioSource.clip = audioClips[3];
@@ -80,8 +79,7 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > 63f){
-                // currState = State.Mannequin;
+            if(timer > 61f){
                 pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Mannequin);
             }
         }
@@ -94,15 +92,14 @@ public class StateManager : MonoBehaviour
             }
             
             if(timer > 61f){
-                // currState = State.Head;
                 pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Head);
-                if(PhotonNetwork.LocalPlayer.ActorNumber > 1)
-                    tmpText.text = "Place an emoji on the mannequin";
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1) tmpText.text = "Place an emoji on the mannequin";
             }
         }
-        else if(currState == State.Head && timer > 3f){
+        else if(currState == State.Head){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Head
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1) tmpText.text = "Place an emoji on the mannequin";
                 mannequin.transform.Find("Head").GetComponent<Outline>().enabled = true;
                 mannequin.transform.Find("PlacementLocations/FaceAndHeadPlacement").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[5];
@@ -110,36 +107,33 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > /*30f*/ + 35f){
+            if(timer > 30f + 33f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1){
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        tmpText.text = "";
-                        // currState = State.Face;
                         pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Face);
                     }
                 }
             }
         }
-        else if(currState == State.Face && timer > 3f){
+        else if(currState == State.Face){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Face
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1) tmpText.text = "Place an emoji on the mannequin";
                 audioSource.clip = audioClips[6];
                 audioSource.Play();
                 playOneShot = false;
             }
 
-            if(timer > /*30f*/ + 23f){
+            if(timer > 30f + 20f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1){
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        // currState = State.Shoulders;
-                        tmpText.text = "";
-                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Shoulders);
                         mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("PlacementLocations/FaceAndHeadPlacement").GetComponent<Outline>().enabled = false;
+                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Shoulders);
                     }
                 }
             }
@@ -147,6 +141,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Shoulders){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Shoulders
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1) tmpText.text = "Place an emoji on the mannequin";
                 mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = true;
                 mannequin.transform.Find("PlacementLocations/NeckAndShouldersPlacement").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[7];
@@ -154,17 +149,14 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > /*30f*/ + 20f){
+            if(timer > 30f + 19f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1){
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        // currState = State.Arms;
-                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Arms);
                         mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("PlacementLocations/NeckAndShouldersPlacement").GetComponent<Outline>().enabled = false;
-                        if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                            tmpText.text = "";
+                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Arms);
                     }
                 }
             }
@@ -172,6 +164,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Arms){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Arms
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1) tmpText.text = "Place an emoji on the mannequin";
                 mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = true;
                 mannequin.transform.Find("PlacementLocations/ArmsPlacement").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[8];
@@ -179,17 +172,14 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > /*30f*/ + 7f){
+            if(timer > 30f + 5f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1){
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        // currState = State.Chest;
-                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Chest);
                         mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("PlacementLocations/ArmsPlacement").GetComponent<Outline>().enabled = false;
-                        if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                            tmpText.text = "";
+                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Chest);
                     }
                 }
             }
@@ -197,6 +187,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Chest){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Chest
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1) tmpText.text = "Place an emoji on the mannequin";
                 mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = true;
                 mannequin.transform.Find("PlacementLocations/ChestPlacement").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[9];
@@ -204,17 +195,14 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > /*30f*/ + 17f){
+            if(timer > 30f + 16f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1){
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        // currState = State.Stomach;
-                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Stomach);
                         mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("PlacementLocations/ChestPlacement").GetComponent<Outline>().enabled = false;
-                        if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                            tmpText.text = "";
+                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Stomach);
                     }
                 }
             }
@@ -222,6 +210,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Stomach){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Stomach
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1) tmpText.text = "Place an emoji on the mannequin";
                 mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = true;
                 mannequin.transform.Find("PlacementLocations/StomachPlacement").GetComponent<Outline>().enabled = true;
                 audioSource.clip = audioClips[10];
@@ -229,17 +218,14 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > /*30f*/ + 17f){
+            if(timer > 30f + 16f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1){
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        // currState = State.Body;
-                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Body);
                         mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("PlacementLocations/StomachPlacement").GetComponent<Outline>().enabled = false;
-                        if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                            tmpText.text = "";
+                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Body);
                     }
                 }
             }
@@ -247,6 +233,7 @@ public class StateManager : MonoBehaviour
         else if(currState == State.Body){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Body
+                if(PhotonNetwork.LocalPlayer.ActorNumber > 1) tmpText.text = "Place an emoji on the mannequin";
                 mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = true;
                 mannequin.transform.Find("Extras").GetComponent<Outline>().enabled = true;
                 mannequin.transform.Find("Head").GetComponent<Outline>().enabled = true;
@@ -259,13 +246,11 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > /*30f*/ + 17f){
+            if(timer > 60f + 10f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1){
                     tmpText.text = "Click (B) to go to the next exercise";
 
                     if(ControllerAdditions.bPressed){
-                        // currState = State.Emojis;
-                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Emojis1);
                         mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("Extras").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
@@ -273,8 +258,7 @@ public class StateManager : MonoBehaviour
                         mannequin.transform.Find("Legs").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
                         mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
-                        if(PhotonNetwork.LocalPlayer.ActorNumber == 1)
-                            tmpText.text = "";
+                        pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Emojis1);
                     }
                 }
             }
@@ -360,6 +344,7 @@ public class StateManager : MonoBehaviour
 
     [PunRPC]
     void ChangeState(short s){
+        tmpText.text = "";
         timer = 0f;
         playOneShot = true;
         audioSource.Stop();
