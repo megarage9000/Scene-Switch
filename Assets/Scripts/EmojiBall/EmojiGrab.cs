@@ -84,7 +84,6 @@ public class EmojiGrab : XRGrabInteractable
 
             }
             _placementLocation = detected;
-            hint.ShowHint();
         }
 
     }
@@ -95,7 +94,15 @@ public class EmojiGrab : XRGrabInteractable
 
         if (leaving && hint) {
             _placementLocation = null;
-            hint.HideHint();
+        }
+    }
+
+    protected override void OnDestroy() {
+        base.OnDestroy();
+        if(_placementLocation) {
+            PlacementHint hint = _placementLocation.GetComponent<PlacementHint>();
+            if (hint)
+                hint.HideHint();
         }
     }
 

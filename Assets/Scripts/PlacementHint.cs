@@ -7,10 +7,13 @@ public class PlacementHint : MonoBehaviour
 {
     private Outline outline;
     private MeshRenderer renderer;
+
+    private List<string> _emojiBallTags;
+
     private void Awake() {
         outline = GetComponent<Outline>();
         renderer = GetComponent<MeshRenderer>();
-
+        _emojiBallTags = new List<string>( new string[] { "AngryEmoji", "DisgustedEmoji", "HappyEmoji", "SadEmoji", "ScaredEmoji", "SurprisedEmoji" });
         HideHint();
     }
 
@@ -52,10 +55,17 @@ public class PlacementHint : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other) {
-       ShowHint();
+        string otherTag = other.gameObject.tag;
+        if(_emojiBallTags.Contains(otherTag)){
+            ShowHint();
+        }
+
     }
 
     private void OnTriggerExit(Collider other) {
-       HideHint(); 
+        string otherTag = other.gameObject.tag;
+        if (_emojiBallTags.Contains(otherTag)) {
+            HideHint();
+        }
     }
 }
