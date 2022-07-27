@@ -69,6 +69,7 @@ MonoBehaviour:
   - SetHintNetwork
   - SetMaterialByNameNetwork
   - SetPlacementNetwork
+  - UnhighlightMannequin
   DisableAutoOpenWizard: 1
   ShowSettings: 1
   DevRegionSetOnce: 1

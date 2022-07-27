@@ -40,6 +40,11 @@ public class NetworkPlayer : MonoBehaviour
             }
         }
 
+        
+        // foreach (var mesh in GetComponentsInChildren<Renderer>()) {
+        //     mesh.material = (PhotonNetwork.LocalPlayer.ActorNumber == 1) ? purpleMat : greenMat;
+        // }
+
         // Disabling mesh renderers if its the local player
         if(photonView.IsMine) {
             changePlayerHandColor = true;

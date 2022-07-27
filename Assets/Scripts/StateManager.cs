@@ -131,8 +131,9 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("PlacementLocations/FaceAndHeadPlacement").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("PlacementLocations/FaceAndHeadPlacement").GetComponent<Outline>().enabled = false;
+                        pv.RPC("UnhighlightMannequin", RpcTarget.AllBufferedViaServer);
                         pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Shoulders);
                     }
                 }
@@ -154,8 +155,9 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("PlacementLocations/NeckAndShouldersPlacement").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("PlacementLocations/NeckAndShouldersPlacement").GetComponent<Outline>().enabled = false;
+                        pv.RPC("UnhighlightMannequin", RpcTarget.AllBufferedViaServer);
                         pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Arms);
                     }
                 }
@@ -177,8 +179,9 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("PlacementLocations/ArmsPlacement").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("PlacementLocations/ArmsPlacement").GetComponent<Outline>().enabled = false;
+                        pv.RPC("UnhighlightMannequin", RpcTarget.AllBufferedViaServer);
                         pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Chest);
                     }
                 }
@@ -200,8 +203,9 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("PlacementLocations/ChestPlacement").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("PlacementLocations/ChestPlacement").GetComponent<Outline>().enabled = false;
+                        pv.RPC("UnhighlightMannequin", RpcTarget.AllBufferedViaServer);
                         pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Stomach);
                     }
                 }
@@ -223,8 +227,9 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to move to the next body part";
 
                     if(ControllerAdditions.bPressed){
-                        mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("PlacementLocations/StomachPlacement").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("PlacementLocations/StomachPlacement").GetComponent<Outline>().enabled = false;
+                        pv.RPC("UnhighlightMannequin", RpcTarget.AllBufferedViaServer);
                         pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Body);
                     }
                 }
@@ -251,13 +256,14 @@ public class StateManager : MonoBehaviour
                     tmpText.text = "Click (B) to go to the next exercise";
 
                     if(ControllerAdditions.bPressed){
-                        mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("Extras").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("Joints").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("Legs").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
-                        mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Arms").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Extras").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Head").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Joints").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Legs").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Stomach").GetComponent<Outline>().enabled = false;
+                        // mannequin.transform.Find("Torso").GetComponent<Outline>().enabled = false;
+                        pv.RPC("UnhighlightMannequin", RpcTarget.AllBufferedViaServer);
                         pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Emojis1);
                     }
                 }
@@ -304,7 +310,7 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(PhotonNetwork.LocalPlayer.ActorNumber == 2 && timer > 27f){
+            if(PhotonNetwork.LocalPlayer.ActorNumber > 1 && timer > 27f){
                 tmpText.text = "Touch the emoji orbs and pick an emotion that fits better\nPress (B) to go to the next exercise";
 
                 if(ControllerAdditions.bPressed){
@@ -322,7 +328,7 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(PhotonNetwork.LocalPlayer.ActorNumber == 2 && timer > 22f){
+            if(PhotonNetwork.LocalPlayer.ActorNumber > 1 && timer > 22f){
                 tmpText.text = "Resize emotion balls\nPress (B) when ready to finish exercise";
 
                 if(ControllerAdditions.bPressed){
@@ -349,6 +355,13 @@ public class StateManager : MonoBehaviour
         playOneShot = true;
         audioSource.Stop();
         currState = (State)s;
+    }
+
+    [PunRPC]
+    void UnhighlightMannequin(){
+        foreach (var outline in mannequin.GetComponentsInChildren<Outline>()) {
+            outline.enabled = false;
+        }
     }
 
     void TurnMannequinOn(){
