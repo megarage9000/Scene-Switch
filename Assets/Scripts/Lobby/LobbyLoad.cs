@@ -7,6 +7,6 @@ public class LobbyLoad : MonoBehaviour
 {
     public void LoadScene() {
         Debug.Log($"Room # = {RoomSettings.RoomNumber}, Scene # = {RoomSettings.SceneEnvironment}");
-        SceneManager.LoadScene(RoomSettings.SceneEnvironment + 1);
+        SceneManager.LoadScene(RoomSettings.SceneEnvironment);
     }
 }
