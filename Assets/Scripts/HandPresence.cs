@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.XR;
+using Photon.Pun;
 
 public class HandPresence : MonoBehaviour
 {
@@ -17,6 +18,7 @@ public class HandPresence : MonoBehaviour
     private GameObject spawnedController;
     private GameObject spawnedHandModel;
     private Animator handAnimator;
+    private bool changeColor = false;
 
     // Start is called before the first frame update
     void Start()
@@ -48,6 +50,7 @@ public class HandPresence : MonoBehaviour
             // }
 
             spawnedHandModel = Instantiate(handModelPrefab, transform);
+            changeColor = true;
             handAnimator = spawnedHandModel.GetComponent<Animator>();
         }
     }
@@ -96,6 +99,22 @@ public class HandPresence : MonoBehaviour
                 if (spawnedController)
                     spawnedController.SetActive(false);
                 UpdateHandAnimation();
+            }
+        }
+
+        if(changeColor && NetworkPlayer.changePlayerHandColor){
+            SetPlayerHandColor();
+            changeColor = false;
+        }
+    }
+
+    public void SetPlayerHandColor(){
+        foreach (var mesh in GetComponentsInChildren<Renderer>()){
+            if(PhotonNetwork.IsMasterClient){
+                mesh.material = greenMat;
+            }
+            else{
+                mesh.material = purpleMat;
             }
         }
     }
