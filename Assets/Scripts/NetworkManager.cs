@@ -23,11 +23,11 @@ public class NetworkManager : MonoBehaviourPunCallbacks
         roomOptions.MaxPlayers = 2;
         roomOptions.IsVisible = true;
         roomOptions.IsOpen = true;
-        PhotonNetwork.JoinOrCreateRoom("Room 3", roomOptions, TypedLobby.Default);
+        PhotonNetwork.JoinOrCreateRoom($"Room {RoomSettings.RoomNumber}", roomOptions, TypedLobby.Default);
     }
 
     public override void OnJoinedRoom(){
-        Debug.Log("Joined a room.");
+        Debug.Log($"Joined a room. Room = {PhotonNetwork.CurrentRoom.Name}");
         base.OnJoinedRoom();
     }
 
