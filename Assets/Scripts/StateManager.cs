@@ -41,7 +41,7 @@ public class StateManager : MonoBehaviour
 
 
     void Start(){
-        // tmpText.text = "";
+        tmpText.text = "";
         audioSource = GetComponent<AudioSource>();
         pv = GetComponent<PhotonView>();
         
