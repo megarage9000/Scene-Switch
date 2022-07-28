@@ -223,6 +223,10 @@ PrefabInstance:
       propertyPath: sceneViewId
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7446307926791985090, guid: 4086ac02d7fc4f34c9e86d862f18c3f9, type: 3}
+      propertyPath: distanceFrom
+      value: 
+      objectReference: {fileID: 928305987}
     - target: {fileID: 7629750950625717892, guid: 4086ac02d7fc4f34c9e86d862f18c3f9, type: 3}
       propertyPath: sceneViewId
       value: 3
@@ -241,6 +245,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 4086ac02d7fc4f34c9e86d862f18c3f9, type: 3}
+--- !u!1 &928305987 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6859626198698537234, guid: 4086ac02d7fc4f34c9e86d862f18c3f9, type: 3}
+  m_PrefabInstance: {fileID: 910485396}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &1424405214
 PrefabInstance:
   m_ObjectHideFlags: 0

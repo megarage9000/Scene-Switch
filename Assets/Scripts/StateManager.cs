@@ -272,7 +272,7 @@ public class StateManager : MonoBehaviour
                 }
             }
         }
-        else if(currState == State.Emojis1){ // DELAY
+        else if(currState == State.Emojis1){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Emojis1
                 audioSource.clip = audioClips[12];
@@ -280,11 +280,15 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(!audioSource.isPlaying && true/*IF GREEN PLAYER IS CLOSE TO MANNEQUIN*/){
-                pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Emojis2);
+            if(!audioSource.isPlaying && PhotonNetwork.LocalPlayer.ActorNumber == 1){
+                tmpText.text = "Move close to the mannequin";
+
+                if(ObjectDistTo.isClose){
+                    pv.RPC("ChangeState", RpcTarget.AllBufferedViaServer, (short)State.Emojis2);
+                }
             }
         }
-        else if(currState == State.Emojis2){ // DELAY
+        else if(currState == State.Emojis2 && timer > 1f){
             if(playOneShot){
                 Debug.Log("STATE: "  + currState); // STATE: Emojis2
                 audioSource.clip = audioClips[13];
@@ -292,7 +296,7 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(timer > /*60f*/ + 13f){
+            if(timer > 30f + 15f){
                 if(PhotonNetwork.LocalPlayer.ActorNumber == 1){
                     tmpText.text = "Click (B) to go to the next exercise";
 
@@ -328,7 +332,7 @@ public class StateManager : MonoBehaviour
                 playOneShot = false;
             }
 
-            if(PhotonNetwork.LocalPlayer.ActorNumber > 1 && timer > 22f){
+            if(PhotonNetwork.LocalPlayer.ActorNumber > 1 && timer > 23f){
                 tmpText.text = "Resize emotion balls\nPress (B) when ready to finish exercise";
 
                 if(ControllerAdditions.bPressed){

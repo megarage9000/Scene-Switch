@@ -2,9 +2,9 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-public class GreenPlayerDistToMannequin : MonoBehaviour
+public class ObjectDistTo : MonoBehaviour
 {
-    [SerializeField] GameObject mannequin;
+    [SerializeField] GameObject distanceFrom;
     static public bool isClose = false;
     private float triggerDist = 2f;
 
@@ -17,9 +17,7 @@ public class GreenPlayerDistToMannequin : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float dist = Vector3.Distance(this.gameObject.transform.position, mannequin.transform.position); 
+        float dist = Vector3.Distance(this.gameObject.transform.position, distanceFrom.transform.position); 
         isClose = (dist < triggerDist) ? true : false;
-        Debug.Log(dist);
-        Debug.Log(isClose);
     }
 }
