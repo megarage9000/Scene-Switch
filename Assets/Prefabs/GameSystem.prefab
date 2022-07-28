@@ -629,6 +629,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2738884169381341729, guid: 18d2b0658a4d1624887929e57cfba9fd, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 600
+      objectReference: {fileID: 0}
     - target: {fileID: 2738884169381341730, guid: 18d2b0658a4d1624887929e57cfba9fd, type: 3}
       propertyPath: m_text
       value: Removed on start
@@ -669,6 +673,23 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   mannequin: {fileID: 6859626198698537234}
+--- !u!1 &7446307924966868694 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1934561558, guid: 18d2b0658a4d1624887929e57cfba9fd, type: 3}
+  m_PrefabInstance: {fileID: 7446307926791985088}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &7446307925801787726
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7446307924966868694}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: d32e4664761ad4a4ba87dabd4fa35d0c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!4 &8954192601224107441 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1951526631880802929, guid: 18d2b0658a4d1624887929e57cfba9fd, type: 3}
