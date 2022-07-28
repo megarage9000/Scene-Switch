@@ -3,10 +3,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using System;
 
-public class RoomSettings : MonoBehaviour
-{
-    static int SceneEnvironment = 1;
-    static int RoomNumber = 1;
+public class RoomSettings : MonoBehaviour{
+    public static int SceneEnvironment = 1;
+    public static int RoomNumber = 1;
 
     public void SetScene(Int32 sceneNum) {
         SceneEnvironment = sceneNum;

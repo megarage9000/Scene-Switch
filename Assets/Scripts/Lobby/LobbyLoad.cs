@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class LobbyLoad : MonoBehaviour
 {
-    public void LoadScene() { 
+    public void LoadScene() {
+        Debug.Log($"Room # = {RoomSettings.RoomNumber}, Scene # = {RoomSettings.SceneEnvironment}");
     }
 }
