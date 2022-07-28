@@ -47,8 +47,8 @@ public class EmojiSubwordTap : NetworkAdditions {
             subword.GetComponent<NetworkAdditions>().SetMaterial(subWords[i]);
 
             /* Rotate the enemy to face towards player */
-            subword.transform.rotation = Quaternion.LookRotation(transform.TransformDirection(Vector3.forward));
-            subword.transform.position -= Vector3.forward * 0.2f;
+            subword.transform.localRotation = Quaternion.LookRotation(transform.TransformDirection(Vector3.right));
+            subword.transform.localPosition += Vector3.right;
 
             /* Adjust height */
             // subword.transform.Translate(new Vector3(0, subword.transform.localScale.y / 2, 0));

@@ -821,7 +821,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 6225875216608987832}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
@@ -1003,7 +1003,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 9147010415732600980}
-  m_Enabled: 1
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 5fea29bb7c508c244a1f805a5fd3fc4d, type: 3}
   m_Name: 
@@ -1094,8 +1094,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
@@ -1203,8 +1207,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
@@ -1312,8 +1320,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
@@ -1417,8 +1429,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
@@ -1571,8 +1587,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
+      propertyPath: m_Enabled
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineWidth
-      value: 4
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9109145842069068459, guid: f6bff2140c891284dac99f8b1554562e, type: 3}
       propertyPath: outlineColor.b
